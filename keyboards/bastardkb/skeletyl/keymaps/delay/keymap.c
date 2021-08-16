@@ -1,7 +1,5 @@
-/*
- * Copyright 2020 Nick Brassel (tzarc)
- * Copyright 2021 Stefan Kerkmann (@KarlK90)
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+/**
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,21 +15,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include QMK_KEYBOARD_H
+#include "keymaps/split34.h"
 
-#include_next <mcuconf.h>
+#define LAYOUT_skeletyl(...) LAYOUT_split_3x5_3(__VA_ARGS__)
 
-#undef STM32_SPI_USE_SPI1
-#define STM32_SPI_USE_SPI1 TRUE
-
-#undef STM32_PWM_USE_TIM2
-#define STM32_PWM_USE_TIM2 TRUE
-
-#undef STM32_SERIAL_USE_USART1
-#define STM32_SERIAL_USE_USART1 TRUE
-
-#undef STM32_GPT_USE_TIM4
-#define STM32_GPT_USE_TIM4 TRUE
-
-#undef STM32_ST_USE_TIMER
-#define STM32_ST_USE_TIMER 5
+// clang-format off
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  [_BASE] = LAYOUT_skeletyl(DVORAK_split_3x5_3),
+  [_NAV] = LAYOUT_skeletyl(NAV_split_3x5_3),
+  [_SYM] = LAYOUT_skeletyl(SYM_split_3x5_3),
+  [_NUM] = LAYOUT_skeletyl(NUM_split_3x5_3),
+  [_SPEC] = LAYOUT_skeletyl(SPEC_split_3x5_3),
+};
+// clang-format on

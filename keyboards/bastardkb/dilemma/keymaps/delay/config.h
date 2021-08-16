@@ -1,7 +1,5 @@
 /*
- * Copyright 2020 Nick Brassel (tzarc)
- * Copyright 2021 Stefan Kerkmann (@KarlK90)
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,19 +17,11 @@
 
 #pragma once
 
-#include_next <mcuconf.h>
+#ifdef MCU_RP
+#    undef MASTER_RIGHT
+#    define SPLIT_HAND_PIN GP29
+#endif
 
-#undef STM32_SPI_USE_SPI1
-#define STM32_SPI_USE_SPI1 TRUE
-
-#undef STM32_PWM_USE_TIM2
-#define STM32_PWM_USE_TIM2 TRUE
-
-#undef STM32_SERIAL_USE_USART1
-#define STM32_SERIAL_USE_USART1 TRUE
-
-#undef STM32_GPT_USE_TIM4
-#define STM32_GPT_USE_TIM4 TRUE
-
-#undef STM32_ST_USE_TIMER
-#define STM32_ST_USE_TIMER 5
+/* OLED config. */
+#define I2C1_CLOCK_SPEED 400000
+#define I2C1_DUTY_CYCLE FAST_DUTY_CYCLE_2

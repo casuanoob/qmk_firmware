@@ -1,6 +1,4 @@
-/*
- * Copyright 2020 Nick Brassel (tzarc)
- * Copyright 2021 Stefan Kerkmann (@KarlK90)
+/**
  * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,19 +17,20 @@
 
 #pragma once
 
-#include_next <mcuconf.h>
+#include "quantum.h"
 
-#undef STM32_SPI_USE_SPI1
-#define STM32_SPI_USE_SPI1 TRUE
+typedef enum {
+  ONESHOT_UP_UNQUEUED = 0,
+  ONESHOT_UP_QUEUED,
+  ONESHOT_DOWN_UNUSED,
+  ONESHOT_DOWN_USED,
+} oneshot_mod_state_t;
 
-#undef STM32_PWM_USE_TIM2
-#define STM32_PWM_USE_TIM2 TRUE
+void oneshot_mod_pre(oneshot_mod_state_t* state, uint16_t mod, uint16_t trigger,
+                     uint16_t keycode, keyrecord_t* record);
 
-#undef STM32_SERIAL_USE_USART1
-#define STM32_SERIAL_USE_USART1 TRUE
+void oneshot_mod_post(oneshot_mod_state_t* state, uint16_t mod,
+                      uint16_t trigger, uint16_t keycode, keyrecord_t* record);
 
-#undef STM32_GPT_USE_TIM4
-#define STM32_GPT_USE_TIM4 TRUE
-
-#undef STM32_ST_USE_TIMER
-#define STM32_ST_USE_TIMER 5
+bool is_oneshot_mod_cancel_key(uint16_t keycode);
+bool is_oneshot_mod_ignore_key(uint16_t keycode);

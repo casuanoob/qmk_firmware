@@ -1,10 +1,8 @@
 /*
- * Copyright 2020 Nick Brassel (tzarc)
- * Copyright 2021 Stefan Kerkmann (@KarlK90)
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * it under the terms of the GNU General Publicw License as published by
  * the Free Software Foundation, either version 2 of the License, or
  * (at your option) any later version.
  *
@@ -17,21 +15,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-
-#include_next <mcuconf.h>
-
-#undef STM32_SPI_USE_SPI1
-#define STM32_SPI_USE_SPI1 TRUE
-
-#undef STM32_PWM_USE_TIM2
-#define STM32_PWM_USE_TIM2 TRUE
-
-#undef STM32_SERIAL_USE_USART1
-#define STM32_SERIAL_USE_USART1 TRUE
-
-#undef STM32_GPT_USE_TIM4
-#define STM32_GPT_USE_TIM4 TRUE
-
-#undef STM32_ST_USE_TIMER
-#define STM32_ST_USE_TIMER 5
+#include "4x6.h"

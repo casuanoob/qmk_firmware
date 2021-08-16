@@ -1,7 +1,5 @@
-/*
- * Copyright 2020 Nick Brassel (tzarc)
- * Copyright 2021 Stefan Kerkmann (@KarlK90)
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+/**
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #pragma once
 
-#include_next <mcuconf.h>
+// Handedness.
+#undef MASTER_RIGHT
 
-#undef STM32_SPI_USE_SPI1
-#define STM32_SPI_USE_SPI1 TRUE
+#define A0 PAL_LINE(GPIOA, 0)
+#define SPLIT_HAND_PIN A0
+#define SPLIT_HAND_PIN_LOW_IS_LEFT  // High -> right, Low -> left.
 
-#undef STM32_PWM_USE_TIM2
-#define STM32_PWM_USE_TIM2 TRUE
+// Trackball angle adjustment.
+#undef ROTATIONAL_TRANSFORM_ANGLE
+#define ROTATIONAL_TRANSFORM_ANGLE -25
 
-#undef STM32_SERIAL_USE_USART1
-#define STM32_SERIAL_USE_USART1 TRUE
+// Custom DPI.
+#define CHARYBDIS_MINIMUM_DEFAULT_DPI 800
+#define CHARYBDIS_MINIMUM_SNIPING_DPI 300
 
-#undef STM32_GPT_USE_TIM4
-#define STM32_GPT_USE_TIM4 TRUE
+// Disable unused keycodes.
+#define NO_CHARYBDIS_KEYCODES
 
-#undef STM32_ST_USE_TIMER
-#define STM32_ST_USE_TIMER 5
+// Double trackball build.
+#undef POINTING_DEVICE_RIGHT
+#define POINTING_DEVICE_COMBINED
