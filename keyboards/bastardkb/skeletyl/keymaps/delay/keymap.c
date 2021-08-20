@@ -344,6 +344,20 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 }
 #endif  // TAPPING_FORCE_HOLD_PER_KEY
 
+#ifdef PERMISSIVE_HOLD_PER_KEY
+bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case SPC_NAV:
+    case TAB_DEV:
+    case ESC_SYM:
+    case ENT_NUM:
+      return true;
+    default:
+      return false;
+  }
+}
+#endif  // PERMISSIVE_HOLD_PER_KEY
+
 #if 0
 void keyboard_post_init_user(void) {
 }
