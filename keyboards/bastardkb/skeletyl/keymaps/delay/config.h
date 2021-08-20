@@ -162,4 +162,4 @@
  * NOTE: in case of excessive triggers on the home-row, consider using
  * PERMISIVE_HOLD_PER_KEY to target only the thumb cluster's keys.
  */
-#define PERMISSIVE_HOLD
+#define PERMISSIVE_HOLD_PER_KEY
