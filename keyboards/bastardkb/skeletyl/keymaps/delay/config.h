@@ -163,3 +163,12 @@
  * PERMISIVE_HOLD_PER_KEY to target only the thumb cluster's keys.
  */
 #define PERMISSIVE_HOLD_PER_KEY
+
+/**
+ * The last mod-tap hold will be converted to the corresponding mod-tap tap if
+ * another key on the same hand is tapped during the hold, unless a key on the
+ * other hand is tapped first.
+ *
+ * See precondition.github.io/home-row-mods#rolled-modifiers-cancellation.
+ */
+#define BILATERAL_COMBINATIONS 500
