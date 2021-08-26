@@ -162,7 +162,7 @@
  * NOTE: in case of excessive triggers on the home-row, consider using
  * PERMISIVE_HOLD_PER_KEY to target only the thumb cluster's keys.
  */
-#define PERMISSIVE_HOLD_PER_KEY
+#define PERMISSIVE_HOLD
 
 /**
  * The last mod-tap hold will be converted to the corresponding mod-tap tap if
