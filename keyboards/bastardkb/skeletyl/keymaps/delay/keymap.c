@@ -1,4 +1,6 @@
 #include QMK_KEYBOARD_H
+#include "compose.h"
+#include "delay.h"
 #include "quantum/rgb_matrix/rgb_matrix.h"
 #include "quantum/rgblight/rgblight_list.h"
 
@@ -8,12 +10,13 @@ enum layer_names {
   _NAV,  // Navigation layer.
   _NUM,  // Number pad.
   _SYM,  // Other special characters commonly found in regular text.
+  _EXP,  // Experiment layers (for one-off tests).
 };
 
 enum custom_keycodes {
   // Custom version of these keycodes to add special effects.
-  FX_ESC = SAFE_RANGE,  // Auto-unlock OSM Shift.
-  FX_RST,               // Changes LEDs color before entering reset mode.
+  FX_ESC = SAFE_RANGE_KEYMAP,  // Auto-unlock OSM Shift.
+  FX_RST,                      // Changes LEDs color before entering reset mode.
   // Custom version of these keycodes that can't be shifted.
   NS_0,
   NS_1,
@@ -80,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // ├────────────────────────────────────────────┤ ├────────────────────────────────────────────┤
        NS_SCLN,    KC_Q,    KC_J,    KC_K,    KC_X,      KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,
   // ╰────────────────────────────────────────────┤ ├────────────────────────────────────────────╯
-                         TAB_DEV, SPC_NAV, OSM_SFT,   ESC_SYM, ENT_NUM, XXXXXXX
+                         TAB_DEV, SPC_NAV, OSM_SFT,   ESC_SYM, ENT_NUM, MO(_EXP)
   //                   ╰──────────────────────────╯ ╰──────────────────────────╯
   ),
 
@@ -131,6 +134,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           KC_TAB,  KC_SPC, KC_UNDS,   ESC_SYM, XXXXXXX, XXXXXXX
   //                   ╰──────────────────────────╯ ╰──────────────────────────╯
   ),
+
+  [_EXP] = LAYOUT_split_3x5_3(
+  // ╭────────────────────────────────────────────╮ ╭────────────────────────────────────────────╮
+       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  // ├────────────────────────────────────────────┤ ├────────────────────────────────────────────┤
+       XXXXXXX, XXXXXXX, COMPOSE, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  // ├────────────────────────────────────────────┤ ├────────────────────────────────────────────┤
+       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  // ╰────────────────────────────────────────────┤ ├────────────────────────────────────────────╯
+                         XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, _______
+  //                   ╰──────────────────────────╯ ╰──────────────────────────╯
+  ),
 };
 // clang-format on
 
@@ -164,7 +179,7 @@ static void _maybe_clear_oneshot_locked_mods(void) {
   }
 #endif  // NO_SHIFT_CODE
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case ESC_SYM: {
       if (record->tap.count > 0) {
@@ -358,10 +373,11 @@ bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
 }
 #endif  // PERMISSIVE_HOLD_PER_KEY
 
-#if 0
-void keyboard_post_init_user(void) {
+#ifdef COMPOSE_ENABLE
+void compose_keymap(compose_state_t *state) {
+  // Add keymap-specific compose here.
 }
-#endif
+#endif  // COMPOSE_ENABLE
 
 void eeconfig_init_user(void) {
   rgb_matrix_mode(RGB_MATRIX_STARTUP_MODE);
