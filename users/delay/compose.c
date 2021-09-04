@@ -48,32 +48,36 @@ bool _compose_queue_is_full(compose_state_t *state) {
 bool _compose_handle_keypress(compose_state_t *state, uint16_t keycode,
                               keyrecord_t *record) {
   // Get the base keycode of a mod or layer tap key.
-  if ((QK_MOD_TAP <= keycode && keycode <= QK_MOD_TAP_MAX) ||
-      (QK_LAYER_TAP <= keycode && keycode <= QK_LAYER_TAP_MAX)) {
-    // Earlier return if this has not been considered tapped yet.
-    if (record->tap.count == 0) {
-      return true;
-    }
-    keycode = keycode & 0xff;
-  }
-  // Early exit if the keycode is not eligible (ie. not a basic keycode or
-  // a mod).
-  if ((keycode < KC_A || keycode > KC_CAPSLOCK) &&
-      (keycode < QK_MODS || keycode > QK_MODS_MAX)) {
-    return true;
+  switch (keycode) {
+    case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+    case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+      // Early return if this has not been considered tapped yet.
+      if (record->tap.count == 0) {
+        return true;
+      }
+      keycode = keycode & 0xff;
   }
   // Force compose on Enter.
   if (keycode == KC_ENT) {
     _compose_process_queue(state);
     return false;
   }
-  // Push the keycode to the queue, and compose if the queue is full.
-  _compose_push_keycode(state,
-                        get_mods() & MOD_MASK_SHIFT ? S(keycode) : keycode);
-  if (_compose_queue_is_full(state)) {
-    _compose_process_queue(state);
+  // Process eligible keycodes (ie. basic keycodes and mods).
+  switch (keycode) {
+    case KC_A ... KC_CAPSLOCK:
+    case QK_MODS ... QK_MODS_MAX:
+      // Shift keycode if necessary, ignores other mods.
+      if (mod_config(get_mods() | get_oneshot_mods()) & MOD_MASK_SHIFT) {
+        keycode = S(keycode);
+      }
+      // Push keycode into the queue, and compose if the queue is full.
+      _compose_push_keycode(state, keycode);
+      if (_compose_queue_is_full(state)) {
+        _compose_process_queue(state);
+      }
+      return false;
   }
-  return false;
+  return true;
 }
 
 void keyboard_post_init_compose(compose_state_t *state) {
