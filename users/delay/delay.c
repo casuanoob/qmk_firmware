@@ -6,6 +6,73 @@
 /** Compose global state.  */
 static compose_state_t compose_state = {0};
 
+/**
+ * Handle a 2-keycodes sequence.
+ *
+ * Checks whether the first, unmodded, keycode is the key is equal to
+ * `prefix_modifier_keycode`.  If so, sends `actual_modifier_keycode` followed
+ * by the second, unchanged, keycode in the queue.
+ *
+ * Note that mods are temporarily disabled for sending `actual_modifier_keycode`
+ * to allow for shorthands such as "AA" to send "À".
+ * For example, consider the following:
+ *
+ *   _handle_modifier_sequence(state, KC_A, ALGR(KC_GRAVE));
+ *
+ * With this mapping, the sequence `{ COMPOSE, S(KC_A), S(KC_A) }` prints "À" by
+ * sending `ALGR(KC_A)` followed by `S(KC_A)`.  If mods were not disabled, it
+ * would send `S(ALGR(KC_A))` first, which would not be interpreted as an intl
+ * sequence prefix by the host system.
+ *
+ * Note that this function only looks at the first 2 keycodes in the queue, and
+ * ignores the rest.  It's also a no-op if the queue is not large enough (less
+ * than 2 in size).
+ */
+bool _handle_modifier_sequence(compose_state_t *state,
+                               uint8_t prefix_modifier_keycode,
+                               uint16_t actual_modifier_keycode) {
+#if COMPOSE_KEYCODE_QUEUE_SIZE >= 2
+  if (state->keycode_queue[0] == KC_NO || state->keycode_queue[1] == KC_NO) {
+    return false;
+  }
+  const uint8_t unshifted_first_keycode = state->keycode_queue[0] & 0xff;
+  if (unshifted_first_keycode != prefix_modifier_keycode) {
+    return false;
+  }
+  // Temporary disable all mods to send the modifier keycode.
+  const uint16_t mods = mod_config(get_mods() | get_oneshot_mods());
+  clear_mods();
+  tap_code16(actual_modifier_keycode);
+  set_mods(mods);
+  // Sends the composed keycode.
+  tap_code16(state->keycode_queue[1]);
+  return true;
+#else   // COMPOSE_KEYCODE_QUEUE_SIZE < 2
+  return false;
+#endif  // COMPOSE_KEYCODE_QUEUE_SIZE >= 2
+}
+
+/**
+ * Add support for foreign language characters, such as é, à, etc…
+ *
+ * Supported sequences are:
+ *   e [letter] -> AltGr-e [letter] -> acute (eg., á)
+ *   a [letter] -> AltGr-` [letter] -> grave (eg., è)
+ *   i [letter] -> AltGr-i [letter] -> circumflex (eg., ô)
+ *   u [letter] -> AltGr-u [letter] -> umlaut or dieresis (eg., ï)
+ *   n [letter] -> AltGr-n [letter] -> tilde (eg.,  ñ)
+ *
+ * Also adds support for uppercase shorthands, ie. "AA" and "aA" both produce
+ * "À", "eA" and "EA" produce "Á", etc…
+ */
+bool _handle_intl_compose_sequences(compose_state_t *state) {
+  return _handle_modifier_sequence(state, KC_E, ALGR(KC_E)) ||
+         _handle_modifier_sequence(state, KC_A, ALGR(KC_GRAVE)) ||
+         _handle_modifier_sequence(state, KC_I, ALGR(KC_I)) ||
+         _handle_modifier_sequence(state, KC_U, ALGR(KC_U)) ||
+         _handle_modifier_sequence(state, KC_N, ALGR(KC_N));
+}
+
 __attribute__((weak)) void compose_keymap(compose_state_t *state) {}
 
 /**
@@ -15,103 +82,9 @@ __attribute__((weak)) void compose_keymap(compose_state_t *state) {}
  * appropriate unicode character(s) as hexadecimal string.
  */
 void compose_user(compose_state_t *state) {
-  if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, KC_A))) {
-    send_unicode_string("á");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, S(KC_A)))) {
-    send_unicode_string("Á");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, KC_O))) {
-    send_unicode_string("ó");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, S(KC_O)))) {
-    send_unicode_string("Ó");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, KC_E))) {
-    send_unicode_string("é");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, S(KC_E)))) {
-    send_unicode_string("É");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, KC_U))) {
-    send_unicode_string("ú");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, S(KC_U)))) {
-    send_unicode_string("Ú");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, KC_I))) {
-    send_unicode_string("í");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_E, S(KC_I)))) {
-    send_unicode_string("Í");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, KC_A))) {
-    send_unicode_string("ä");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, S(KC_A)))) {
-    send_unicode_string("Ä");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, KC_O))) {
-    send_unicode_string("ö");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, S(KC_O)))) {
-    send_unicode_string("Ö");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, KC_E))) {
-    send_unicode_string("ë");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, S(KC_E)))) {
-    send_unicode_string("Ë");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, KC_U))) {
-    send_unicode_string("ü");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, S(KC_U)))) {
-    send_unicode_string("Ü");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, KC_I))) {
-    send_unicode_string("ï");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_U, S(KC_I)))) {
-    send_unicode_string("Ï");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, KC_A))) {
-    send_unicode_string("â");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, S(KC_A)))) {
-    send_unicode_string("Â");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, KC_O))) {
-    send_unicode_string("ô");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, S(KC_O)))) {
-    send_unicode_string("Ô");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, KC_E))) {
-    send_unicode_string("ê");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, S(KC_E)))) {
-    send_unicode_string("Ê");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, KC_U))) {
-    send_unicode_string("û");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, S(KC_U)))) {
-    send_unicode_string("Û");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, KC_I))) {
-    send_unicode_string("î");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_I, S(KC_I)))) {
-    send_unicode_string("Î");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, KC_A))) {
-    send_unicode_string("à");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, S(KC_A)))) {
-    send_unicode_string("À");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, KC_O))) {
-    send_unicode_string("ò");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, S(KC_O)))) {
-    send_unicode_string("Ò");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, KC_E))) {
-    send_unicode_string("è");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, S(KC_E)))) {
-    send_unicode_string("È");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, KC_U))) {
-    send_unicode_string("ù");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, S(KC_U)))) {
-    send_unicode_string("Ù");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, KC_I))) {
-    send_unicode_string("ì");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_A, S(KC_I)))) {
-    send_unicode_string("Ì");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_O, KC_E))) {
-    send_unicode_string("œ");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_O, S(KC_E)))) {
-    send_unicode_string("Œ");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_C, KC_C))) {
-    send_unicode_string("ç");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_C, S(KC_C)))) {
-    send_unicode_string("Ç");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_T, KC_T))) {
-    send_unicode_string("…");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_T, KC_F))) {
-    send_unicode_string("(╯°□°)╯︵ ┻━┻");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_F, KC_T))) {
-    send_unicode_string("┬─┬ノ( º _ ºノ)");
-  } else if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_S, KC_H))) {
-    send_unicode_string("¯\\_(ツ)_/¯");
-  } else {
+  if (compose_queue_equal(state, COMPOSE_SEQUENCE(KC_D, KC_D))) {
+    tap_code16(ALGR(KC_SCOLON));
+  } else if (!_handle_intl_compose_sequences(state)) {
     compose_keymap(state);
   }
 }
