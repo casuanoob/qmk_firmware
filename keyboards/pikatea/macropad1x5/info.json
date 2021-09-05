@@ -1,0 +1,18 @@
+{
+  "keyboard_name": "macropad1x5",
+  "url": "",
+  "maintainer": "delay",
+  "width": 1,
+  "height": 5,
+  "layouts": {
+    "LAYOUT": {
+      "layout": [
+        {"x":0, "y":0},
+        {"x":0, "y":1},
+        {"x":0, "y":2},
+        {"x":0, "y":3},
+        {"x":0, "y":4}
+      ]
+    }
+  }
+}
