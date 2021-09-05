@@ -1,9 +1,3 @@
-COMBO_ENABLE = no
-EXTRAKEY_ENABLE = no
-LEADER_ENABLE = no
-LINK_TIME_OPTIMIZATION = yes
-MOUSEKEY_ENABLE = yes
-NKRO_ENABLE = yes
-TAP_DANCE_ENABLE = no
-UNICODE_ENABLE = no
-COMPOSE_ENABLE = yes
+NKRO_ENABLE = yes # Skeletyl supports NKRO.
+MOUSEKEY_ENABLE = yes # Keymap uses mouse keys.
+COMPOSE_ENABLE = yes # Enable composition.
