@@ -181,7 +181,7 @@ static void _maybe_clear_oneshot_locked_mods(void) {
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case ESC_SYM: {
+    case ESC_SYM:
       if (record->tap.count > 0) {
         if (record->event.pressed) {
           _maybe_clear_oneshot_locked_mods();
@@ -194,8 +194,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         return false;
       }
       break;
-    }
-    case FX_ESC: {
+    case FX_ESC:
       if (record->event.pressed) {
         _maybe_clear_oneshot_locked_mods();
         register_code(KC_ESC);
@@ -203,8 +202,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         unregister_code(KC_ESC);
       }
       break;
-    }
-    case FX_RST: {
+    case FX_RST:
       if (record->event.pressed) {
         rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
         rgb_matrix_sethsv_noeeprom(HSV_RED);
@@ -212,7 +210,6 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         reset_keyboard();
       }
       break;
-    }
     case NS_0:
       NO_SHIFT_CODE(KC_0);
     case NS_1:
