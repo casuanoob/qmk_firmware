@@ -6,6 +6,11 @@
 #define FORCE_NKRO
 
 /**
+ * Only uses 8 bits for layers.  Limits available layers to 8.
+ */
+#define LAYER_STATE_8BIT
+
+/**
  * Flash each side with `-bl dfu-split-{left,right}` to set handedness in memory
  * eg.
  *
