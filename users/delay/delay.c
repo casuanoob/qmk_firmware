@@ -1,5 +1,22 @@
+/**
+ * Copyright 2021 Charly Delay <charly@codesink.dev> @0xcharly
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 #include QMK_KEYBOARD_H
 #include "compose.h"
+#include "config.h"
 #include "delay.h"
 
 #ifdef COMPOSE_ENABLE
@@ -28,9 +45,9 @@ static compose_state_t compose_state = {0};
  * ignores the rest.  It's also a no-op if the queue is not large enough (less
  * than 2 in size).
  */
-bool _handle_modifier_sequence(compose_state_t *state,
-                               uint8_t prefix_modifier_keycode,
-                               uint16_t actual_modifier_keycode) {
+static bool _handle_modifier_sequence(compose_state_t *state,
+                                      uint8_t prefix_modifier_keycode,
+                                      uint16_t actual_modifier_keycode) {
 #if COMPOSE_KEYCODE_QUEUE_SIZE >= 2
   if (state->keycode_queue[0] == KC_NO || state->keycode_queue[1] == KC_NO) {
     return false;
@@ -65,15 +82,13 @@ bool _handle_modifier_sequence(compose_state_t *state,
  * Also adds support for uppercase shorthands, ie. "AA" and "aA" both produce
  * "À", "eA" and "EA" produce "Á", etc…
  */
-bool _handle_intl_compose_sequences(compose_state_t *state) {
+static bool _handle_intl_compose_sequences(compose_state_t *state) {
   return _handle_modifier_sequence(state, KC_E, ALGR(KC_E)) ||
          _handle_modifier_sequence(state, KC_A, ALGR(KC_GRAVE)) ||
          _handle_modifier_sequence(state, KC_I, ALGR(KC_I)) ||
          _handle_modifier_sequence(state, KC_U, ALGR(KC_U)) ||
          _handle_modifier_sequence(state, KC_N, ALGR(KC_N));
 }
-
-__attribute__((weak)) void compose_keymap(compose_state_t *state) {}
 
 /**
  * This is where compose sequences are matched.
@@ -88,12 +103,28 @@ void compose_user(compose_state_t *state) {
     compose_keymap(state);
   }
 }
+
+__attribute__((weak)) void compose_keymap(compose_state_t *state) {}
 #endif  // COMPOSE_ENABLE
 
-__attribute__((weak)) bool process_record_keymap(uint16_t keycode,
-                                                 keyrecord_t *record) {
-  return true;
-}
+#ifndef NO_SHIFT_CODE
+#define NO_SHIFT_CODE(keycode)                                           \
+  {                                                                      \
+    if (record->event.pressed) {                                         \
+      const uint8_t mod_shift = mod_config(get_mods()) & MOD_MASK_SHIFT; \
+      if (mod_shift) {                                                   \
+        del_mods(mod_shift);                                             \
+        register_code(keycode);                                          \
+        add_mods(mod_shift);                                             \
+      } else {                                                           \
+        register_code(keycode);                                          \
+      }                                                                  \
+    } else {                                                             \
+      unregister_code(keycode);                                          \
+    }                                                                    \
+    break;                                                               \
+  }
+#endif  // NO_SHIFT_CODE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef COMPOSE_ENABLE
@@ -101,10 +132,61 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
   }
 #endif  // COMPOSE_ENABLE
+  switch (keycode) {
+    case FX_RESET:
+      if (record->event.pressed) {
+#ifdef RGB_MATRIX_ENABLE
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_RED);
+#endif  // RGB_MATRIX_ENABLE
+      } else {
+        reset_keyboard();
+      }
+      break;
+    case NS_0:
+      NO_SHIFT_CODE(KC_0);
+    case NS_1:
+      NO_SHIFT_CODE(KC_1);
+    case NS_2:
+      NO_SHIFT_CODE(KC_2);
+    case NS_3:
+      NO_SHIFT_CODE(KC_3);
+    case NS_4:
+      NO_SHIFT_CODE(KC_4);
+    case NS_5:
+      NO_SHIFT_CODE(KC_5);
+    case NS_6:
+      NO_SHIFT_CODE(KC_6);
+    case NS_7:
+      NO_SHIFT_CODE(KC_7);
+    case NS_8:
+      NO_SHIFT_CODE(KC_8);
+    case NS_9:
+      NO_SHIFT_CODE(KC_9);
+    case NS_BSLASH:
+      NO_SHIFT_CODE(KC_BSLASH);
+    case NS_COMMA:
+      NO_SHIFT_CODE(KC_COMMA);
+    case NS_DOT:
+      NO_SHIFT_CODE(KC_DOT);
+    case NS_GRAVE:
+      NO_SHIFT_CODE(KC_GRAVE);
+    case NS_LBRACKET:
+      NO_SHIFT_CODE(KC_LBRC);
+    case NS_RBRACKET:
+      NO_SHIFT_CODE(KC_RBRC);
+    case NS_SCOLON:
+      NO_SHIFT_CODE(KC_SCOLON);
+    case NS_SLASH:
+      NO_SHIFT_CODE(KC_SLASH);
+  }
   return process_record_keymap(keycode, record);
 }
 
-__attribute__((weak)) void matrix_scan_keymap(void) {}
+__attribute__((weak)) bool process_record_keymap(uint16_t keycode,
+                                                 keyrecord_t *record) {
+  return true;
+}
 
 void matrix_scan_user(void) {
 #ifdef COMPOSE_ENABLE
@@ -114,7 +196,7 @@ void matrix_scan_user(void) {
   matrix_scan_keymap();
 }
 
-__attribute__((weak)) void keyboard_post_init_keymap(void) {}
+__attribute__((weak)) void matrix_scan_keymap(void) {}
 
 void keyboard_post_init_user(void) {
 #ifdef COMPOSE_ENABLE
@@ -122,3 +204,52 @@ void keyboard_post_init_user(void) {
 #endif  // COMPOSE_ENABLE
   keyboard_post_init_keymap();
 }
+
+__attribute__((weak)) void keyboard_post_init_keymap(void) {}
+
+#ifdef RGB_MATRIX_ENABLE
+/**
+ * Apply default/startup RGB matrix values.
+ *
+ * This is to replace the missing `rgb_matrix_reload_from_eeprom()`.
+ */
+void rgb_matrix_reset_noeeprom(void) {
+  rgb_matrix_mode_noeeprom(RGB_MATRIX_STARTUP_MODE);
+  rgb_matrix_sethsv_noeeprom(RGB_MATRIX_STARTUP_HSV);
+  rgb_matrix_set_speed_noeeprom(RGB_MATRIX_STARTUP_SPD);
+}
+#endif  // RGB_MATRIX_ENABLE
+
+/**
+ * Called when a one-shot layer "lock" status changes.
+ *
+ * This is called automatically by the QMK framework when a one-shot layer is
+ * activated and deactivated.
+ * The only one-shot layer in this layout is the one-shot shift layer.  Turns
+ * the RGBs solid blue when this layer is activated, and back to default when
+ * deactivated.
+ */
+void oneshot_locked_mods_changed_user(uint8_t mods) {
+#ifdef RGB_MATRIX_ENABLE
+  if (mods & MOD_MASK_SHIFT) {
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_sethsv_noeeprom(HSV_BLUE);
+  } else if (!mods) {
+    rgb_matrix_reset_noeeprom();  // Load default values.
+  }
+#endif  // RGB_MATRIX_ENABLE
+  oneshot_locked_mods_changed_keymap(mods);
+}
+
+void oneshot_locked_mods_changed_keymap(uint8_t mods) {}
+
+void eeconfig_init_user(void) {
+#ifdef RGB_MATRIX_ENABLE
+  rgb_matrix_mode(RGB_MATRIX_STARTUP_MODE);
+  rgb_matrix_sethsv(RGB_MATRIX_STARTUP_HSV);
+  rgb_matrix_set_speed(RGB_MATRIX_STARTUP_SPD);
+#endif  // RGB_MATRIX_ENABLE
+  eeconfig_init_keymap();
+}
+
+__attribute__((weak)) void eeconfig_init_keymap(void) {}
