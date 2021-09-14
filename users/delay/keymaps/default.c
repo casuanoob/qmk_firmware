@@ -56,6 +56,20 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         unregister_code(KC_ESC);
       }
       break;
+    case KM_FIRST_DEFAULT_LAYER ... KM_LAST_DEFAULT_LAYER:
+      if (record->event.pressed) {
+        const uint8_t mods = mod_config(get_mods() | get_oneshot_mods());
+        const uint8_t layer =
+            keycode - KM_FIRST_DEFAULT_LAYER + LAYER_ALPHAS_FIRST;
+        if (!mods) {
+          // Temporarily changes the layer by default.
+          default_layer_set((layer_state_t)1 << layer);
+        } else if (mods & MOD_MASK_SHIFT) {
+          // Permanently changes the layer if shifted.
+          set_single_persistent_default_layer(layer);
+        }
+      }
+      break;
   }
   return true;
 };
