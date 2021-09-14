@@ -37,11 +37,22 @@ enum layers_keymap {
 
 enum keycodes_keymap {
   FX_ESCAPE = SAFE_RANGE_KEYMAP,  // Auto-unlock OSM Shift.
+  // Change default layers.  Order must match the one in `layers_keymap`.
+  // By default, the default layer is changed only temporarily (ie. it only
+  // persists until the keyboard loses power).  Use Shift to modify the default
+  // layer in a persistent way.
+  KM_FIRST_DEFAULT_LAYER,
+  KM_DVORAK = KM_FIRST_DEFAULT_LAYER,  // Sets default layer to Dvorak.
+  KM_COLEMAK_DHM,                      // Sets default layer to Colemak-DHm.
+  KM_LAST_DEFAULT_LAYER = KM_COLEMAK_DHM,
   SAFE_RANGE_WITH_DEFAULT_KEYMAP,
 };
 
 // Shorthands
 #define FX_ESC FX_ESCAPE
+
+#define KM_DVRK KM_DVORAK
+#define KM_CDHM KM_COLEMAK_DHM
 
 // Custom NAV keycodes, for Apple macOS.
 #define FX_CUT LGUI(KC_X)
@@ -159,8 +170,8 @@ enum keycodes_keymap {
  * active development, until they get promoted to one of the stable layers.
  */
 #define LAYER_EXP_split_3x5_3                                                                 \
-    _______________DEAD_HALF_ROW_______________, _______________DEAD_HALF_ROW_______________, \
-    XXXXXXX, XXXXXXX, COMPOSE, XXXXXXX, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
+    KM_DVRK, KM_CDHM, XXXXXXX, XXXXXXX, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
+    XXXXXXX, XXXXXXX, COMPOSE, XXXXXXX, XXXXXXX, ______________HOME_ROW_GACS_R______________, \
     _______________DEAD_HALF_ROW_______________, _______________DEAD_HALF_ROW_______________, \
                       _______________DEAD_HALF_ROW_______________, _______
 // clang-format on
