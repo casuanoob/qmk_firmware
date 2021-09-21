@@ -22,13 +22,21 @@
 
 enum layers_keymap {
   LAYER_DEFAULT = 0,
-  LAYER_ALPHAS_FIRST = LAYER_DEFAULT,        // First alpha layer.
-  LAYER_ALPHAS_DVORAK = LAYER_ALPHAS_FIRST,  // Dvorak layout.
-  LAYER_ALPHAS_COLEMAK_DHM,                  // Colemak-DHm layout.
+  // Alpha layers.
+  LAYER_ALPHAS_FIRST = LAYER_DEFAULT,
+  LAYER_ALPHAS_DVORAK = LAYER_ALPHAS_FIRST,  // Dvorak.
+  LAYER_ALPHAS_COLEMAK_DHM,                  // Colemak-DHm.
   LAYER_ALPHAS_LAST = LAYER_ALPHAS_COLEMAK_DHM,
-  LAYER_NON_ALPHAS_FIRST,              // First non-alphas layers.
+  // Alpha layers with no Home Row Mods (for practice/typing tests).
+  // Must mirror alpha layers, and follow the same orders.
+  LAYER_NO_MODS_ALPHAS_FIRST,
+  LAYER_NO_MODS_ALPHAS_DVORAK = LAYER_NO_MODS_ALPHAS_FIRST,  // Dvorak.
+  LAYER_NO_MODS_ALPHAS_COLEMAK_DHM,                          // Colemak-DHm.
+  LAYER_NO_MODS_ALPHAS_LAST = LAYER_NO_MODS_ALPHAS_COLEMAK_DHM,
+  // Non-alphas layers.
+  LAYER_NON_ALPHAS_FIRST,
   LAYER_DEV = LAYER_NON_ALPHAS_FIRST,  // Special characters used for dev/shell.
-  LAYER_NAV,                           // Navigation layer.
+  LAYER_NAV,                           // Navigation.
   LAYER_NUM,                           // Number pad.
   LAYER_SYM,                           // Other special characters.
   LAYER_EXP,                           // Experiment layers (for one-off tests).
@@ -115,7 +123,10 @@ enum keycodes_keymap {
        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M, NS_COMM,  NS_DOT, KC_SLSH
 
 /** Thumb clusters used on split 3x5+3 keyboards. */
-#define LAYER_ALPHAS_THUMBS_split_1x3   TAB_DEV, SPC_NAV, OSM_SFT, ESC_SYM, ENT_NUM, OSL_EXP
+#define LAYER_ALPHAS_THUMBS_1x6         TAB_DEV, SPC_NAV, OSM_SFT, ESC_SYM, ENT_NUM, OSL_EXP
+
+/** Thumb clusters used on split 3x5+3 keyboards. Use with homerow-free layouts.  */
+#define LAYER_NO_MODS_ALPHAS_THUMBS_1x6    KC_TAB, KC_SPC, OSM_SFT, KC_ESC, ENT_NUM, OSL_EXP
 
 /**
  * Layers used on split 3x5+3 keyboards.
