@@ -18,9 +18,9 @@
 /* General configuration. */
 
 /**
- * Only uses 8 bits for layers.  Limits available layers to 8.
+ * Only uses 16 bits for layers.  Limits available layers to 16.
  */
-#define LAYER_STATE_8BIT
+#define LAYER_STATE_16BIT
 
 /* Split keyboards. */
 
