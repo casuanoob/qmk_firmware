@@ -1,6 +1,4 @@
-/**
- * Copyright 2021 gtips
- * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
+/* Copyright 2021 gtips
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,10 +27,10 @@ enum layer_names {
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_GMEET] = LAYOUT_reviung5(
-    RCS(KC_E), RCS(KC_R), RCS(KC_F), RCS(KC_C), MUTE_RGB
+    MUTE_RGB, RCS(KC_C), RCS(KC_R), RCS(KC_F), RCS(KC_E)
   ),
   [LAYER_RGB] = LAYOUT_reviung5(
-    RESET, RGB_RMOD, RGB_TOG, RGB_MOD, _______
+    _______, RGB_RMOD, RGB_TOG, RGB_MOD, RESET
   )
 };
 // clang-format on
@@ -62,10 +60,10 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
   }
   switch (get_highest_layer(layer_state)) {
     case LAYER_RGB:
-      clockwise ? rgblight_increase_val() : rgblight_decrease_val();
+      clockwise == true ? rgblight_decrease_val() : rgblight_increase_val();
       break;
     default:
-      tap_code(clockwise ? KC_VOLU : KC_VOLD);
+      tap_code((clockwise == true) ? KC_VOLD : KC_VOLU);
       break;
   }
   return true;
@@ -73,7 +71,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 #endif  // ENCODER_ENABLE
 
 #ifdef RGBLIGHT_ENABLE
-layer_state_t layer_state_set_keymap(layer_state_t state) {
+layer_state_t layer_state_set_user(layer_state_t state) {
   switch (get_highest_layer(state)) {
     default:  // For any other layers, or the default layer
       rgblight_reload_from_eeprom();
