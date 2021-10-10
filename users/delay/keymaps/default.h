@@ -27,12 +27,14 @@ enum layers_keymap {
   LAYER_ALPHAS_DVORAK = LAYER_ALPHAS_FIRST,  // Dvorak.
   LAYER_ALPHAS_COLEMAK_DHM,                  // Colemak-DHm.
   LAYER_ALPHAS_LAST = LAYER_ALPHAS_COLEMAK_DHM,
+#ifndef KEYMAP_DEFAULT_LITE
   // Alpha layers with no Home Row Mods (for practice/typing tests).
   // Must mirror alpha layers, and follow the same orders.
   LAYER_NO_MODS_ALPHAS_FIRST,
   LAYER_NO_MODS_ALPHAS_DVORAK = LAYER_NO_MODS_ALPHAS_FIRST,  // Dvorak.
   LAYER_NO_MODS_ALPHAS_COLEMAK_DHM,                          // Colemak-DHm.
   LAYER_NO_MODS_ALPHAS_LAST = LAYER_NO_MODS_ALPHAS_COLEMAK_DHM,
+#endif  // !KEYMAP_DEFAULT_LITE
   // Non-alphas layers.
   LAYER_NON_ALPHAS_FIRST,
   LAYER_DEV = LAYER_NON_ALPHAS_FIRST,  // Special characters used for dev/shell.
@@ -76,7 +78,13 @@ enum keycodes_keymap {
 #define TAB_DEV LT(LAYER_DEV, KC_TAB)
 #define ESC_SYM LT(LAYER_SYM, KC_ESC)
 #define ENT_NUM LT(LAYER_NUM, KC_ENT)
+
+// Optional layers.
+#ifdef KEYMAP_DEFAULT_LITE
+#define OSL_EXP XXXXXXX
+#else  // !KEYMAP_DEFAULT_LITE
 #define OSL_EXP OSL(LAYER_EXP)
+#endif  // KEYMAP_DEFAULT_LITE
 
 // One-shot keys.
 #define OSM_SFT OSM(MOD_LSFT)
@@ -157,7 +165,7 @@ enum keycodes_keymap {
                       XXXXXXX, _______, XXXXXXX,  FX_ESC,  KC_ENT, XXXXXXX
 
 /**
- * The numerals & symbols layer contains the numpad and common arithmetic
+ * The Numerals & Symbols layer contains the numpad and common arithmetic
  * functions on the opposite hand.
  */
 #define LAYER_NUM_split_3x5_3                                                                 \
@@ -167,7 +175,7 @@ enum keycodes_keymap {
                       KC_BSPC,    NS_0, KC_MINS, XXXXXXX, _______, XXXXXXX
 
 /**
- * The symbol layer contains most symbols that didn't make the cut to the
+ * The Symbol layer contains most symbols that didn't make the cut to the
  * Development & Console layer.  Those symbols are placed on the opposite hand.
  */
 #define LAYER_SYM_split_3x5_3                                                                 \
