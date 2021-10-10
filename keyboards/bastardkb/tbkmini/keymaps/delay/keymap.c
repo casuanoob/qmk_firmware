@@ -52,6 +52,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_NAV] = LAYOUT_tbkmini(LAYOUT_split_3x5_to_3x6(LAYER_NAV_split_3x5_3)),
   [LAYER_NUM] = LAYOUT_tbkmini(LAYOUT_split_3x5_to_3x6(LAYER_NUM_split_3x5_3)),
   [LAYER_SYM] = LAYOUT_tbkmini(LAYOUT_split_3x5_to_3x6(LAYER_SYM_split_3x5_3)),
+  [LAYER_PTR] = LAYOUT_tbkmini(LAYOUT_split_3x5_to_3x6(LAYER_PTR_split_3x5_3)),
+
+#ifndef KEYMAP_DEFAULT_LITE
   [LAYER_EXP] = LAYOUT_tbkmini(LAYOUT_split_3x5_to_3x6(LAYER_EXP_split_3x5_3)),
+#endif  // !KEYMAP_DEFAULT_LITE
 };
 // clang-format on
