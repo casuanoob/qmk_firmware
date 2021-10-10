@@ -22,6 +22,10 @@
 #include "quantum/rgblight/rgblight_list.h"
 #endif  // RGB_MATRIX_ENABLE
 
+#ifndef MIN
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#endif  // !MIN
+
 static void _maybe_clear_oneshot_locked_mods(void) {
   const uint8_t locked_mods = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
   if (locked_mods) {
