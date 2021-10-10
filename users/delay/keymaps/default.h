@@ -58,6 +58,17 @@ enum keycodes_keymap {
   SAFE_RANGE_WITH_DEFAULT_KEYMAP,
 };
 
+/**
+ * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
+ *
+ * `_user` is already defined to add common functions to all keymaps, therefore
+ * a new version of the `layer_state_set_keymap*` callback is necessary for each
+ * keymap to add their own.
+ *
+ * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
+ */
+layer_state_t layer_state_set_keymap(layer_state_t state);
+
 // Shorthands
 #define FX_ESC FX_ESCAPE
 
