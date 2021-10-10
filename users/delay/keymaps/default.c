@@ -86,6 +86,11 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   return true;
 };
 
+__attribute__((weak)) layer_state_t layer_state_set_keymap(
+    layer_state_t state) {
+  return state;
+}
+
 #ifdef RGB_MATRIX_ENABLE
 /**
  * Called on layer change.
@@ -104,7 +109,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
       rgb_matrix_sethsv_noeeprom(HSV_PINK);
       break;
   }
-  return state;
+  return layer_state_set_keymap(state);
 }
 
 /**
@@ -137,6 +142,16 @@ void rgb_matrix_indicators_user(void) {
       _rgb_matrix_sethsv_noeeprom(28, HSV_YELLOW, /* force_value= */ true);
       break;
   }
+}
+#else   // !RGB_MATRIX_ENABLE
+/**
+ * Called on layer change.
+ *
+ * This is called automatically by the QMK framework when the active layer
+ * changes.
+ */
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return layer_state_set_keymap(state);
 }
 #endif  // RGB_MATRIX_ENABLE
 
