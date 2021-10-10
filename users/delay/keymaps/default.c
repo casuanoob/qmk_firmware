@@ -164,9 +164,16 @@ layer_state_t layer_state_set_user(layer_state_t state) {
  */
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case QK_LAYER_TAP ... QK_LAYER_TAP_MAX: {
+      const uint8_t layer = (keycode >> 0x8) & 0xf;
+      if (layer == LAYER_PTR) {
+        return TAPPING_TERM + 150;
+      }
+      break;
+    }
     case QK_MOD_TAP ... QK_MOD_TAP_MAX: {
-      // Use the mod to distinguish between Home Row mod since the actual alpha
-      // layout can vary.
+      // Use the mod to distinguish between Home Row mod since the actual
+      // alpha layout can vary.
       const uint8_t mod = mod_config((keycode >> 0x8) & 0x1f);
       if (mod & MOD_MASK_GUI) {
         // Pinkies.
