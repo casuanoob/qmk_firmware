@@ -28,3 +28,9 @@ endif
 ifeq ($(strip $(KEYMAP_ENABLE)), default)
 	SRC += keymaps/default.c
 endif
+
+# Include compose source and flags if support is enabled.
+ifeq ($(strip $(KEYMAP_ENABLE)), lite)
+	SRC += keymaps/default.c
+	OPT_DEFS += -DKEYMAP_DEFAULT_LITE
+endif
