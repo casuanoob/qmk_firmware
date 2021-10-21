@@ -63,6 +63,12 @@ enum keycodes_keymap {
   SAFE_RANGE_WITH_DEFAULT_KEYMAP,
 };
 
+#ifdef TAP_DANCE_ENABLE
+enum tapdance_keymap {
+  TD_ONESHOT_SHIFT,  // Custom OSM Shift with layer on hold.
+};
+#endif  // TAP_DANCE_ENABLE
+
 /**
  * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
  *
@@ -104,7 +110,11 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 #endif  // KEYMAP_DEFAULT_LITE
 
 // One-shot keys.
+#ifdef TAP_DANCE_ENABLE
+#define OSM_SFT TD(TD_ONESHOT_SHIFT)
+#else  // !TAP_DANCE_ENABLE
 #define OSM_SFT OSM(MOD_LSFT)
+#endif  // TAP_DANCE_ENABLE
 
 // clang-format off
 /**
