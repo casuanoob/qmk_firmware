@@ -91,7 +91,7 @@ __attribute__((weak)) layer_state_t layer_state_set_keymap(
   return state;
 }
 
-#ifdef RGB_MATRIX_ENABLE
+#if defined(RGB_MATRIX_ENABLE) && 0  // Disabled, but kept for example purposes.
 /**
  * Called on layer change.
  *
