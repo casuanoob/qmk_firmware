@@ -22,7 +22,11 @@
  * Use `SAFE_RANGE_KEYMAP` for keymap specific codes, instead of `SAFE_RANGE`.
  */
 enum keycodes_user {
+#ifdef VIA_ENABLE
+  COMPOSE = USER00,
+#else
   COMPOSE = SAFE_RANGE,
+#endif
   // Custom version of these keycodes to add special effects.
   FX_RESET,  // Changes LEDs color, if any, before entering reset mode.
   // Custom version of these keycodes that can't be shifted.
