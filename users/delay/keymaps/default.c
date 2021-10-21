@@ -26,15 +26,95 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #endif  // !MIN
 
-static void _maybe_clear_oneshot_locked_mods(void) {
-  const uint8_t locked_mods = get_oneshot_locked_mods() & MOD_MASK_SHIFT;
-  if (locked_mods) {
-    // Clear any locked one-shot mod, if enabled.  The only one-shot layer in
-    // this layout is the one-shot shift layer, so it is safe to clear all
-    // locked mods.
-    del_mods(locked_mods);
-    clear_oneshot_locked_mods();
+#ifdef TAP_DANCE_ENABLE
+typedef enum {
+  TD_NONE,
+  TD_UNKNOWN,
+  TD_SINGLE_TAP,
+  TD_DOUBLE_TAP,
+  TD_HOLD,
+} td_state_t;
+
+static td_state_t _get_current_state(qk_tap_dance_state_t *state) {
+  if (state->count == 1) {
+    return state->interrupted || !state->pressed ? TD_SINGLE_TAP : TD_HOLD;
   }
+  if (state->count == 2) {
+    return TD_DOUBLE_TAP;
+  }
+  return TD_UNKNOWN;
+}
+
+static void _oneshot_shift_td_on_dance_finished(qk_tap_dance_state_t *state,
+                                                void *user_data) {
+  td_state_t *const oneshot_shift_td_state = user_data;
+  *oneshot_shift_td_state = _get_current_state(state);
+
+  const uint8_t mod = MOD_LSFT;
+  switch (*oneshot_shift_td_state) {
+    case TD_SINGLE_TAP:
+      if (get_oneshot_locked_mods() & mod) {
+        clear_oneshot_locked_mods();
+        clear_oneshot_mods();
+        del_mods(mod);
+      } else {
+        set_oneshot_mods(mod);
+      }
+      break;
+    case TD_DOUBLE_TAP:
+      clear_oneshot_mods();
+      set_oneshot_locked_mods(mod);
+      add_mods(mod);
+      break;
+    case TD_HOLD:
+      clear_oneshot_mods();
+      layer_on(LAYER_DEV);
+      break;
+    default:
+      break;
+  }
+}
+
+static void _oneshot_shift_td_on_dance_reset(qk_tap_dance_state_t *state,
+                                             void *user_data) {
+  td_state_t *const oneshot_shift_td_state = user_data;
+  if (*oneshot_shift_td_state == TD_HOLD) {
+    layer_off(LAYER_NUM);
+  }
+  *oneshot_shift_td_state = TD_NONE;
+}
+
+/**
+ * The state for the oneshot-shift tap-dance.
+ *
+ * This state is not meant to be accessed directly.  Instead, use the
+ * `user_data` value that is passed to each callback.
+ */
+static td_state_t g_oneshot_shift_td_state = TD_NONE;
+
+/**
+ * Define global tap-dance actions.
+ */
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_ONESHOT_SHIFT] =
+        {
+            .fn = {
+                /* user_fn_on_each_tap= */ NULL,
+                _oneshot_shift_td_on_dance_finished,
+                _oneshot_shift_td_on_dance_reset,
+            },
+            .user_data = &g_oneshot_shift_td_state,
+            .custom_tapping_term = TAPPING_TERM + 125,
+        },
+};
+#endif  // TAP_DANCE_ENABLE
+
+static void _maybe_clear_oneshot_locked_mods(void) {
+  // Clear any locked one-shot mod, if enabled.  The only one-shot layer in
+  // this layout is the one-shot shift layer, so it is safe to clear all
+  // locked mods.
+  del_mods(MOD_MASK_SHIFT);
+  clear_oneshot_locked_mods();
 }
 
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
