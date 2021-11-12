@@ -41,9 +41,8 @@ enum layers_keymap {
   LAYER_NAV,                           // Navigation.
   LAYER_NUM,                           // Number pad.
   LAYER_SYM,                           // Other special characters.
-  LAYER_PTR,                           // Pointer layer (mice/trackballs).
 #ifdef KEYMAP_DEFAULT_LITE
-  LAYER_NON_ALPHAS_LAST = LAYER_PTR,
+  LAYER_NON_ALPHAS_LAST = LAYER_SYM,
 #else   // !KEYMAP_DEFAULT_LITE
   LAYER_EXP,  // Experiment layers (for one-off tests).
   LAYER_NON_ALPHAS_LAST = LAYER_EXP,
@@ -138,30 +137,6 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
       __VA_ARGS__
 #define HOME_ROW_MOD_GACS(...) _HOME_ROW_MOD_GACS(__VA_ARGS__)
 
-/**
- * Add pointer layer keys to a layout.
- *
- * Expects a 10-key per row layout.  The layout passed in parameter must contain
- * at least 30 keycodes.
- *
- * This is meant to be used with the `LAYER_ALPHAS_*` defined below, eg.:
- *
- *     POINTER_MOD(LAYER_ALPHAS_COLEMAK_DHM_3x10)
- */
-#define _POINTER_MOD(                                                  \
-    L00, L01, L02, L03, L04, R05, R06, R07, R08, R09,                  \
-    L10, L11, L12, L13, L14, R15, R16, R17, R18, R19,                  \
-    L20, L21, L22, L23, L24, R25, R26, R27, R28, R29,                  \
-    ...)                                                               \
-             L00,         L01,         L02,         L03,         L04,  \
-             R05,         R06,         R07,         R08,         R09,  \
-             L10,         L11,         L12,         L13,         L14,  \
-             R15,         R16,         R17,         R18,         R19,  \
-      _L_PTR(L20),        L21,         L22,         L23,         L24,  \
-             R25,         R26,         R27,         R28,  _L_PTR(R29),  \
-      __VA_ARGS__
-#define POINTER_MOD(...) _POINTER_MOD(__VA_ARGS__)
-
 /** Convenience row shorthands. */
 #define _______________DEAD_HALF_ROW_______________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 #define ______________HOME_ROW_GACS_L______________ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX
@@ -178,6 +153,23 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 /** Colemak-DHm layout (3 rows, 10 columns). */
 #define LAYER_ALPHAS_COLEMAK_DHM_3x10                                                         \
        KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, NS_SCLN, \
+       KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O, \
+       KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H, NS_COMM,  NS_DOT, KC_SLSH
+
+/*
+ * Slightly modified versions of the layouts above to surface high-frequency
+ * keys on the base layer (namely, underscore `_`).
+ */
+
+/** Slightly modified Dvorak layout (3 rows, 10 columns). */
+#define LAYER_ALPHAS_DVORAK_ALT_3x10                                                          \
+    KC_QUOT, NS_COMM,  NS_DOT,    KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L, \
+       KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S, \
+    KC_UNDS,    KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z
+
+/** Slightly modified Colemak-DHm layout (3 rows, 10 columns). */
+#define LAYER_ALPHAS_COLEMAK_DHM_ALT_3x10                                                     \
+       KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, NS_UNDS, \
        KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O, \
        KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H, NS_COMM,  NS_DOT, KC_SLSH
 
@@ -234,16 +226,6 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
     XXXXXXX, NS_LBRC, KC_PERC, NS_RBRC, XXXXXXX, ______________HOME_ROW_GACS_R______________, \
     XXXXXXX, KC_EXLM,   KC_AT, KC_HASH, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
                        KC_TAB,  KC_SPC, KC_UNDS, _______, XXXXXXX, XXXXXXX
-
-/**
- * The Pointer layer contains the mouse buttons, and the pointers/trackballs
- * functions (sniper mode, drag-scroll, etc…).
- */
-#define LAYER_PTR_split_3x5_3                                                                 \
-    _______________DEAD_HALF_ROW_______________, _______________DEAD_HALF_ROW_______________, \
-    ______________HOME_ROW_GACS_L______________, ______________HOME_ROW_GACS_R______________, \
-    _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, \
-                      KC_BTN3, KC_BTN1, KC_BTN2, KC_BTN2, KC_BTN1, KC_BTN3
 
 /**
  * The Experiment layer serves as placeholder for new features currently under

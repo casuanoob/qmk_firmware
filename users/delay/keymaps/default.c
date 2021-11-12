@@ -244,13 +244,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
  */
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+#if 0  // Disabled, but kept for example purposes.
     case QK_LAYER_TAP ... QK_LAYER_TAP_MAX: {
       const uint8_t layer = (keycode >> 0x8) & 0xf;
-      if (layer == LAYER_PTR) {
-        return TAPPING_TERM + 150;
-      }
+      // Adjust for layer.
       break;
-    }
+  }
+#endif
     case QK_MOD_TAP ... QK_MOD_TAP_MAX: {
       // Use the mod to distinguish between Home Row mod since the actual
       // alpha layout can vary.

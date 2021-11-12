@@ -22,12 +22,12 @@
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-  [LAYER_ALPHAS_DVORAK] = LAYOUT_charybdis_3x5(POINTER_MOD(
+  [LAYER_ALPHAS_DVORAK] = LAYOUT_charybdis_3x5(
     HOME_ROW_MOD_GACS(LAYER_ALPHAS_DVORAK_3x10, LAYER_ALPHAS_THUMBS_1x6)
-  )),
-  [LAYER_ALPHAS_COLEMAK_DHM] = LAYOUT_charybdis_3x5(POINTER_MOD(
+  ),
+  [LAYER_ALPHAS_COLEMAK_DHM] = LAYOUT_charybdis_3x5(
     HOME_ROW_MOD_GACS(LAYER_ALPHAS_COLEMAK_DHM_3x10, LAYER_ALPHAS_THUMBS_1x6)
-  )),
+  ),
 
 #ifndef KEYMAP_DEFAULT_LITE
   [LAYER_NO_MODS_ALPHAS_DVORAK] = LAYOUT_charybdis_3x5(
@@ -42,7 +42,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_NAV] = LAYOUT_charybdis_3x5(LAYER_NAV_split_3x5_3),
   [LAYER_NUM] = LAYOUT_charybdis_3x5(LAYER_NUM_split_3x5_3),
   [LAYER_SYM] = LAYOUT_charybdis_3x5(LAYER_SYM_split_3x5_3),
-  [LAYER_PTR] = LAYOUT_charybdis_3x5(LAYER_PTR_split_3x5_3),
 
 #ifndef KEYMAP_DEFAULT_LITE
   [LAYER_EXP] = LAYOUT_charybdis_3x5(LAYER_EXP_split_3x5_3),

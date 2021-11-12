@@ -24,7 +24,6 @@
 #define PRODUCT_ID 0x1832
 #define DEVICE_VER 0x0001
 #define MANUFACTURER Bastard Keyboards
-#define PRODUCT Charybdis Nano
 
 /* Key matrix configuration. */
 
