@@ -33,25 +33,33 @@ typedef enum {
   TD_SINGLE_TAP,
   TD_DOUBLE_TAP,
   TD_HOLD,
+  TD_DOUBLE_HOLD,
 } td_state_t;
+
+typedef struct {
+  const uint8_t single_hold_layer;
+  const uint8_t double_hold_layer;
+  td_state_t td_state;
+} oneshot_shift_td_state_t;
 
 static td_state_t _get_current_state(qk_tap_dance_state_t *state) {
   if (state->count == 1) {
     return state->interrupted || !state->pressed ? TD_SINGLE_TAP : TD_HOLD;
   }
   if (state->count == 2) {
-    return TD_DOUBLE_TAP;
+    return state->interrupted || !state->pressed ? TD_DOUBLE_TAP
+                                                 : TD_DOUBLE_HOLD;
   }
   return TD_UNKNOWN;
 }
 
 static void _oneshot_shift_td_on_dance_finished(qk_tap_dance_state_t *state,
                                                 void *user_data) {
-  td_state_t *const oneshot_shift_td_state = user_data;
-  *oneshot_shift_td_state = _get_current_state(state);
+  oneshot_shift_td_state_t *const oneshot_shift_td_state = user_data;
+  oneshot_shift_td_state->td_state = _get_current_state(state);
 
   const uint8_t mod = MOD_LSFT;
-  switch (*oneshot_shift_td_state) {
+  switch (oneshot_shift_td_state->td_state) {
     case TD_SINGLE_TAP:
       if (get_oneshot_locked_mods() & mod) {
         clear_oneshot_locked_mods();
@@ -68,7 +76,11 @@ static void _oneshot_shift_td_on_dance_finished(qk_tap_dance_state_t *state,
       break;
     case TD_HOLD:
       clear_oneshot_mods();
-      layer_on(LAYER_DEV);
+      layer_on(oneshot_shift_td_state->single_hold_layer);
+      break;
+    case TD_DOUBLE_HOLD:
+      clear_oneshot_mods();
+      layer_on(oneshot_shift_td_state->double_hold_layer);
       break;
     default:
       break;
@@ -77,11 +89,18 @@ static void _oneshot_shift_td_on_dance_finished(qk_tap_dance_state_t *state,
 
 static void _oneshot_shift_td_on_dance_reset(qk_tap_dance_state_t *state,
                                              void *user_data) {
-  td_state_t *const oneshot_shift_td_state = user_data;
-  if (*oneshot_shift_td_state == TD_HOLD) {
-    layer_off(LAYER_NUM);
+  oneshot_shift_td_state_t *const oneshot_shift_td_state = user_data;
+  switch (oneshot_shift_td_state->td_state) {
+    case TD_HOLD:
+      layer_off(oneshot_shift_td_state->single_hold_layer);
+      break;
+    case TD_DOUBLE_HOLD:
+      layer_off(oneshot_shift_td_state->double_hold_layer);
+      break;
+    default:
+      break;
   }
-  *oneshot_shift_td_state = TD_NONE;
+  oneshot_shift_td_state->td_state = TD_NONE;
 }
 
 /**
@@ -90,7 +109,11 @@ static void _oneshot_shift_td_on_dance_reset(qk_tap_dance_state_t *state,
  * This state is not meant to be accessed directly.  Instead, use the
  * `user_data` value that is passed to each callback.
  */
-static td_state_t g_oneshot_shift_td_state = TD_NONE;
+static oneshot_shift_td_state_t g_oneshot_shift_td_state = {
+    .single_hold_layer = LAYER_DEV,
+    .double_hold_layer = LAYER_EXP,
+    .td_state = TD_NONE,
+};
 
 /**
  * Define global tap-dance actions.
