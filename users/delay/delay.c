@@ -24,6 +24,59 @@
 #include "quantum/rgblight/rgblight_list.h"
 #endif  // RGB_MATRIX_ENABLE
 
+/**
+ * User specific config.
+ *
+ * Currently contains:
+ *   - The targeted platform (used to adjust some keycodes at runtime).
+ */
+typedef union {
+  uint32_t raw;
+  struct {
+    platform_t platform : 2;
+  } __attribute__((packed));
+} eeconfig_user_t;
+
+/** User configuration global state. */
+static eeconfig_user_t g_eeconfig_user = {0};
+
+/** Set the value of `config` from EEPROM. */
+static void _read_eeconfig_user_from_eeprom(eeconfig_user_t *config) {
+  config->raw = eeconfig_read_user();
+}
+
+/** Persist the value of `config` to EEPROM. */
+static void _write_eeconfig_user_to_eeprom(eeconfig_user_t *config) {
+  eeconfig_update_user(config->raw);
+}
+
+static platform_t _eeconfig_user_get_platform(eeconfig_user_t *eeconfig_user) {
+  return eeconfig_user->platform;
+}
+
+static void _eeconfig_user_set_platform(eeconfig_user_t *eeconfig_user,
+                                        platform_t platform) {
+  eeconfig_user->platform = platform;
+}
+
+static void _eeconfig_user_set_platform_and_save_to_eeprom(
+    eeconfig_user_t *eeconfig_user, platform_t platform) {
+  _eeconfig_user_set_platform(&g_eeconfig_user, platform);
+  _write_eeconfig_user_to_eeprom(&g_eeconfig_user);
+}
+
+platform_t get_platform(void) {
+  return _eeconfig_user_get_platform(&g_eeconfig_user);
+}
+
+void set_platform(platform_t platform) {
+  _eeconfig_user_set_platform_and_save_to_eeprom(&g_eeconfig_user, platform);
+}
+
+void set_platform_noeeprom(platform_t platform) {
+  _eeconfig_user_set_platform(&g_eeconfig_user, platform);
+}
+
 #ifdef COMPOSE_ENABLE
 /** Compose global state. */
 static compose_state_t g_compose_state = {0};
@@ -131,6 +184,25 @@ __attribute__((weak)) void compose_keymap(compose_state_t *state) {}
   }
 #endif  // NO_SHIFT_CODE
 
+static void _process_platform_update(platform_t platform, keyrecord_t *record,
+                                     eeconfig_user_t *config) {
+  if (record->event.pressed) {
+    _eeconfig_user_set_platform_and_save_to_eeprom(config, platform);
+  }
+}
+
+static void _process_platform_shortcut(uint16_t keycode, keyrecord_t *record,
+                                       eeconfig_user_t *eeconfig_user) {
+  const uint16_t keycode16 = _eeconfig_user_get_platform(eeconfig_user) == MACOS
+                                 ? LGUI(keycode)
+                                 : LCTL(keycode);
+  if (record->event.pressed) {
+    register_code16(keycode16);
+  } else {
+    unregister_code16(keycode16);
+  }
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef COMPOSE_ENABLE
   if (!process_record_compose(&g_compose_state, keycode, record)) {
@@ -147,6 +219,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         reset_keyboard();
       }
+      break;
+    case FX_PLATFORM_LINUX:
+      _process_platform_update(LINUX, record, &g_eeconfig_user);
+      break;
+    case FX_PLATFORM_MACOS:
+      _process_platform_update(MACOS, record, &g_eeconfig_user);
+      break;
+    case FX_PLATFORM_WINDOWS:
+      _process_platform_update(WINDOWS, record, &g_eeconfig_user);
       break;
     case NS_0:
       NO_SHIFT_CODE(KC_0);
@@ -184,6 +265,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       NO_SHIFT_CODE(KC_SCOLON);
     case NS_SLASH:
       NO_SHIFT_CODE(KC_SLASH);
+    case PL_CUT:
+      _process_platform_shortcut(KC_X, record, &g_eeconfig_user);
+      break;
+    case PL_COPY:
+      _process_platform_shortcut(KC_C, record, &g_eeconfig_user);
+      break;
+    case PL_PASTE:
+      _process_platform_shortcut(KC_V, record, &g_eeconfig_user);
+      break;
   }
   return process_record_keymap(keycode, record);
 }
@@ -250,6 +340,8 @@ void oneshot_locked_mods_changed_user(uint8_t mods) {
 void oneshot_locked_mods_changed_keymap(uint8_t mods) {}
 
 void eeconfig_init_user(void) {
+  g_eeconfig_user.raw = 0;
+  _read_eeconfig_user_from_eeprom(&g_eeconfig_user);
 #ifdef RGB_MATRIX_ENABLE
   rgb_matrix_mode(RGB_MATRIX_STARTUP_MODE);
   rgb_matrix_sethsv(RGB_MATRIX_STARTUP_HSV);
