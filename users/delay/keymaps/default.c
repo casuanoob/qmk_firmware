@@ -20,11 +20,11 @@
 #ifdef RGB_MATRIX_ENABLE
 #include "quantum/rgb_matrix/rgb_matrix.h"
 #include "quantum/rgblight/rgblight_list.h"
-#endif  // RGB_MATRIX_ENABLE
 
 #ifndef MIN
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #endif  // !MIN
+#endif  // RGB_MATRIX_ENABLE
 
 #ifdef TAP_DANCE_ENABLE
 typedef enum {
@@ -144,7 +144,6 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
       if (record->event.pressed) {
         const uint8_t mods = mod_config(get_mods() | get_oneshot_mods());
 #ifdef KEYMAP_DEFAULT_LITE
-        // If ctrl is held, use the HR-less version of the layout.
         const uint8_t layer =
             keycode - KM_FIRST_DEFAULT_LAYER + LAYER_ALPHAS_FIRST;
 #else
