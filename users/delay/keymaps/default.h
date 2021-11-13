@@ -81,11 +81,6 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 #define KM_DVRK KM_DVORAK
 #define KM_CDHM KM_COLEMAK_DHM
 
-// Custom NAV keycodes, for Apple macOS.
-#define FX_CUT LGUI(KC_X)
-#define FX_COPY LGUI(KC_C)
-#define FX_PSTE LGUI(KC_V)
-
 // Spaces navigation.
 #define FX_SCRL LGUI(KC_LEFT)
 #define FX_SCRR LGUI(KC_RIGHT)
@@ -196,7 +191,7 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 #define LAYER_NAV_split_3x5_3                                                                 \
     FX_SCRL, KC_BTN3, KC_BTN1, KC_BTN2, FX_SCRR, XXXXXXX, KC_HOME,   KC_UP,  KC_END, XXXXXXX, \
     ______________HOME_ROW_GACS_L______________, XXXXXXX, KC_LEFT, KC_DOWN, KC_RGHT, XXXXXXX, \
-    XXXXXXX, FX_PSTE, FX_COPY,  FX_CUT, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
+    XXXXXXX, PL_PSTE, PL_COPY,  PL_CUT, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
                       XXXXXXX, _______, XXXXXXX,  FX_ESC,  KC_ENT, XXXXXXX
 
 /**
@@ -224,8 +219,8 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
  * active development, until they get promoted to one of the stable layers.
  */
 #define LAYER_EXP_split_3x5_3                                                                 \
-    KM_DVRK, KM_CDHM, XXXXXXX, XXXXXXX, XXXXXXX, _______________DEAD_HALF_ROW_______________, \
+    KM_DVRK, KM_CDHM, FX_PL_L, FX_PL_M, FX_PL_W, _______________DEAD_HALF_ROW_______________, \
     XXXXXXX, XXXXXXX, COMPOSE, XXXXXXX, XXXXXXX, ______________HOME_ROW_GACS_R______________, \
     _______________DEAD_HALF_ROW_______________, _______________DEAD_HALF_ROW_______________, \
-                      _______________DEAD_HALF_ROW_______________, _______
+                      XXXXXXX, XXXXXXX, _______, XXXXXXX, XXXXXXX, _______
 // clang-format on

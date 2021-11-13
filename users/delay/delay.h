@@ -17,6 +17,26 @@
 #pragma once
 
 /**
+ * Supported platforms.  Used to adjust the binding of some keycodes at runtime
+ * (eg. cut/copy/paste).
+ */
+typedef enum {
+  UNKNOWN = 0,
+  LINUX,
+  MACOS,
+  WINDOWS,
+} platform_t;
+
+/** Return the platform currently targeted. */
+platform_t get_platform(void);
+
+/** Set the platform to target. */
+void set_platform(platform_t platform);
+
+/** Set the platform to target.  Do not persist the change to EEPROM. */
+void set_platform_noeeprom(platform_t platform);
+
+/**
  * Custom keycodes.
  *
  * Use `SAFE_RANGE_KEYMAP` for keymap specific codes, instead of `SAFE_RANGE`.
@@ -29,6 +49,15 @@ enum keycodes_user {
 #endif
   // Custom version of these keycodes to add special effects.
   FX_RESET,  // Changes LEDs color, if any, before entering reset mode.
+  // Keycodes to change the target platform (changes some keycodes at runtime).
+  FX_PLATFORM_LINUX,
+  FX_PLATFORM_MACOS,
+  FX_PLATFORM_WINDOWS,
+  // Cut/copy/paste keycodes that change at runtime based on the current
+  // platform.  See `get_platform()` and `set_platform*(…)`.
+  PL_CUT,    // ^X or Cmd+X based on the platform.
+  PL_COPY,   // ^C or Cmd+C based on the platform.
+  PL_PASTE,  // ^V or Cmd+V based on the platform.
   // Custom version of these keycodes that can't be shifted.
   NS_0,
   NS_1,
@@ -53,6 +82,11 @@ enum keycodes_user {
 
 // Shorthands.
 #define FX_RST FX_RESET
+#define FX_PL_L FX_PLATFORM_LINUX
+#define FX_PL_M FX_PLATFORM_MACOS
+#define FX_PL_W FX_PLATFORM_WINDOWS
+
+#define PL_PSTE PL_PASTE
 
 #define NS_BSLS NS_BSLASH
 #define NS_COMM NS_COMMA
