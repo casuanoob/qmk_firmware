@@ -163,6 +163,18 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         unregister_code(KC_ESC);
       }
       break;
+    case FX_PLATFORM_LINUX:
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+      rgb_matrix_sethsv_noeeprom(HSV_GREEN);
+      break;
+    case FX_PLATFORM_MACOS:
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+      rgb_matrix_sethsv_noeeprom(HSV_CYAN);
+      break;
+    case FX_PLATFORM_WINDOWS:
+      rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+      rgb_matrix_sethsv_noeeprom(HSV_PINK);
+      break;
     case KM_FIRST_DEFAULT_LAYER ... KM_LAST_DEFAULT_LAYER:
       if (record->event.pressed) {
         const uint8_t mods = mod_config(get_mods() | get_oneshot_mods());
@@ -188,12 +200,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
   return true;
 };
 
-__attribute__((weak)) layer_state_t layer_state_set_keymap(
-    layer_state_t state) {
-  return state;
-}
-
-#if defined(RGB_MATRIX_ENABLE) && 0  // Disabled, but kept for example purposes.
+#ifdef RGB_MATRIX_ENABLE
 /**
  * Called on layer change.
  *
@@ -205,15 +212,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     case LAYER_ALPHAS_FIRST ... LAYER_ALPHAS_LAST:
       rgb_matrix_reset_noeeprom();
       break;
-    case LAYER_DEV:
-    case LAYER_SYM:
-      rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-      rgb_matrix_sethsv_noeeprom(HSV_PINK);
-      break;
   }
   return layer_state_set_keymap(state);
 }
 
+#if 0   // Disabled, but kept for example purposes.
 /**
  * Thin wrapper around rgb_matrix_set_color that takes a HSV instead of RGB,
  * and caps the value component to RGB_MATRIX_MAXIMUM_BRIGHTNESS if
@@ -245,6 +248,7 @@ void rgb_matrix_indicators_user(void) {
       break;
   }
 }
+#endif  // 0
 #else   // !RGB_MATRIX_ENABLE
 /**
  * Called on layer change.
@@ -256,6 +260,11 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return layer_state_set_keymap(state);
 }
 #endif  // RGB_MATRIX_ENABLE
+
+__attribute__((weak)) layer_state_t layer_state_set_keymap(
+    layer_state_t state) {
+  return state;
+}
 
 #ifdef TAPPING_TERM_PER_KEY
 /**
