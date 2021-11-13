@@ -41,12 +41,8 @@ enum layers_keymap {
   LAYER_NAV,                           // Navigation.
   LAYER_NUM,                           // Number pad.
   LAYER_SYM,                           // Other special characters.
-#ifdef KEYMAP_DEFAULT_LITE
-  LAYER_NON_ALPHAS_LAST = LAYER_SYM,
-#else   // !KEYMAP_DEFAULT_LITE
-  LAYER_EXP,  // Experiment layers (for one-off tests).
+  LAYER_EXP,                           // Experiment layers (for one-off tests).
   LAYER_NON_ALPHAS_LAST = LAYER_EXP,
-#endif  // KEYMAP_DEFAULT_LITE
 };
 
 enum keycodes_keymap {
@@ -102,11 +98,7 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 #define _L_PTR(KC) LT(LAYER_PTR, KC)
 
 // Optional layers.
-#ifdef KEYMAP_DEFAULT_LITE
-#define OSL_EXP XXXXXXX
-#else  // !KEYMAP_DEFAULT_LITE
 #define OSL_EXP OSL(LAYER_EXP)
-#endif  // KEYMAP_DEFAULT_LITE
 
 // One-shot keys.
 #ifdef TAP_DANCE_ENABLE
