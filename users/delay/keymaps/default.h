@@ -68,7 +68,7 @@ enum tapdance_keymap {
  * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
- * a new version of the `layer_state_set_keymap*` callback is necessary for each
+ * a new version of the `layer_state_set_*` callback is necessary for each
  * keymap to add their own.
  *
  * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.

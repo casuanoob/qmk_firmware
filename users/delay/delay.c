@@ -19,6 +19,11 @@
 #include "config.h"
 #include "delay.h"
 
+#ifdef RGB_MATRIX_ENABLE
+#include "quantum/rgb_matrix/rgb_matrix.h"
+#include "quantum/rgblight/rgblight_list.h"
+#endif  // RGB_MATRIX_ENABLE
+
 #ifdef COMPOSE_ENABLE
 /** Compose global state. */
 static compose_state_t g_compose_state = {0};
@@ -233,7 +238,7 @@ void rgb_matrix_reset_noeeprom(void) {
 void oneshot_locked_mods_changed_user(uint8_t mods) {
 #ifdef RGB_MATRIX_ENABLE
   if (mods & MOD_MASK_SHIFT) {
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_SOLID_COLOR);
+    rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
     rgb_matrix_sethsv_noeeprom(HSV_BLUE);
   } else if (!mods) {
     rgb_matrix_reset_noeeprom();  // Load default values.
