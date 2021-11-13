@@ -20,8 +20,8 @@
 #include "delay.h"
 
 #ifdef COMPOSE_ENABLE
-/** Compose global state.  */
-static compose_state_t compose_state = {0};
+/** Compose global state. */
+static compose_state_t g_compose_state = {0};
 
 /**
  * Handle a 2-keycodes sequence.
@@ -128,7 +128,7 @@ __attribute__((weak)) void compose_keymap(compose_state_t *state) {}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef COMPOSE_ENABLE
-  if (!process_record_compose(&compose_state, keycode, record)) {
+  if (!process_record_compose(&g_compose_state, keycode, record)) {
     return false;
   }
 #endif  // COMPOSE_ENABLE
@@ -191,7 +191,7 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode,
 void matrix_scan_user(void) {
 #ifdef COMPOSE_ENABLE
   // Compose callback, used to handle compose sequence timeout.
-  matrix_scan_compose(&compose_state);
+  matrix_scan_compose(&g_compose_state);
 #endif  // COMPOSE_ENABLE
   matrix_scan_keymap();
 }
@@ -199,8 +199,9 @@ void matrix_scan_user(void) {
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 void keyboard_post_init_user(void) {
+  g_eeconfig_user.raw = eeconfig_read_user();
 #ifdef COMPOSE_ENABLE
-  keyboard_post_init_compose(&compose_state);
+  keyboard_post_init_compose(&g_compose_state);
 #endif  // COMPOSE_ENABLE
   keyboard_post_init_keymap();
 }

@@ -62,13 +62,6 @@ enum keycodes_user {
 #define NS_SCLN NS_SCOLON
 #define NS_SLSH NS_SLASH
 
-#ifdef COMPOSE_ENABLE
-/**
- * Use this function to add support for more composition on a per-keymap basis.
- */
-void compose_keymap(compose_state_t *state);
-#endif  // COMPOSE_ENABLE
-
 /**
  * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
  *
@@ -112,6 +105,13 @@ void keyboard_post_init_keymap(void);
  * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
  */
 void eeconfig_init_keymap(void);
+
+#ifdef COMPOSE_ENABLE
+/**
+ * Use this function to add support for more composition on a per-keymap basis.
+ */
+void compose_keymap(compose_state_t *state);
+#endif  // COMPOSE_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
 /**
