@@ -17,13 +17,13 @@
 
 /* General configuration. */
 
-#ifdef KEYMAP_DEFAULT_LITE
+#ifdef DELAY_KEYMAP_LITE
 /** Only uses 8 bits for layers.  Limits available layers to 8.  */
 #define LAYER_STATE_8BIT
 #else
 /** Only uses 16 bits for layers.  Limits available layers to 16.  */
 #define LAYER_STATE_16BIT
-#endif  // KEYMAP_DEFAULT_LITE
+#endif  // DELAY_KEYMAP_LITE
 
 /* Split keyboards. */
 

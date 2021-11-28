@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
-#include "keymaps/default.h"
+#include "keymaps/3x5_3-homerow.h"
 
 #define LAYOUT_charybdis_3x5_delay(...) LAYOUT_split_3x5_3(__VA_ARGS__)
 
@@ -29,14 +29,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     HOME_ROW_MOD_GACS(LAYER_ALPHAS_COLEMAK_DHM_3x10, LAYER_ALPHAS_THUMBS_1x6)
   ),
 
-#ifndef KEYMAP_DEFAULT_LITE
+#ifndef DELAY_KEYMAP_LITE
   [LAYER_NO_MODS_ALPHAS_DVORAK] = LAYOUT_charybdis_3x5_delay(
     LAYER_ALPHAS_DVORAK_3x10, LAYER_NO_MODS_ALPHAS_THUMBS_1x6
   ),
   [LAYER_NO_MODS_ALPHAS_COLEMAK_DHM] = LAYOUT_charybdis_3x5_delay(
     LAYER_ALPHAS_COLEMAK_DHM_3x10, LAYER_NO_MODS_ALPHAS_THUMBS_1x6
   ),
-#endif  // !KEYMAP_DEFAULT_LITE
+#endif  // !DELAY_KEYMAP_LITE
 
   [LAYER_DEV] = LAYOUT_charybdis_3x5_delay(LAYER_DEV_split_3x5_3),
   [LAYER_NAV] = LAYOUT_charybdis_3x5_delay(LAYER_NAV_split_3x5_3),

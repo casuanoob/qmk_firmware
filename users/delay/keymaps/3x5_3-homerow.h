@@ -27,14 +27,14 @@ enum layers_keymap {
   LAYER_ALPHAS_DVORAK = LAYER_ALPHAS_FIRST,  // Dvorak.
   LAYER_ALPHAS_COLEMAK_DHM,                  // Colemak-DHm.
   LAYER_ALPHAS_LAST = LAYER_ALPHAS_COLEMAK_DHM,
-#ifndef KEYMAP_DEFAULT_LITE
+#ifndef DELAY_KEYMAP_LITE
   // Alpha layers with no Home Row Mods (for practice/typing tests).
   // Must mirror alpha layers, and follow the same orders.
   LAYER_NO_MODS_ALPHAS_FIRST,
   LAYER_NO_MODS_ALPHAS_DVORAK = LAYER_NO_MODS_ALPHAS_FIRST,  // Dvorak.
   LAYER_NO_MODS_ALPHAS_COLEMAK_DHM,                          // Colemak-DHm.
   LAYER_NO_MODS_ALPHAS_LAST = LAYER_NO_MODS_ALPHAS_COLEMAK_DHM,
-#endif  // !KEYMAP_DEFAULT_LITE
+#endif  // !DELAY_KEYMAP_LITE
   // Non-alphas layers.
   LAYER_NON_ALPHAS_FIRST,
   LAYER_DEV = LAYER_NON_ALPHAS_FIRST,  // Special characters used for dev/shell.
