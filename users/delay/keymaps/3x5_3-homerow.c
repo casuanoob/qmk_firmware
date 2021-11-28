@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
-#include "keymaps/default.h"
+#include "keymaps/3x5_3-homerow.h"
 
 #ifdef RGB_MATRIX_ENABLE
 #include "quantum/rgb_matrix/rgb_matrix.h"
@@ -178,7 +178,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     case KM_FIRST_DEFAULT_LAYER ... KM_LAST_DEFAULT_LAYER:
       if (record->event.pressed) {
         const uint8_t mods = mod_config(get_mods() | get_oneshot_mods());
-#ifdef KEYMAP_DEFAULT_LITE
+#ifdef DELAY_KEYMAP_LITE
         const uint8_t layer =
             keycode - KM_FIRST_DEFAULT_LAYER + LAYER_ALPHAS_FIRST;
 #else
@@ -186,7 +186,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         const uint8_t layer = keycode - KM_FIRST_DEFAULT_LAYER +
                               (mods & MOD_MASK_CTRL ? LAYER_NO_MODS_ALPHAS_FIRST
                                                     : LAYER_ALPHAS_FIRST);
-#endif  // KEYMAP_DEFAULT_LITE
+#endif  // DELAY_KEYMAP_LITE
         if (mods & MOD_MASK_SHIFT) {
           // Permanently changes the layer if shifted.
           set_single_persistent_default_layer(layer);
