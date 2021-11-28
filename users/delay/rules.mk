@@ -25,12 +25,12 @@ ifeq ($(strip $(COMPOSE_ENABLE)), yes)
 endif
 
 # Include compose source and flags if support is enabled.
-ifeq ($(strip $(KEYMAP_ENABLE)), default)
-	SRC += keymaps/default.c
+ifeq ($(strip $(KEYMAP_ENABLE)), 3x5_3-homerow)
+	SRC += keymaps/3x5_3-homerow.c
 endif
 
 # Include compose source and flags if support is enabled.
-ifeq ($(strip $(KEYMAP_ENABLE)), lite)
-	SRC += keymaps/default.c
-	OPT_DEFS += -DKEYMAP_DEFAULT_LITE
+ifeq ($(strip $(KEYMAP_ENABLE)), 3x5_3-homerow-lite)
+	SRC += keymaps/3x5_3-homerow.c
+	OPT_DEFS += -DDELAY_KEYMAP_LITE
 endif
