@@ -1,5 +1,13 @@
-COMPOSE_ENABLE = yes          # Enable composition.
-ONESHOT_MOD_ENABLE = yes
-TD_ONESHOT_DRAGSCROLL_ENABLE = yes
+# Space-saving settings.
+LTO_ENABLE = yes
+QMK_SETTINGS = no
+COMBO_ENABLE = no
 
-KEYMAP_ENABLE = split36 # Use "split36" keymap (from /users/delay).
+COMPOSE_ENABLE = yes   # Enable composition.
+TAP_DANCE_ENABLE = yes # Use tap-dance-based one-shot shift.
+
+KEYMAP_ENABLE = lite # Use "lite" keymap (from /users/delay), ie. w/o training layouts.
+MOUSEKEY_ENABLE = no # Keymap uses mouse keys.
+
+RGB_MATRIX_ENABLE = yes
+RGB_MATRIX_DRIVER = WS2812

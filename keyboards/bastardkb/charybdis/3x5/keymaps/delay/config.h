@@ -1,5 +1,5 @@
 /**
- * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
+ * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,8 @@
  */
 #pragma once
 
-// Trackball angle adjustment.
-#undef ROTATIONAL_TRANSFORM_ANGLE
-#define ROTATIONAL_TRANSFORM_ANGLE -80
-
 // Enable pointer acceleration.
 #define CHARYBDIS_POINTER_ACCELERATION_ENABLE
 
 // macOS "Natural" scroll direction.
-// #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
-
-// Disable unused keycodes.
-#define NO_CHARYBDIS_KEYCODES
+#define CHARYBDIS_DRAGSCROLL_REVERSE_Y
