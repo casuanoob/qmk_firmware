@@ -47,8 +47,6 @@ enum keycodes_user {
 #else
   COMPOSE = SAFE_RANGE,
 #endif
-  // Custom version of these keycodes to add special effects.
-  FX_RESET,  // Changes LEDs color, if any, before entering reset mode.
   // Keycodes to change the target platform (changes some keycodes at runtime).
   FX_PLATFORM_LINUX,
   FX_PLATFORM_MACOS,
@@ -81,7 +79,6 @@ enum keycodes_user {
 };
 
 // Shorthands.
-#define FX_RST FX_RESET
 #define FX_PL_L FX_PLATFORM_LINUX
 #define FX_PL_M FX_PLATFORM_MACOS
 #define FX_PL_W FX_PLATFORM_WINDOWS
@@ -139,6 +136,17 @@ void keyboard_post_init_keymap(void);
  * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
  */
 void eeconfig_init_keymap(void);
+
+/**
+ * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
+ *
+ * `_user` is already defined to add common functions to all keymaps, therefore
+ * a new version of the `shutdown_*` callback is necessary for each keymap to
+ * add their own.
+ *
+ * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
+ */
+void shutdown_keymap(void);
 
 #ifdef COMPOSE_ENABLE
 /**

@@ -210,16 +210,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 #endif  // COMPOSE_ENABLE
   switch (keycode) {
-    case FX_RESET:
-      if (record->event.pressed) {
-#ifdef RGB_MATRIX_ENABLE
-        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-        rgb_matrix_sethsv_noeeprom(HSV_RED);
-#endif  // RGB_MATRIX_ENABLE
-      } else {
-        reset_keyboard();
-      }
-      break;
     case FX_PLATFORM_LINUX:
       _process_platform_update(LINUX, record, &g_eeconfig_user);
       break;
@@ -351,3 +341,26 @@ void eeconfig_init_user(void) {
 }
 
 __attribute__((weak)) void eeconfig_init_keymap(void) {}
+
+#ifdef RGB_MATRIX_ENABLE
+// Forward-declare this helper function since it is defined in rgb_matrix.c.
+void rgb_matrix_update_pwm_buffers(void);
+#endif
+
+void shutdown_user(void) {
+#ifdef RGBLIGHT_ENABLE
+  rgblight_enable_noeeprom();
+  rgblight_mode_noeeprom(1);
+  rgblight_setrgb_red();
+#endif  // RGBLIGHT_ENABLE
+#ifdef RGB_MATRIX_ENABLE
+  rgb_matrix_set_color_all(RGB_RED);
+  rgb_matrix_update_pwm_buffers();
+#endif  // RGB_MATRIX_ENABLE
+#ifdef OLED_ENABLE
+  oled_off();
+#endif  // OLED_ENABLE
+  shutdown_keymap();
+}
+
+__attribute__((weak)) void shutdown_keymap(void) {}

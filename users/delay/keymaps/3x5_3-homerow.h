@@ -128,8 +128,8 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 #define _______________DEAD_HALF_ROW_______________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
 #define ______________HOME_ROW_GACS_L______________ KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, XXXXXXX
 #define ______________HOME_ROW_GACS_R______________ XXXXXXX, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI
-#define ________________RESET_ROW_L________________  FX_RST, EEP_RST, XXXXXXX, XXXXXXX, XXXXXXX
-#define ________________RESET_ROW_R________________ XXXXXXX, XXXXXXX, XXXXXXX, EEP_RST,  FX_RST
+#define ________________RESET_ROW_L________________   RESET, EEP_RST, XXXXXXX, XXXXXXX, XXXXXXX
+#define ________________RESET_ROW_R________________ XXXXXXX, XXXXXXX, XXXXXXX, EEP_RST,   RESET
 
 /** Dvorak layout (3 rows, 10 columns). */
 #define LAYER_ALPHAS_DVORAK_3x10                                                              \
