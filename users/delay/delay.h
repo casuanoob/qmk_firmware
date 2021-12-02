@@ -17,8 +17,9 @@
 #pragma once
 
 /**
- * Supported platforms.  Used to adjust the binding of some keycodes at runtime
- * (eg. cut/copy/paste).
+ * \brief Supported platforms.
+ *
+ * Used to adjust the binding of some keycodes at runtime (eg. cut/copy/paste).
  */
 typedef enum {
   UNKNOWN = 0,
@@ -27,17 +28,17 @@ typedef enum {
   WINDOWS,
 } platform_t;
 
-/** Return the platform currently targeted. */
+/** \brief Return the platform currently targeted. */
 platform_t get_platform(void);
 
-/** Set the platform to target. */
+/** \brief Set the platform to target. */
 void set_platform(platform_t platform);
 
-/** Set the platform to target.  Do not persist the change to EEPROM. */
+/** \brief Set the platform to target.  Do not persist the change to EEPROM. */
 void set_platform_noeeprom(platform_t platform);
 
 /**
- * Custom keycodes.
+ * \brief Custom keycodes.
  *
  * Use `SAFE_RANGE_KEYMAP` for keymap specific codes, instead of `SAFE_RANGE`.
  */
@@ -94,7 +95,7 @@ enum keycodes_user {
 #define NS_SLSH NS_SLASH
 
 /**
- * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
+ * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
  * a new version of the `process_record_*` callback is necessary for each keymap
@@ -105,7 +106,7 @@ enum keycodes_user {
 bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
 
 /**
- * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
+ * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
  * a new version of the `matrix_scan_keymap_*` callback is necessary for each
@@ -116,7 +117,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
 void matrix_scan_keymap(void);
 
 /**
- * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
+ * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
  * a new version of the `keyboard_post_init_*` callback is necessary for each
@@ -127,7 +128,7 @@ void matrix_scan_keymap(void);
 void keyboard_post_init_keymap(void);
 
 /**
- * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
+ * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
  * a new version of the `eeconfig_init_*` callback is necessary for each keymap
@@ -138,7 +139,7 @@ void keyboard_post_init_keymap(void);
 void eeconfig_init_keymap(void);
 
 /**
- * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
+ * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
  * a new version of the `shutdown_*` callback is necessary for each keymap to
@@ -150,14 +151,14 @@ void shutdown_keymap(void);
 
 #ifdef COMPOSE_ENABLE
 /**
- * Use this function to add support for more composition on a per-keymap basis.
+ * \brief Augment COMPOSE composition at the keymap level.
  */
 void compose_keymap(compose_state_t *state);
 #endif  // COMPOSE_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
 /**
- * Apply default/startup RGB matrix values.
+ * \brief Apply default/startup RGB matrix values.
  *
  * This is to replace the missing `rgb_matrix_reload_from_eeprom()`.
  */
@@ -165,7 +166,7 @@ void rgb_matrix_reset_noeeprom(void);
 #endif  // RGB_MATRIX_ENABLE
 
 /**
- * Similar to `_kb`, `_user`, and other variants, but for individual keymaps.
+ * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
  * a new version of the `oneshot_locked_mods_changed_*` callback is necessary
