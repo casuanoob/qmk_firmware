@@ -104,7 +104,7 @@ static void _oneshot_shift_td_on_dance_reset(qk_tap_dance_state_t *state,
 }
 
 /**
- * The state for the oneshot-shift tap-dance.
+ * \brief The state for the oneshot-shift tap-dance.
  *
  * This state is not meant to be accessed directly.  Instead, use the
  * `user_data` value that is passed to each callback.
@@ -116,7 +116,7 @@ static oneshot_shift_td_state_t g_oneshot_shift_td_state = {
 };
 
 /**
- * Define global tap-dance actions.
+ * \brief Define global tap-dance actions.
  */
 qk_tap_dance_action_t tap_dance_actions[] = {
     [TD_ONESHOT_SHIFT] =
@@ -202,7 +202,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
 
 #ifdef RGB_MATRIX_ENABLE
 /**
- * Called on layer change.
+ * \brief Called on layer change.
  *
  * This is called automatically by the QMK framework when the active layer
  * changes.
@@ -218,6 +218,8 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 #if 0   // Disabled, but kept for example purposes.
 /**
+ * \brief Set all RGB to the specified color.
+ *
  * Thin wrapper around rgb_matrix_set_color that takes a HSV instead of RGB,
  * and caps the value component to RGB_MATRIX_MAXIMUM_BRIGHTNESS if
  * `force_value` is `false`.  It uses the provided `v` otherwise.
@@ -234,7 +236,7 @@ static void _rgb_matrix_sethsv_noeeprom(uint8_t index, uint8_t h, uint8_t s,
 }
 
 /**
- * Called during every cycle.
+ * \brief Called during every cycle.
  *
  * Per-key RGB configuration must go in this callback to be properly applied.
  */
@@ -251,7 +253,7 @@ void rgb_matrix_indicators_user(void) {
 #endif  // 0
 #else   // !RGB_MATRIX_ENABLE
 /**
- * Called on layer change.
+ * \brief Called on layer change.
  *
  * This is called automatically by the QMK framework when the active layer
  * changes.
@@ -268,7 +270,7 @@ __attribute__((weak)) layer_state_t layer_state_set_keymap(
 
 #ifdef TAPPING_TERM_PER_KEY
 /**
- * Define key-specific `TAPPING_TERM`.
+ * \brief Define key-specific `TAPPING_TERM`.
  *
  * Tunes the `TAPPING_TERM` for both layer-taps and Home Row mods.  For Home Row
  * mods, this implementation assumes GACS home row order.

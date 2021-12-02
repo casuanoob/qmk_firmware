@@ -18,7 +18,7 @@
 #include "delay.h"
 
 /**
- * Resets the compose state, clears the queue.
+ * \brief Resets the compose state, clears the queue.
  */
 void _compose_reset(compose_state_t *state) {
   for (int i = 0; i < COMPOSE_KEYCODE_QUEUE_SIZE; ++i) {
@@ -30,7 +30,7 @@ void _compose_reset(compose_state_t *state) {
 }
 
 /**
- * Process the queue.
+ * \brief Process the queue.
  *
  * Resets the compose state regardless of whether a compose sequence was
  * matched.
@@ -41,7 +41,7 @@ void _compose_process_queue(compose_state_t *state) {
 }
 
 /**
- * Push a new keycode to the queue.
+ * \brief Push a new keycode to the queue.
  */
 void _compose_push_keycode(compose_state_t *state, uint16_t keycode) {
   state->keycode_queue[state->keycode_queue_index++] = keycode;
@@ -49,14 +49,14 @@ void _compose_push_keycode(compose_state_t *state, uint16_t keycode) {
 }
 
 /**
- * Whether the compose queue is full.
+ * \brief Whether the compose queue is full.
  */
 bool _compose_queue_is_full(compose_state_t *state) {
   return state->keycode_queue_index >= COMPOSE_KEYCODE_QUEUE_SIZE;
 }
 
 /**
- * Handle a keypress when composing is active.
+ * \brief Handle a keypress when composing is active.
  *
  * If the keycode is eligible, push it into the compose queue.  When the queue
  * is full, trigger composing (see `_compose_process_queue(…)`).
@@ -136,6 +136,6 @@ bool compose_queue_equal(compose_state_t *state,
 }
 
 /**
- * This is where compose combos should defined.
+ * \brief This is where compose combos should defined.
  */
 __attribute__((weak)) void compose_user(compose_state_t *state) {}
