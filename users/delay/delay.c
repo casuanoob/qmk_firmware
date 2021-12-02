@@ -25,7 +25,7 @@
 #endif  // RGB_MATRIX_ENABLE
 
 /**
- * User specific config.
+ * \brief User specific config.
  *
  * Currently contains:
  *   - The targeted platform (used to adjust some keycodes at runtime).
@@ -37,15 +37,15 @@ typedef union {
   } __attribute__((packed));
 } eeconfig_user_t;
 
-/** User configuration global state. */
+/** \brief User configuration global state. */
 static eeconfig_user_t g_eeconfig_user = {0};
 
-/** Set the value of `config` from EEPROM. */
+/** \brief Set the value of `config` from EEPROM. */
 static void _read_eeconfig_user_from_eeprom(eeconfig_user_t *config) {
   config->raw = eeconfig_read_user();
 }
 
-/** Persist the value of `config` to EEPROM. */
+/** \brief Persist the value of `config` to EEPROM. */
 static void _write_eeconfig_user_to_eeprom(eeconfig_user_t *config) {
   eeconfig_update_user(config->raw);
 }
@@ -82,7 +82,7 @@ void set_platform_noeeprom(platform_t platform) {
 static compose_state_t g_compose_state = {0};
 
 /**
- * Handle a 2-keycodes sequence.
+ * \brief Handle a 2-keycodes sequence.
  *
  * Checks whether the first, unmodded, keycode is the key is equal to
  * `prefix_modifier_keycode`.  If so, sends `actual_modifier_keycode` followed
@@ -128,7 +128,7 @@ static bool _handle_modifier_sequence(compose_state_t *state,
 }
 
 /**
- * Add support for foreign language characters, such as é, à, etc…
+ * \brief Add support for foreign language characters, such as é, à, etc…
  *
  * Supported sequences are:
  *   e [letter] -> AltGr-e [letter] -> acute (eg., á)
@@ -149,7 +149,7 @@ static bool _handle_intl_compose_sequences(compose_state_t *state) {
 }
 
 /**
- * This is where compose sequences are matched.
+ * \brief This is where compose sequences are matched.
  *
  * Checks the compose queue for known sequences.  If found, sends the
  * appropriate unicode character(s) as hexadecimal string.
@@ -295,7 +295,7 @@ __attribute__((weak)) void keyboard_post_init_keymap(void) {}
 
 #ifdef RGB_MATRIX_ENABLE
 /**
- * Apply default/startup RGB matrix values.
+ * \brief Apply default/startup RGB matrix values.
  *
  * This is to replace the missing `rgb_matrix_reload_from_eeprom()`.
  */
@@ -307,7 +307,7 @@ void rgb_matrix_reset_noeeprom(void) {
 #endif  // RGB_MATRIX_ENABLE
 
 /**
- * Called when a one-shot layer "lock" status changes.
+ * \brief Called when a one-shot layer "lock" status changes.
  *
  * This is called automatically by the QMK framework when a one-shot layer is
  * activated and deactivated.

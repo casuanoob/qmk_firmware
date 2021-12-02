@@ -18,10 +18,10 @@
 /* General configuration. */
 
 #ifdef DELAY_KEYMAP_LITE
-/** Only uses 8 bits for layers.  Limits available layers to 8.  */
+/** \brief Only uses 8 bits for layers.  Limits available layers to 8.  */
 #define LAYER_STATE_8BIT
 #else
-/** Only uses 16 bits for layers.  Limits available layers to 16.  */
+/** \brief Only uses 16 bits for layers.  Limits available layers to 16.  */
 #define LAYER_STATE_16BIT
 #endif  // DELAY_KEYMAP_LITE
 
@@ -29,8 +29,7 @@
 
 #ifdef SPLIT_KEYBOARD
 /**
- * Flash each side with `-bl dfu-split-{left,right}` to set handedness in memory
- * eg.
+ * \brief Flash each side with `-bl dfu-split-*` to set handedness in memory eg.
  *
  *     `qmk flash -bl dfu-split-left -kb <keyboard> -km delay`
  *     `qmk flash -bl dfu-split-right -kb <keyboard> -km delay`
@@ -126,13 +125,15 @@
 /* One-Shot keys. */
 
 /**
- * Tapping this number of times holds the key until tapped once again.
+ * \brief Tapping this number of times holds the key until tapped once again.
+ *
  * https://beta.docs.qmk.fm/using-qmk/software-features/one_shot_keys
  */
 #define ONESHOT_TAP_TOGGLE 2
 
 /**
- * Time (in ms) before the one shot key is released.
+ * \brief Time (in ms) before the one shot key is released.
+ *
  * https://beta.docs.qmk.fm/using-qmk/software-features/one_shot_keys
  */
 #define ONESHOT_TIMEOUT 1500
@@ -141,6 +142,8 @@
 /* Tap dances. */
 
 /**
+ * \brief Configure the global tapping term (default: 200ms).
+ *
  * If you have a lot of accidental mod activations, crank up the tapping term.
  *
  * See
@@ -152,13 +155,15 @@
 #endif  // TAPPING_TERM
 
 /**
- * Customize the TAPPING_TERM for specific keys.
+ * \brief Customize the TAPPING_TERM for specific keys.
  */
 #define TAPPING_TERM_PER_KEY
 
 /**
- * Enable rapid switch from tap to hold.  Disable auto-repeat when pressing key
- * twice, except for one-shot keys.
+ * \brief Enable rapid switch from tap to hold.
+ *
+ * Note that a side-effect of this setting is to disable auto-repeat when
+ * pressing key twice, except for one-shot keys.
  *
  * See
  *   https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-force-hold
@@ -177,7 +182,7 @@
  */
 
 /**
- * Faster tap-hold trigger.
+ * \brief Faster tap-hold trigger.
  *
  * Without `PERMISSIVE_HOLD`, within `TAPPING_TERM`:
  *   Mod(a)🠗 e🠗 e🠕 Mod(a)🠕 ➞ ae
@@ -194,7 +199,7 @@
 #define PERMISSIVE_HOLD_PER_KEY
 
 /**
- * Faster layer-tap hold trigger.
+ * \brief Faster layer-tap hold trigger.
  *
  * Without `HOLD_ON_OTHER_KEY_PRESS`, within `TAPPING_TERM`:
  *     LT(2, a)🠗 e🠗 LT(2, a)🠕 e🠕 ➞ ae
@@ -206,7 +211,7 @@
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 /**
- * Prevent normal rollover on alphas from accidentally triggering mods.
+ * \brief Prevent normal rollover on alphas from accidentally triggering mods.
  *
  * Ignores key presses that interrupt a mod-tap.  Must-have for Home Row mod.
  *
@@ -222,6 +227,8 @@
 #define IGNORE_MOD_TAP_INTERRUPT
 
 /**
+ * \brief Prevent same-hand mod misfires.
+ *
  * The last mod-tap hold will be converted to the corresponding mod-tap tap if
  * another key on the same hand is tapped during the hold, unless a key on the
  * other hand is tapped first.
