@@ -16,7 +16,7 @@
  */
 #pragma once
 
-#include QMK_KEYBOARD_H
+#include "quantum.h"
 
 /** \brief Default compose timeout at 1000ms. */
 #ifndef COMPOSE_TERM

@@ -18,19 +18,34 @@ endif
 # Include common sources.
 SRC += delay.c
 
-# Include compose source and flags if support is enabled.
+# Include compose source and flags if enabled.
 ifeq ($(strip $(COMPOSE_ENABLE)), yes)
 	SRC += compose.c
 	OPT_DEFS += -DCOMPOSE_ENABLE
 endif
 
-# Include compose source and flags if support is enabled.
-ifeq ($(strip $(KEYMAP_ENABLE)), 3x5_3-homerow)
-	SRC += keymaps/3x5_3-homerow.c
+# Include tap-dances source and flags if enabled.
+ifeq ($(strip $(TD_ONESHOT_SHIFT_ENABLE)), yes)
+	TAP_DANCE_ENABLE = yes
+	SRC += tap_dance.c
+	OPT_DEFS += -DTD_ONESHOT_SHIFT_ENABLE
 endif
 
-# Include compose source and flags if support is enabled.
-ifeq ($(strip $(KEYMAP_ENABLE)), 3x5_3-homerow-lite)
-	SRC += keymaps/3x5_3-homerow.c
-	OPT_DEFS += -DDELAY_KEYMAP_LITE
+# Include split36 keymap source and flags if enabled.
+ifeq ($(strip $(KEYMAP_ENABLE)), split36)
+	SRC += keymaps/split36.c
+	OPT_DEFS += -DDELAY_KEYMAP_SPLIT36
+endif
+
+# Include split36-homerow keymap source and flags if enabled.
+ifeq ($(strip $(KEYMAP_ENABLE)), split36-homerow)
+	SRC += keymaps/split36-homerow.c
+	OPT_DEFS += -DDELAY_KEYMAP_SPLIT36_HOMEROW
+endif
+
+# Include split36-homerow-lite source and flags if enabled.
+ifeq ($(strip $(KEYMAP_ENABLE)), split36-homerow-lite)
+	SRC += keymaps/split36-homerow.c
+	OPT_DEFS += -DDELAY_KEYMAP_SPLIT36_HOMEROW
+	OPT_DEFS += -DDELAY_KEYMAP_SPLIT36_HOMEROW_LITE
 endif
