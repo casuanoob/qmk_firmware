@@ -16,9 +16,13 @@
  */
 #pragma once
 
-#include QMK_KEYBOARD_H
 #include "compose.h"
 #include "delay.h"
+#include "quantum.h"
+
+#ifdef TAP_DANCE_ENABLE
+#include "tap_dance.h"
+#endif  // TAP_DANCE_ENABLE
 
 enum layers_keymap {
   LAYER_DEFAULT = 0,
@@ -27,14 +31,14 @@ enum layers_keymap {
   LAYER_ALPHAS_DVORAK = LAYER_ALPHAS_FIRST,  // Dvorak.
   LAYER_ALPHAS_COLEMAK_DHM,                  // Colemak-DHm.
   LAYER_ALPHAS_LAST = LAYER_ALPHAS_COLEMAK_DHM,
-#ifndef DELAY_KEYMAP_LITE
+#ifndef DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
   // Alpha layers with no Home Row Mods (for practice/typing tests).
   // Must mirror alpha layers, and follow the same orders.
   LAYER_NO_MODS_ALPHAS_FIRST,
   LAYER_NO_MODS_ALPHAS_DVORAK = LAYER_NO_MODS_ALPHAS_FIRST,  // Dvorak.
   LAYER_NO_MODS_ALPHAS_COLEMAK_DHM,                          // Colemak-DHm.
   LAYER_NO_MODS_ALPHAS_LAST = LAYER_NO_MODS_ALPHAS_COLEMAK_DHM,
-#endif  // !DELAY_KEYMAP_LITE
+#endif  // !DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
   // Non-alphas layers.
   LAYER_NON_ALPHAS_FIRST,
   LAYER_DEV = LAYER_NON_ALPHAS_FIRST,  // Special characters used for dev/shell.
@@ -57,12 +61,6 @@ enum keycodes_keymap {
   KM_LAST_DEFAULT_LAYER = KM_COLEMAK_DHM,
   SAFE_RANGE_WITH_DEFAULT_KEYMAP,
 };
-
-#ifdef TAP_DANCE_ENABLE
-enum tapdance_keymap {
-  TD_ONESHOT_SHIFT,  // Custom OSM Shift with layer on hold.
-};
-#endif  // TAP_DANCE_ENABLE
 
 /**
  * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
@@ -96,11 +94,11 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 #define OSL_EXP OSL(LAYER_EXP)
 
 // One-shot keys.
-#ifdef TAP_DANCE_ENABLE
+#if defined(TAP_DANCE_ENABLE) && defined(TD_ONESHOT_SHIFT_ENABLE)
 #define OSM_SFT TD(TD_ONESHOT_SHIFT)
-#else  // !TAP_DANCE_ENABLE
+#else
 #define OSM_SFT OSM(MOD_LSFT)
-#endif  // TAP_DANCE_ENABLE
+#endif  // TAP_DANCE_ENABLE && TD_ONESHOT_SHIFT_ENABLE
 
 // clang-format off
 /**

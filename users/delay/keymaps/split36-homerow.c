@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include QMK_KEYBOARD_H
-#include "keymaps/3x5_3-homerow.h"
+#include "keymaps/split36-homerow.h"
 
 #ifdef RGB_MATRIX_ENABLE
 #include "quantum/rgb_matrix/rgb_matrix.h"
@@ -27,82 +27,11 @@
 #endif  // RGB_MATRIX_ENABLE
 
 #ifdef TAP_DANCE_ENABLE
-typedef enum {
-  TD_NONE,
-  TD_UNKNOWN,
-  TD_SINGLE_TAP,
-  TD_DOUBLE_TAP,
-  TD_HOLD,
-  TD_DOUBLE_HOLD,
-} td_state_t;
+#include "tap_dance.h"
+#endif  // TAP_DANCE_ENABLE
 
-typedef struct {
-  const uint8_t single_hold_layer;
-  const uint8_t double_hold_layer;
-  td_state_t td_state;
-} oneshot_shift_td_state_t;
-
-static td_state_t _get_current_state(qk_tap_dance_state_t *state) {
-  if (state->count == 1) {
-    return state->interrupted || !state->pressed ? TD_SINGLE_TAP : TD_HOLD;
-  }
-  if (state->count == 2) {
-    return state->interrupted || !state->pressed ? TD_DOUBLE_TAP
-                                                 : TD_DOUBLE_HOLD;
-  }
-  return TD_UNKNOWN;
-}
-
-static void _oneshot_shift_td_on_dance_finished(qk_tap_dance_state_t *state,
-                                                void *user_data) {
-  oneshot_shift_td_state_t *const oneshot_shift_td_state = user_data;
-  oneshot_shift_td_state->td_state = _get_current_state(state);
-
-  const uint8_t mod = MOD_LSFT;
-  switch (oneshot_shift_td_state->td_state) {
-    case TD_SINGLE_TAP:
-      if (get_oneshot_locked_mods() & mod) {
-        clear_oneshot_locked_mods();
-        clear_oneshot_mods();
-        del_mods(mod);
-      } else {
-        set_oneshot_mods(mod);
-      }
-      break;
-    case TD_DOUBLE_TAP:
-      clear_oneshot_mods();
-      set_oneshot_locked_mods(mod);
-      add_mods(mod);
-      break;
-    case TD_HOLD:
-      clear_oneshot_mods();
-      layer_on(oneshot_shift_td_state->single_hold_layer);
-      break;
-    case TD_DOUBLE_HOLD:
-      clear_oneshot_mods();
-      layer_on(oneshot_shift_td_state->double_hold_layer);
-      break;
-    default:
-      break;
-  }
-}
-
-static void _oneshot_shift_td_on_dance_reset(qk_tap_dance_state_t *state,
-                                             void *user_data) {
-  oneshot_shift_td_state_t *const oneshot_shift_td_state = user_data;
-  switch (oneshot_shift_td_state->td_state) {
-    case TD_HOLD:
-      layer_off(oneshot_shift_td_state->single_hold_layer);
-      break;
-    case TD_DOUBLE_HOLD:
-      layer_off(oneshot_shift_td_state->double_hold_layer);
-      break;
-    default:
-      break;
-  }
-  oneshot_shift_td_state->td_state = TD_NONE;
-}
-
+#ifdef TAP_DANCE_ENABLE
+#ifdef TD_ONESHOT_SHIFT_ENABLE
 /**
  * \brief The state for the oneshot-shift tap-dance.
  *
@@ -114,21 +43,24 @@ static oneshot_shift_td_state_t g_oneshot_shift_td_state = {
     .double_hold_layer = LAYER_EXP,
     .td_state = TD_NONE,
 };
+#endif  // TD_ONESHOT_SHIFT_ENABLE
 
 /**
  * \brief Define global tap-dance actions.
  */
 qk_tap_dance_action_t tap_dance_actions[] = {
+#ifdef TD_ONESHOT_SHIFT_ENABLE
     [TD_ONESHOT_SHIFT] =
         {
             .fn = {
                 /* user_fn_on_each_tap= */ NULL,
-                _oneshot_shift_td_on_dance_finished,
-                _oneshot_shift_td_on_dance_reset,
+                oneshot_shift_td_on_dance_finished,
+                oneshot_shift_td_on_dance_reset,
             },
             .user_data = &g_oneshot_shift_td_state,
-            .custom_tapping_term = TAPPING_TERM + 125,
+            .custom_tapping_term = DELAY_TD_TAPPING_TERM,
         },
+#endif  // TD_ONESHOT_SHIFT_ENABLE
 };
 #endif  // TAP_DANCE_ENABLE
 
@@ -178,7 +110,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
     case KM_FIRST_DEFAULT_LAYER ... KM_LAST_DEFAULT_LAYER:
       if (record->event.pressed) {
         const uint8_t mods = mod_config(get_mods() | get_oneshot_mods());
-#ifdef DELAY_KEYMAP_LITE
+#ifdef DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
         const uint8_t layer =
             keycode - KM_FIRST_DEFAULT_LAYER + LAYER_ALPHAS_FIRST;
 #else
@@ -186,7 +118,7 @@ bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
         const uint8_t layer = keycode - KM_FIRST_DEFAULT_LAYER +
                               (mods & MOD_MASK_CTRL ? LAYER_NO_MODS_ALPHAS_FIRST
                                                     : LAYER_ALPHAS_FIRST);
-#endif  // DELAY_KEYMAP_LITE
+#endif  // DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
         if (mods & MOD_MASK_SHIFT) {
           // Permanently changes the layer if shifted.
           set_single_persistent_default_layer(layer);
@@ -311,11 +243,11 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 #endif  // TAPPING_TERM_PER_KEY
 
-#ifdef TAPPING_FORCE_HOLD_PER_KEY
+#if defined(TAPPING_FORCE_HOLD_PER_KEY) && !defined(TD_ONESHOT_SHIFT_ENABLE)
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-  return keycode != OSM_SFT && keycode != OSL_EXP;
+  return keycode != OSM_SFT;
 }
-#endif  // TAPPING_FORCE_HOLD_PER_KEY
+#endif  // TAPPING_FORCE_HOLD_PER_KEY && !TD_ONESHOT_SHIFT_ENABLE
 
 #ifdef PERMISSIVE_HOLD_PER_KEY
 bool get_permissive_hold(uint16_t keycode, keyrecord_t *record) {
