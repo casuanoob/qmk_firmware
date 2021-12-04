@@ -16,7 +16,7 @@ ifndef SPACE_CADET_ENABLE
 endif
 
 # Include common sources.
-SRC += delay.c
+SRC += delay.c platform.c
 
 # Include compose source and flags if enabled.
 ifeq ($(strip $(COMPOSE_ENABLE)), yes)
@@ -29,6 +29,12 @@ ifeq ($(strip $(TD_ONESHOT_SHIFT_ENABLE)), yes)
 	TAP_DANCE_ENABLE = yes
 	SRC += tap_dance.c
 	OPT_DEFS += -DTD_ONESHOT_SHIFT_ENABLE
+endif
+
+# Include oneshot mods.
+ifeq ($(strip $(ONESHOT_MOD_ENABLE)), yes)
+	SRC += oneshot_mod.c
+	OPT_DEFS += -DONESHOT_MOD_ENABLE
 endif
 
 # Include split36 keymap source and flags if enabled.
