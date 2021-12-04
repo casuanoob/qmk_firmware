@@ -21,3 +21,6 @@
 
 // macOS "Natural" scroll direction.
 #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
+
+// Disable unused keycodes.
+#define NO_CHARYBDIS_KEYCODES
