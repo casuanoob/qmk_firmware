@@ -15,15 +15,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* General configuration. */
+/* Keymap-specific configuration. */
 
-#ifdef DELAY_KEYMAP_LITE
+#ifdef DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
 /** \brief Only uses 8 bits for layers.  Limits available layers to 8.  */
 #define LAYER_STATE_8BIT
 #else
 /** \brief Only uses 16 bits for layers.  Limits available layers to 16.  */
 #define LAYER_STATE_16BIT
-#endif  // DELAY_KEYMAP_LITE
+#endif  // DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
+
+#ifdef DELAY_KEYMAP_SPLIT36_HOMEROW
+/**
+ * \brief Enable rapid switch from tap to hold.
+ *
+ * Note that a side-effect of this setting is to disable auto-repeat when
+ * pressing key twice, except for one-shot keys.
+ *
+ * See
+ *   https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-force-hold
+ *   https://precondition.github.io/home-row-mods#tapping-force-hold
+ */
+#define TAPPING_FORCE_HOLD_PER_KEY
+#endif  // DELAY_KEYMAP_SPLIT36_HOMEROW
 
 /* Split keyboards. */
 
@@ -158,18 +172,6 @@
  * \brief Customize the TAPPING_TERM for specific keys.
  */
 #define TAPPING_TERM_PER_KEY
-
-/**
- * \brief Enable rapid switch from tap to hold.
- *
- * Note that a side-effect of this setting is to disable auto-repeat when
- * pressing key twice, except for one-shot keys.
- *
- * See
- *   https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-force-hold
- *   https://precondition.github.io/home-row-mods#tapping-force-hold
- */
-#define TAPPING_FORCE_HOLD_PER_KEY
 
 /*
  * Tap-or-Hold decision modes.
