@@ -57,7 +57,8 @@ enum keycodes_user {
   PL_CUT,    // ^X or Cmd+X based on the platform.
   PL_COPY,   // ^C or Cmd+C based on the platform.
   PL_PASTE,  // ^V or Cmd+V based on the platform.
-  // Custom version of these keycodes that can't be shifted.
+  // Custom version of these keycodes that don't shift when only oneshot shift
+  // mod is locked.
   NS_0,
   NS_1,
   NS_2,
@@ -76,6 +77,11 @@ enum keycodes_user {
   NS_RBRACKET,
   NS_SCOLON,
   NS_SLASH,
+  // Custom version of up/down/left/right keycodes that can't be shifted.
+  NS_UP,
+  NS_DOWN,
+  NS_LEFT,
+  NS_RIGHT,
   SAFE_RANGE_KEYMAP,
 };
 
@@ -93,6 +99,7 @@ enum keycodes_user {
 #define NS_RBRC NS_RBRACKET
 #define NS_SCLN NS_SCOLON
 #define NS_SLSH NS_SLASH
+#define NS_RGHT NS_RIGHT
 
 /**
  * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
