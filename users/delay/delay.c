@@ -17,64 +17,24 @@
 #include "compose.h"
 #include "config.h"
 #include "delay.h"
+#include "platform.h"
 
 #ifdef RGB_MATRIX_ENABLE
 #include "quantum/rgb_matrix/rgb_matrix.h"
 #include "quantum/rgblight/rgblight_list.h"
 #endif  // RGB_MATRIX_ENABLE
 
-/**
- * \brief User specific config.
- *
- * Currently contains:
- *   - The targeted platform (used to adjust some keycodes at runtime).
- */
-typedef union {
-  uint32_t raw;
-  struct {
-    platform_t platform : 2;
-  } __attribute__((packed));
-} eeconfig_user_t;
+#ifdef ONESHOT_MOD_ENABLE
+#include "oneshot_mod.h"
 
-/** \brief User configuration global state. */
-static eeconfig_user_t g_eeconfig_user = {0};
-
-/** \brief Set the value of `config` from EEPROM. */
-static void _read_eeconfig_user_from_eeprom(eeconfig_user_t *config) {
-  config->raw = eeconfig_read_user();
-}
-
-/** \brief Persist the value of `config` to EEPROM. */
-static void _write_eeconfig_user_to_eeprom(eeconfig_user_t *config) {
-  eeconfig_update_user(config->raw);
-}
-
-static platform_t _eeconfig_user_get_platform(eeconfig_user_t *eeconfig_user) {
-  return eeconfig_user->platform;
-}
-
-static void _eeconfig_user_set_platform(eeconfig_user_t *eeconfig_user,
-                                        platform_t platform) {
-  eeconfig_user->platform = platform;
-}
-
-static void _eeconfig_user_set_platform_and_save_to_eeprom(
-    eeconfig_user_t *eeconfig_user, platform_t platform) {
-  _eeconfig_user_set_platform(&g_eeconfig_user, platform);
-  _write_eeconfig_user_to_eeprom(&g_eeconfig_user);
-}
-
-platform_t get_platform(void) {
-  return _eeconfig_user_get_platform(&g_eeconfig_user);
-}
-
-void set_platform(platform_t platform) {
-  _eeconfig_user_set_platform_and_save_to_eeprom(&g_eeconfig_user, platform);
-}
-
-void set_platform_noeeprom(platform_t platform) {
-  _eeconfig_user_set_platform(&g_eeconfig_user, platform);
-}
+typedef struct {
+  oneshot_mod_state_t lalt;
+  oneshot_mod_state_t lctl;
+  oneshot_mod_state_t lgui;
+  oneshot_mod_state_t lsft;
+  oneshot_mod_state_t ralt;
+} osm_state_t;
+#endif  // ONESHOT_MOD_ENABLE
 
 #ifdef COMPOSE_ENABLE
 /** Compose global state. */
@@ -190,61 +150,21 @@ __attribute__((weak)) void compose_keymap(compose_state_t *state) {}
   }
 #endif  // NO_ONESHOT_SHIFT_LOCKED_CODE
 
-static void _process_platform_update(platform_t platform, keyrecord_t *record,
-                                     eeconfig_user_t *config) {
-  if (record->event.pressed) {
-    _eeconfig_user_set_platform_and_save_to_eeprom(config, platform);
-  }
-}
-
-static void _process_platform_shortcut(uint16_t keycode, keyrecord_t *record,
-                                       eeconfig_user_t *eeconfig_user) {
-  const uint16_t keycode16 = _eeconfig_user_get_platform(eeconfig_user) == MACOS
-                                 ? LGUI(keycode)
-                                 : LCTL(keycode);
-  if (record->event.pressed) {
-    register_code16(keycode16);
-  } else {
-    unregister_code16(keycode16);
-  }
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+static bool process_record_user_internal(uint16_t keycode,
+                                         keyrecord_t *record) {
 #ifdef COMPOSE_ENABLE
   if (!process_record_compose(&g_compose_state, keycode, record)) {
     return false;
   }
 #endif  // COMPOSE_ENABLE
   switch (keycode) {
-    case FX_PLATFORM_LINUX:
-      _process_platform_update(LINUX, record, &g_eeconfig_user);
+    case MACOS:
+      if (record->event.pressed) {
+        toggle_macos();
+      }
       break;
-    case FX_PLATFORM_MACOS:
-      _process_platform_update(MACOS, record, &g_eeconfig_user);
-      break;
-    case FX_PLATFORM_WINDOWS:
-      _process_platform_update(WINDOWS, record, &g_eeconfig_user);
-      break;
-    case NS_0:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_0);
-    case NS_1:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_1);
-    case NS_2:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_2);
-    case NS_3:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_3);
-    case NS_4:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_4);
-    case NS_5:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_5);
-    case NS_6:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_6);
-    case NS_7:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_7);
-    case NS_8:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_8);
-    case NS_9:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_9);
+    case NS_1 ... NS_0:
+      NO_ONESHOT_SHIFT_LOCKED_CODE(keycode - NS_1 + KC_1);
     case NS_BSLASH:
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_BSLASH);
     case NS_COMMA:
@@ -253,6 +173,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOT);
     case NS_GRAVE:
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_GRAVE);
+    case NS_QUOTE:
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_QUOTE);
     case NS_LBRACKET:
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LBRC);
     case NS_RBRACKET:
@@ -269,17 +191,84 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
     case NS_RIGHT:
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
-    case PL_CUT:
-      _process_platform_shortcut(KC_X, record, &g_eeconfig_user);
+    case SC_CUT:
+      process_record_cut(record);
       break;
-    case PL_COPY:
-      _process_platform_shortcut(KC_C, record, &g_eeconfig_user);
+    case SC_COPY:
+      process_record_copy(record);
       break;
-    case PL_PASTE:
-      _process_platform_shortcut(KC_V, record, &g_eeconfig_user);
+    case SC_PASTE:
+      process_record_paste(record);
+      break;
+    case SC_PASTE_NO_FORMAT:
+      process_record_paste_no_format(record);
+      break;
+    case SC_CLOSE:
+      process_record_close(record);
+      break;
+    case SC_SELECT_ALL:
+      process_record_select_all(record);
+      break;
+    case WS_GOTO_1 ... WS_GOTO_0:
+      process_record_space_goto_index(record, keycode - WS_GOTO_1);
+    case WS_CYCLE_MODE:
+      process_record_space_cycle_mode(record);
+      break;
+    case WS_FOCUS_PREVIOUS:
+      process_record_space_focus_previous(record);
+      break;
+    case WS_FOCUS_NEXT:
+      process_record_space_focus_next(record);
+      break;
+    case WS_GOTO_PREVIOUS:
+      process_record_space_goto_previous(record);
+      break;
+    case WS_GOTO_NEXT:
+      process_record_space_goto_next(record);
+      break;
+    case WS_MAIN_PANE_EXPAND:
+      process_record_space_main_pane_expand(record);
+      break;
+    case WS_MAIN_PANE_SHRINK:
+      process_record_space_main_pane_shrink(record);
+      break;
+    case WS_MAIN_PANE_COUNT_DECREASE:
+      process_record_space_main_pane_count_decrease(record);
+      break;
+    case WS_MAIN_PANE_COUNT_INCREASE:
+      process_record_space_main_pane_count_increase(record);
+      break;
+    case WS_MAIN_PANE_PROMOTE:
+      process_record_space_main_pane_promote(record);
       break;
   }
   return process_record_keymap(keycode, record);
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+#ifdef ONESHOT_MOD_ENABLE
+  static osm_state_t osm_state = {
+      .lalt = ONESHOT_UP_UNQUEUED,
+      .lctl = ONESHOT_UP_UNQUEUED,
+      .lgui = ONESHOT_UP_UNQUEUED,
+      .lsft = ONESHOT_UP_UNQUEUED,
+      .ralt = ONESHOT_UP_UNQUEUED,
+  };
+  oneshot_mod_pre(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
+  oneshot_mod_pre(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
+  oneshot_mod_pre(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
+  oneshot_mod_pre(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
+  oneshot_mod_pre(&osm_state.ralt, KC_RALT, OS_RALT, keycode, record);
+#endif  // ONESHOT_MOD_ENABLE
+  const bool result = process_record_user_internal(keycode, record);
+#ifdef ONESHOT_MOD_ENABLE
+  oneshot_mod_post(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
+  oneshot_mod_post(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
+  oneshot_mod_post(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
+  oneshot_mod_post(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
+  oneshot_mod_post(&osm_state.ralt, KC_RALT, OS_RALT, keycode, record);
+#endif  // ONESHOT_MOD_ENABLE
+  return result;
 }
 
 __attribute__((weak)) bool process_record_keymap(uint16_t keycode,
@@ -297,8 +286,24 @@ void matrix_scan_user(void) {
 
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
+/**
+ * Init the host platform (whether host is macOS or not).
+ *
+ * This relies on a macOS oddity to detect whether the host platform is macOS or
+ * another system: macOS does not support some features (in this case, numlock),
+ * so by manually setting numlock, and checking for its value, it's possible to
+ * guess the host OS.
+ */
+static void _init_host_platform(void) {
+  add_key(KC_NUM_LOCK);
+  send_keyboard_report();
+  set_is_macos(!(host_keyboard_leds() & (1 << USB_LED_NUM_LOCK)));
+  del_key(KC_NUM_LOCK);
+  send_keyboard_report();
+}
+
 void keyboard_post_init_user(void) {
-  g_eeconfig_user.raw = eeconfig_read_user();
+  _init_host_platform();
 #ifdef COMPOSE_ENABLE
   keyboard_post_init_compose(&g_compose_state);
 #endif  // COMPOSE_ENABLE
@@ -342,19 +347,6 @@ void oneshot_locked_mods_changed_user(uint8_t mods) {
 }
 
 void oneshot_locked_mods_changed_keymap(uint8_t mods) {}
-
-void eeconfig_init_user(void) {
-  g_eeconfig_user.raw = 0;
-  _read_eeconfig_user_from_eeprom(&g_eeconfig_user);
-#ifdef RGB_MATRIX_ENABLE
-  rgb_matrix_mode(RGB_MATRIX_STARTUP_MODE);
-  rgb_matrix_sethsv(RGB_MATRIX_STARTUP_HSV);
-  rgb_matrix_set_speed(RGB_MATRIX_STARTUP_SPD);
-#endif  // RGB_MATRIX_ENABLE
-  eeconfig_init_keymap();
-}
-
-__attribute__((weak)) void eeconfig_init_keymap(void) {}
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
