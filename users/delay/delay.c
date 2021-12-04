@@ -164,24 +164,31 @@ void compose_user(compose_state_t *state) {
 __attribute__((weak)) void compose_keymap(compose_state_t *state) {}
 #endif  // COMPOSE_ENABLE
 
-#ifndef NO_SHIFT_CODE
-#define NO_SHIFT_CODE(keycode)                                           \
-  {                                                                      \
-    if (record->event.pressed) {                                         \
-      const uint8_t mod_shift = mod_config(get_mods()) & MOD_MASK_SHIFT; \
-      if (mod_shift) {                                                   \
-        del_mods(mod_shift);                                             \
-        register_code(keycode);                                          \
-        add_mods(mod_shift);                                             \
-      } else {                                                           \
-        register_code(keycode);                                          \
-      }                                                                  \
-    } else {                                                             \
-      unregister_code(keycode);                                          \
-    }                                                                    \
-    break;                                                               \
+/**
+ * \brief Do not shift `keycode` if only oneshot-shift is locked.
+ *
+ * This effectively suppresses the effect of oneshot-shift locked mod for some
+ * keycodes, allowing for better typing experience in all caps (eg. for
+ * identifier names in some programming language/coding style).
+ */
+#ifndef NO_ONESHOT_SHIFT_LOCKED_CODE
+#define NO_ONESHOT_SHIFT_LOCKED_CODE(keycode)                  \
+  {                                                            \
+    if (record->event.pressed) {                               \
+      if (get_oneshot_locked_mods() & MOD_MASK_SHIFT) {        \
+        const uint8_t mod_shift = get_mods() & MOD_MASK_SHIFT; \
+        unregister_mods(mod_shift);                            \
+        register_code(keycode);                                \
+        register_mods(mod_shift);                              \
+      } else {                                                 \
+        register_code(keycode);                                \
+      }                                                        \
+    } else {                                                   \
+      unregister_code(keycode);                                \
+    }                                                          \
+    break;                                                     \
   }
-#endif  // NO_SHIFT_CODE
+#endif  // NO_ONESHOT_SHIFT_LOCKED_CODE
 
 static void _process_platform_update(platform_t platform, keyrecord_t *record,
                                      eeconfig_user_t *config) {
@@ -219,41 +226,49 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       _process_platform_update(WINDOWS, record, &g_eeconfig_user);
       break;
     case NS_0:
-      NO_SHIFT_CODE(KC_0);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_0);
     case NS_1:
-      NO_SHIFT_CODE(KC_1);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_1);
     case NS_2:
-      NO_SHIFT_CODE(KC_2);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_2);
     case NS_3:
-      NO_SHIFT_CODE(KC_3);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_3);
     case NS_4:
-      NO_SHIFT_CODE(KC_4);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_4);
     case NS_5:
-      NO_SHIFT_CODE(KC_5);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_5);
     case NS_6:
-      NO_SHIFT_CODE(KC_6);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_6);
     case NS_7:
-      NO_SHIFT_CODE(KC_7);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_7);
     case NS_8:
-      NO_SHIFT_CODE(KC_8);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_8);
     case NS_9:
-      NO_SHIFT_CODE(KC_9);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_9);
     case NS_BSLASH:
-      NO_SHIFT_CODE(KC_BSLASH);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_BSLASH);
     case NS_COMMA:
-      NO_SHIFT_CODE(KC_COMMA);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_COMMA);
     case NS_DOT:
-      NO_SHIFT_CODE(KC_DOT);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOT);
     case NS_GRAVE:
-      NO_SHIFT_CODE(KC_GRAVE);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_GRAVE);
     case NS_LBRACKET:
-      NO_SHIFT_CODE(KC_LBRC);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LBRC);
     case NS_RBRACKET:
-      NO_SHIFT_CODE(KC_RBRC);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RBRC);
     case NS_SCOLON:
-      NO_SHIFT_CODE(KC_SCOLON);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SCOLON);
     case NS_SLASH:
-      NO_SHIFT_CODE(KC_SLASH);
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SLASH);
+    case NS_UP:
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_UP);
+    case NS_DOWN:
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOWN);
+    case NS_LEFT:
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
+    case NS_RIGHT:
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
     case PL_CUT:
       _process_platform_shortcut(KC_X, record, &g_eeconfig_user);
       break;
