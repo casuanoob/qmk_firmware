@@ -1,8 +1,7 @@
 {
-    "url": "https://bastardkb.com/charybdis",
-    "usb": {
-        "pid": "0x1833",
-    },
+    "keyboard_name": "Charybdis",
+    "url": "https://www.bastardkb.com",
+    "maintainer": "Quentin Lebastard",
     "layouts": {
         "LAYOUT_charybdis_4x6": {
             "layout": [
