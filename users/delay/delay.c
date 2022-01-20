@@ -20,6 +20,10 @@
 #include "platform.h"
 
 #ifdef RGB_MATRIX_ENABLE
+#include "timer.h"
+#endif  // RGB_MATRIX_ENABLE
+
+#ifdef RGB_MATRIX_ENABLE
 #include "quantum/rgb_matrix/rgb_matrix.h"
 #include "quantum/rgblight/rgblight_list.h"
 #endif  // RGB_MATRIX_ENABLE
@@ -282,23 +286,61 @@ __attribute__((weak)) bool process_record_keymap(uint16_t keycode,
   return true;
 }
 
+#ifdef RGB_MATRIX_ENABLE
+static uint16_t reset_rgb_matrix_timer = 0;
+
+/**
+ * \brief Apply default/startup RGB matrix values.
+ *
+ * This is to replace the missing `rgb_matrix_reload_from_eeprom()`.
+ */
+void rgb_matrix_reset_noeeprom(void) {
+  rgb_matrix_mode_noeeprom(RGB_MATRIX_STARTUP_MODE);
+  rgb_matrix_sethsv_noeeprom(RGB_MATRIX_STARTUP_HSV);
+  rgb_matrix_set_speed_noeeprom(RGB_MATRIX_STARTUP_SPD);
+}
+#endif  // RGB_MATRIX_ENABLE
+
 void matrix_scan_user(void) {
 #ifdef COMPOSE_ENABLE
   // Compose callback, used to handle compose sequence timeout.
   matrix_scan_compose(&g_compose_state);
 #endif  // COMPOSE_ENABLE
+#ifdef RGB_MATRIX_ENABLE
+  if (reset_rgb_matrix_timer != 0 &&
+      TIMER_DIFF_16(timer_read(), reset_rgb_matrix_timer) >= 1000) {
+    rgb_matrix_reset_noeeprom();
+    reset_rgb_matrix_timer = 0;
+  }
+#endif  // RGB_MATRIX_ENABLE
   matrix_scan_keymap();
 }
 
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
+/** Called on layer change. */
+layer_state_t layer_state_set_user(layer_state_t state) {
+#ifdef RGB_MATRIX_ENABLE
+  // TODO(delay): use layer name instead of hard-coded 0.
+  if (get_highest_layer(state) == 0) {
+    reset_rgb_matrix_timer = timer_read();
+  }
+#endif  // RGB_MATRIX_ENABLE
+  return layer_state_set_keymap(state);
+}
+
+__attribute__((weak)) layer_state_t layer_state_set_keymap(
+    layer_state_t state) {
+  return state;
+}
+
 /**
  * Init the host platform (whether host is macOS or not).
  *
- * This relies on a macOS oddity to detect whether the host platform is macOS or
- * another system: macOS does not support some features (in this case, numlock),
- * so by manually setting numlock, and checking for its value, it's possible to
- * guess the host OS.
+ * This relies on a macOS oddity to detect whether the host platform is macOS
+ * or another system: macOS does not support some features (in this case,
+ * numlock), so by manually setting numlock, and checking for its value, it's
+ * possible to guess the host OS.
  */
 static void _init_host_platform(void) {
   add_key(KC_NUM_LOCK);
@@ -317,19 +359,6 @@ void keyboard_post_init_user(void) {
 }
 
 __attribute__((weak)) void keyboard_post_init_keymap(void) {}
-
-#ifdef RGB_MATRIX_ENABLE
-/**
- * \brief Apply default/startup RGB matrix values.
- *
- * This is to replace the missing `rgb_matrix_reload_from_eeprom()`.
- */
-void rgb_matrix_reset_noeeprom(void) {
-  rgb_matrix_mode_noeeprom(RGB_MATRIX_STARTUP_MODE);
-  rgb_matrix_sethsv_noeeprom(RGB_MATRIX_STARTUP_HSV);
-  rgb_matrix_set_speed_noeeprom(RGB_MATRIX_STARTUP_SPD);
-}
-#endif  // RGB_MATRIX_ENABLE
 
 /**
  * \brief Called when a one-shot layer "lock" status changes.

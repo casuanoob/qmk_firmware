@@ -159,6 +159,17 @@ void matrix_scan_keymap(void);
  * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
+ * a new version of the `layer_state_set_*` callback is necessary for each
+ * keymap to add their own.
+ *
+ * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
+ */
+layer_state_t layer_state_set_keymap(layer_state_t state);
+
+/**
+ * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
+ *
+ * `_user` is already defined to add common functions to all keymaps, therefore
  * a new version of the `keyboard_post_init_*` callback is necessary for each
  * keymap to add their own.
  *
