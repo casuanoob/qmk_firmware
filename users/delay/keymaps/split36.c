@@ -19,6 +19,10 @@
 #include "platform.h"
 
 #ifdef RGB_MATRIX_ENABLE
+#include "timer.h"
+#endif  // RGB_MATRIX_ENABLE
+
+#ifdef RGB_MATRIX_ENABLE
 #include "quantum/rgb_matrix/rgb_matrix.h"
 #include "quantum/rgblight/rgblight_list.h"
 #endif  // RGB_MATRIX_ENABLE

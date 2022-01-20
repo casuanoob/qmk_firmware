@@ -36,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef POINTING_DEVICE_ENABLE
 /** Called on layer change. */
-layer_state_t layer_state_set_user(layer_state_t state) {
+layer_state_t layer_state_set_keymap(layer_state_t state) {
   const layer_state_t current_layer = get_highest_layer(state);
   charybdis_set_pointer_dragscroll_enabled(current_layer == _NAV);
   return state;
