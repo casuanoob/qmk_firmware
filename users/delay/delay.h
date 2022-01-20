@@ -38,6 +38,8 @@ enum keycodes_user {
   SC_PASTE_NO_FORMAT,  // Shifted ^V or Cmd+V based on the platform.
   // Other platform-specific shortcuts.
   SC_CLOSE,       // ^W or Cmd+W based on the platform.
+  SC_NEW_TAB,     // ^T or Cmd+T based on the platform.
+  SC_NEW_WINDOW,  // ^N or Cmd+N based on the platform.
   SC_SELECT_ALL,  // ^A or Cmd+A based on the platform.
   // Custom version of these keycodes that don't shift when only oneshot shift
   // mod is locked.
@@ -106,6 +108,9 @@ enum keycodes_user {
 #define NS_SCLN NS_SCOLON
 #define NS_SLSH NS_SLASH
 #define SC_PSTE SC_PASTE
+#define SC_CLSE SC_CLOSE
+#define SC_NTAB SC_NEW_TAB
+#define SC_NWIN SC_NEW_WINDOW
 #define SC_SELA SC_SELECT_ALL
 #define WS_1 WS_GOTO_1
 #define WS_2 WS_GOTO_2
