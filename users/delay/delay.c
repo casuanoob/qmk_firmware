@@ -206,6 +206,12 @@ static bool process_record_user_internal(uint16_t keycode,
     case SC_CLOSE:
       process_record_close(record);
       break;
+    case SC_NEW_TAB:
+      process_record_new_tab(record);
+      break;
+    case SC_NEW_WINDOW:
+      process_record_new_window(record);
+      break;
     case SC_SELECT_ALL:
       process_record_select_all(record);
       break;

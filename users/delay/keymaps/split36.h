@@ -71,6 +71,8 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
 
 // Mod-taps.
 #define CTL_DWN LCTL_T(KC_DOWN)
+#define GUI_RGH LGUI_T(KC_RIGHT)
+#define SFT_LFT LSFT_T(KC_LEFT)
 
 // Shorthands
 #define ___x___ KC_NO
@@ -112,7 +114,7 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
  */
 #define NUM_split_3x5_3                                                                       \
      KC_EQL,    NS_7,    NS_8,    NS_9, KC_ASTR, ___x___, ___x___, ___x___, ___x___, ___x___, \
-    KC_COLN,    NS_4,    NS_5,    NS_6, KC_PLUS, ___x___, ___x___, ___x___, ___x___, ___x___, \
+    KC_COLN,    NS_4,    NS_5,    NS_6, KC_PLUS, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
     KC_SLSH,    NS_1,    NS_2,    NS_3, KC_MINS, ___x___, ___x___, ___x___, ___x___, ___x___, \
                       KC_BSPC,  KC_ESC,    NS_0, ___x___, _______, ___x___
 
@@ -121,7 +123,7 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
  */
 #define FUN_split_3x5_3                                                                       \
      KC_F12,   KC_F7,   KC_F8,   KC_F9, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
-     KC_F11,   KC_F4,   KC_F5,   KC_F6, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+     KC_F11,   KC_F4,   KC_F5,   KC_F6, ___x___, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
      KC_F10,   KC_F1,   KC_F2,   KC_F3, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
                       ___x___, ___x___, ___x___, ___x___, ___x___, ___x___
 
@@ -130,8 +132,8 @@ layer_state_t layer_state_set_keymap(layer_state_t state);
  */
 #define NAV_split_3x5_3                                                                       \
     WS_PREV, RCS_TAB,   KC_UP, CTL_TAB, WS_NEXT, ___x___, KC_HOME,   NS_UP,  KC_END, ___x___, \
-    SC_SELA, KC_LEFT, CTL_DWN, KC_RGHT, ___x___, ___x___, NS_LEFT, NS_DOWN, NS_RGHT, ___x___, \
-    ___x___, SC_PSTE, SC_COPY,  SC_CUT, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+    SC_NWIN, SFT_LFT, CTL_DWN, GUI_RGH, SC_NTAB, ___x___, NS_LEFT, NS_DOWN, NS_RGHT, ___x___, \
+    SC_CLSE, SC_PSTE, SC_COPY,  SC_CUT, SC_SELA, ___x___, ___x___, ___x___, ___x___, ___x___, \
                       ___x___, _______, ___x___, ___x___, ___x___, ___x___
 
 /**

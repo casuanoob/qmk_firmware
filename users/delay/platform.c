@@ -50,12 +50,20 @@ void process_record_paste_no_format(const keyrecord_t *record) {
   _process_record_simple_shortcut(record, S(KC_V));
 }
 
-void process_record_select_all(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, KC_A);
-}
-
 void process_record_close(const keyrecord_t *record) {
   _process_record_simple_shortcut(record, KC_W);
+}
+
+void process_record_new_tab(const keyrecord_t *record) {
+  _process_record_simple_shortcut(record, KC_T);
+}
+
+void process_record_new_window(const keyrecord_t *record) {
+  _process_record_simple_shortcut(record, KC_N);
+}
+
+void process_record_select_all(const keyrecord_t *record) {
+  _process_record_simple_shortcut(record, KC_A);
 }
 
 static void _process_record_space_shortcut(const keyrecord_t *record,
