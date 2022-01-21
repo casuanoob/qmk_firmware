@@ -252,7 +252,7 @@ static bool process_record_user_internal(uint16_t keycode,
       process_record_space_main_pane_promote(record);
       break;
   }
-  return process_record_keymap(keycode, record);
+  return process_record_user_keymap(keycode, record);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -281,14 +281,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return result;
 }
 
-__attribute__((weak)) bool process_record_keymap(uint16_t keycode,
-                                                 keyrecord_t *record) {
+__attribute__((weak)) bool process_record_user_keymap(uint16_t keycode,
+                                                      keyrecord_t *record) {
   return true;
 }
 
 #ifdef RGB_MATRIX_ENABLE
-static uint16_t reset_rgb_matrix_timer = 0;
-
 /**
  * \brief Apply default/startup RGB matrix values.
  *
@@ -306,30 +304,17 @@ void matrix_scan_user(void) {
   // Compose callback, used to handle compose sequence timeout.
   matrix_scan_compose(&g_compose_state);
 #endif  // COMPOSE_ENABLE
-#ifdef RGB_MATRIX_ENABLE
-  if (reset_rgb_matrix_timer != 0 &&
-      TIMER_DIFF_16(timer_read(), reset_rgb_matrix_timer) >= 1000) {
-    rgb_matrix_reset_noeeprom();
-    reset_rgb_matrix_timer = 0;
-  }
-#endif  // RGB_MATRIX_ENABLE
-  matrix_scan_keymap();
+  matrix_scan_user_keymap();
 }
 
-__attribute__((weak)) void matrix_scan_keymap(void) {}
+__attribute__((weak)) void matrix_scan_user_keymap(void) {}
 
 /** Called on layer change. */
 layer_state_t layer_state_set_user(layer_state_t state) {
-#ifdef RGB_MATRIX_ENABLE
-  // TODO(delay): use layer name instead of hard-coded 0.
-  if (get_highest_layer(state) == 0) {
-    reset_rgb_matrix_timer = timer_read();
-  }
-#endif  // RGB_MATRIX_ENABLE
-  return layer_state_set_keymap(state);
+  return layer_state_set_user_keymap(state);
 }
 
-__attribute__((weak)) layer_state_t layer_state_set_keymap(
+__attribute__((weak)) layer_state_t layer_state_set_user_keymap(
     layer_state_t state) {
   return state;
 }
@@ -355,10 +340,10 @@ void keyboard_post_init_user(void) {
 #ifdef COMPOSE_ENABLE
   keyboard_post_init_compose(&g_compose_state);
 #endif  // COMPOSE_ENABLE
-  keyboard_post_init_keymap();
+  keyboard_post_init_user_keymap();
 }
 
-__attribute__((weak)) void keyboard_post_init_keymap(void) {}
+__attribute__((weak)) void keyboard_post_init_user_keymap(void) {}
 
 /**
  * \brief Called when a one-shot layer "lock" status changes.
@@ -378,10 +363,11 @@ void oneshot_locked_mods_changed_user(uint8_t mods) {
     rgb_matrix_reset_noeeprom();  // Load default values.
   }
 #endif  // RGB_MATRIX_ENABLE
-  oneshot_locked_mods_changed_keymap(mods);
+  oneshot_locked_mods_changed_user_keymap(mods);
 }
 
-void oneshot_locked_mods_changed_keymap(uint8_t mods) {}
+__attribute__((weak)) void oneshot_locked_mods_changed_user_keymap(
+    uint8_t mods) {}
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
@@ -401,7 +387,7 @@ void shutdown_user(void) {
 #ifdef OLED_ENABLE
   oled_off();
 #endif  // OLED_ENABLE
-  shutdown_keymap();
+  shutdown_user_keymap();
 }
 
-__attribute__((weak)) void shutdown_keymap(void) {}
+__attribute__((weak)) void shutdown_user_keymap(void) {}

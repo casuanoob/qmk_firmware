@@ -134,70 +134,21 @@ enum keycodes_user {
 #define WS_MPPR WS_MAIN_PANE_PROMOTE
 
 /**
- * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
+ * \brief Similar to `_kb`, `_user`, and other variants, but for
+ * userspace-defined keymaps.
  *
  * `_user` is already defined to add common functions to all keymaps, therefore
- * a new version of the `process_record_*` callback is necessary for each keymap
+ * new versions of these callbacks are necessary for each keymap
  * to add their own.
  *
  * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
  */
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
-
-/**
- * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
- *
- * `_user` is already defined to add common functions to all keymaps, therefore
- * a new version of the `matrix_scan_keymap_*` callback is necessary for each
- * keymap to add their own.
- *
- * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
- */
-void matrix_scan_keymap(void);
-
-/**
- * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
- *
- * `_user` is already defined to add common functions to all keymaps, therefore
- * a new version of the `layer_state_set_*` callback is necessary for each
- * keymap to add their own.
- *
- * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
- */
-layer_state_t layer_state_set_keymap(layer_state_t state);
-
-/**
- * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
- *
- * `_user` is already defined to add common functions to all keymaps, therefore
- * a new version of the `keyboard_post_init_*` callback is necessary for each
- * keymap to add their own.
- *
- * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
- */
-void keyboard_post_init_keymap(void);
-
-/**
- * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
- *
- * `_user` is already defined to add common functions to all keymaps, therefore
- * a new version of the `eeconfig_init_*` callback is necessary for each keymap
- * to add their own.
- *
- * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
- */
-void eeconfig_init_keymap(void);
-
-/**
- * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
- *
- * `_user` is already defined to add common functions to all keymaps, therefore
- * a new version of the `shutdown_*` callback is necessary for each keymap to
- * add their own.
- *
- * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
- */
-void shutdown_keymap(void);
+bool process_record_user_keymap(uint16_t keycode, keyrecord_t *record);
+void matrix_scan_user_keymap(void);
+layer_state_t layer_state_set_user_keymap(layer_state_t state);
+void keyboard_post_init_user_keymap(void);
+void oneshot_locked_mods_changed_user_keymap(uint8_t mods);
+void shutdown_user_keymap(void);
 
 #ifdef COMPOSE_ENABLE
 /**
