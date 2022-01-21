@@ -323,16 +323,18 @@ __attribute__((weak)) layer_state_t layer_state_set_user_keymap(
  * Init the host platform (whether host is macOS or not).
  *
  * This relies on a macOS oddity to detect whether the host platform is macOS
- * or another system: macOS does not support some features (in this case,
- * numlock), so by manually setting numlock, and checking for its value, it's
- * possible to guess the host OS.
+ * or another system: macOS does not support some features (in this case, num
+ * lock), so by manually setting num lock, and checking for its value, it's
+ * possible to tell macOS apart from other host OSes.
  */
 static void _init_host_platform(void) {
+  const uint8_t host_kb_leds = host_keyboard_leds();
   add_key(KC_NUM_LOCK);
   send_keyboard_report();
-  set_is_macos(!(host_keyboard_leds() & (1 << USB_LED_NUM_LOCK)));
+  wait_ms(50);
   del_key(KC_NUM_LOCK);
   send_keyboard_report();
+  set_is_macos(host_kb_leds == host_keyboard_leds());
 }
 
 void keyboard_post_init_user(void) {
