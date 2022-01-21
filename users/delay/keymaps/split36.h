@@ -43,15 +43,17 @@ enum keycodes_keymap {
 };
 
 /**
- * \brief Similar to `_kb`, `_user`, and other variants, but for keymaps.
- *
- * `_user` is already defined to add common functions to all keymaps, therefore
- * a new version of the `layer_state_set_*` callback is necessary for each
- * keymap to add their own.
+ * \brief Similar to `_kb`, `_user`, `_user_keymap`, and other variants, but for
+ * keymaps.
  *
  * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
  */
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
+void matrix_scan_keymap(void);
 layer_state_t layer_state_set_keymap(layer_state_t state);
+void keyboard_post_init_keymap(void);
+void oneshot_locked_mods_changed_keymap(uint8_t mods);
+void shutdown_keymap(void);
 
 // Layers.
 #define WNAV MO(_WNAV)
