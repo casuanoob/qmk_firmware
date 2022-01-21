@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,34 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include QMK_KEYBOARD_H
-#include "keymaps/split36-homerow.h"
+#include "keymaps/split36.h"
 
 #define LAYOUT_skeletyl(...) LAYOUT_split_3x5_3(__VA_ARGS__)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-
-  [LAYER_ALPHAS_DVORAK] = LAYOUT_skeletyl(
-    HOME_ROW_MOD_GACS(LAYER_ALPHAS_DVORAK_3x10, LAYER_ALPHAS_THUMBS_1x6)
-  ),
-  [LAYER_ALPHAS_COLEMAK_DHM] = LAYOUT_skeletyl(
-    HOME_ROW_MOD_GACS(LAYER_ALPHAS_COLEMAK_DHM_3x10, LAYER_ALPHAS_THUMBS_1x6)
-  ),
-
-#ifndef DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
-  [LAYER_NO_MODS_ALPHAS_DVORAK] = LAYOUT_skeletyl(
-    LAYER_ALPHAS_DVORAK_3x10, LAYER_NO_MODS_ALPHAS_THUMBS_1x6
-  ),
-  [LAYER_NO_MODS_ALPHAS_COLEMAK_DHM] = LAYOUT_skeletyl(
-    LAYER_ALPHAS_COLEMAK_DHM_3x10, LAYER_NO_MODS_ALPHAS_THUMBS_1x6
-  ),
-#endif  // DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
-
-  [LAYER_DEV] = LAYOUT_skeletyl(LAYER_DEV_split_3x5_3),
-  [LAYER_NAV] = LAYOUT_skeletyl(LAYER_NAV_split_3x5_3),
-  [LAYER_NUM] = LAYOUT_skeletyl(LAYER_NUM_split_3x5_3),
-  [LAYER_SYM] = LAYOUT_skeletyl(LAYER_SYM_split_3x5_3),
-  [LAYER_EXP] = LAYOUT_skeletyl(LAYER_EXP_split_3x5_3),
+  [_BASE] = LAYOUT_skeletyl(DVORAK_ALT_3x5_3),
+  [_LMOD] = LAYOUT_skeletyl(LMOD_split_3x5_3),
+  [_RMOD] = LAYOUT_skeletyl(RMOD_split_3x5_3),
+  [_NAV] = LAYOUT_skeletyl(NAV_split_3x5_3),
+  [_WNAV] = LAYOUT_skeletyl(WNAV_split_3x5_3),
+  [_NUM] = LAYOUT_skeletyl(NUM_split_3x5_3),
+  [_FUN] = LAYOUT_skeletyl(FUN_split_3x5_3),
+  [_PTR] = LAYOUT_skeletyl(PTR_split_3x5_3),
+  [_SPEC] = LAYOUT_skeletyl(SPEC_split_3x5_3),
 };
 // clang-format on
