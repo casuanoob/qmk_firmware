@@ -221,6 +221,7 @@ static bool process_record_user_internal(uint16_t keycode,
       break;
     case WS_GOTO_1 ... WS_GOTO_0:
       process_record_space_goto_index(record, keycode - WS_GOTO_1);
+      break;
     case WS_CYCLE_MODE:
       process_record_space_cycle_mode(record);
       break;
@@ -287,15 +288,10 @@ __attribute__((weak)) bool process_record_user_keymap(uint16_t keycode,
 }
 
 #ifdef RGB_MATRIX_ENABLE
-/**
- * \brief Apply default/startup RGB matrix values.
- *
- * This is to replace the missing `rgb_matrix_reload_from_eeprom()`.
- */
-void rgb_matrix_reset_noeeprom(void) {
-  rgb_matrix_mode_noeeprom(RGB_MATRIX_STARTUP_MODE);
-  rgb_matrix_sethsv_noeeprom(RGB_MATRIX_STARTUP_HSV);
-  rgb_matrix_set_speed_noeeprom(RGB_MATRIX_STARTUP_SPD);
+void rgb_matrix_reset(void) {
+  rgb_matrix_mode(RGB_MATRIX_STARTUP_MODE);
+  rgb_matrix_sethsv(RGB_MATRIX_STARTUP_HSV);
+  rgb_matrix_set_speed(RGB_MATRIX_STARTUP_SPD);
 }
 #endif  // RGB_MATRIX_ENABLE
 
@@ -347,6 +343,8 @@ void keyboard_post_init_user(void) {
 
 __attribute__((weak)) void keyboard_post_init_user_keymap(void) {}
 
+void eeconfig_init_user(void) { eeconfig_update_rgb_matrix_default(); }
+
 /**
  * \brief Called when a one-shot layer "lock" status changes.
  *
@@ -362,7 +360,7 @@ void oneshot_locked_mods_changed_user(uint8_t mods) {
     rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
     rgb_matrix_sethsv_noeeprom(HSV_BLUE);
   } else if (!mods) {
-    rgb_matrix_reset_noeeprom();  // Load default values.
+    rgb_matrix_reload_from_eeprom();  // Load default values.
   }
 #endif  // RGB_MATRIX_ENABLE
   oneshot_locked_mods_changed_user_keymap(mods);
@@ -374,7 +372,7 @@ __attribute__((weak)) void oneshot_locked_mods_changed_user_keymap(
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
-#endif
+#endif  // RGB_MATRIX_ENABLE
 
 void shutdown_user(void) {
 #ifdef RGBLIGHT_ENABLE

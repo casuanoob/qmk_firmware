@@ -163,7 +163,7 @@ void compose_keymap(compose_state_t *state);
  *
  * This is to replace the missing `rgb_matrix_reload_from_eeprom()`.
  */
-void rgb_matrix_reset_noeeprom(void);
+void rgb_matrix_reset(void);
 #endif  // RGB_MATRIX_ENABLE
 
 /**
