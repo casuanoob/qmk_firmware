@@ -56,7 +56,8 @@ enum keycodes_keymap {
 };
 
 // Layers.
-#define WNAV MO(_WNAV)
+#define NAV OSL(_NAV)
+#define WNAV OSL(_WNAV)
 #define FUN OSL(_FUN)
 #define LMOD OSL(_LMOD)
 #define RMOD OSL(_RMOD)
@@ -91,7 +92,7 @@ enum keycodes_keymap {
     NS_QUOT, NS_COMM,  NS_DOT,    KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L, \
        KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S, \
     KC_UNDS,    KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z, \
-                       TD_SFT, NAV_SPC,    LMOD,    RMOD, NUM_ENT,   KC_NO
+                         LMOD,  KC_SPC,     NAV,  TD_SFT, NUM_ENT,    RMOD
 // clang-format on
 
 /**
@@ -102,7 +103,7 @@ enum keycodes_keymap {
     SPECIAL,     FUN, ___x___, ___x___, ___x___, KC_AMPR, KC_LCBR,  KC_EQL, KC_RCBR, KC_PERC, \
     OS_LALT, OS_LSFT, OS_LCTL, OS_LGUI, ___x___, KC_CIRC, KC_LPRN, KC_QUES, KC_RPRN,  KC_DLR, \
     ___x___, ___x___, ___x___, ___x___, ___x___, KC_PIPE, KC_LBRC,   KC_AT, KC_RBRC, KC_SCLN, \
-                      ___x___, ___x___, _______,    WNAV,   CLEAR, ___x___
+                      _______, ___x___, ___x___, ___x___,   CLEAR, ___x___
 // clang-format on
 
 /**
@@ -111,9 +112,9 @@ enum keycodes_keymap {
 // clang-format off
 #define RMOD_split_3x5_3                                                                      \
     KC_DQUO, KC_LABK,  KC_EQL, KC_RABK,  KC_GRV, ___x___, ___x___, ___x___,     FUN, SPECIAL, \
-    KC_HASH, KC_PLUS, KC_MINS, KC_EXLM, ___x___, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
+    KC_HASH, KC_PLUS, KC_MINS, KC_COLN, KC_EXLM, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
     KC_TILD, KC_BSLS, KC_ASTR, KC_SLSH, ___x___, ___x___, ___x___, ___x___, ___x___, OS_RALT, \
-                       KC_TAB, ___x___, ___x___, _______,   CLEAR, ___x___
+                       KC_TAB,  KC_ESC, ___x___, ___x___,   CLEAR, _______
 // clang-format on
 
 /**
@@ -121,10 +122,10 @@ enum keycodes_keymap {
  */
 // clang-format off
 #define NUM_split_3x5_3                                                                       \
-     KC_EQL,    NS_7,    NS_8,    NS_9, KC_ASTR, ___x___, ___x___, ___x___, ___x___, ___x___, \
-    KC_COLN,    NS_4,    NS_5,    NS_6, KC_PLUS, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
-    KC_SLSH,    NS_1,    NS_2,    NS_3, KC_MINS, ___x___, ___x___, ___x___, ___x___, ___x___, \
-                      KC_BSPC,  KC_ESC,    NS_0, ___x___, _______, ___x___
+     KC_EQL,    NS_7,    NS_8,    NS_9, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+    KC_MINS,    NS_4,    NS_5,    NS_6, KC_PLUS, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
+    KC_SLSH,    NS_1,    NS_2,    NS_3, KC_ASTR, ___x___, ___x___, ___x___, ___x___, ___x___, \
+                      KC_BSPC,    NS_0, KC_MINS, ___x___, _______, ___x___
 // clang-format on
 
 /**
@@ -147,10 +148,10 @@ enum keycodes_keymap {
  */
 // clang-format off
 #define NAV_split_3x5_3                                                                       \
-    WS_PREV, RCS_TAB,   KC_UP, CTL_TAB, WS_NEXT, ___x___, KC_HOME,   NS_UP,  KC_END, ___x___, \
-    SC_NWIN, SFT_LFT, CTL_DWN, GUI_RGH, SC_NTAB, ___x___, NS_LEFT, NS_DOWN, NS_RGHT, ___x___, \
-    SC_CLSE, SC_PSTE, SC_COPY,  SC_CUT, SC_SELA, ___x___, ___x___, ___x___, ___x___, ___x___, \
-                      ___x___, _______, ___x___, ___x___, ___x___, ___x___
+    WS_PREV, RCS_TAB, ___x___, CTL_TAB, WS_NEXT, ___x___, KC_HOME,   NS_UP,  KC_END, ___x___, \
+    SC_SELA, OS_LSFT, OS_LCTL, OS_LGUI, SC_NTAB, ___x___, NS_LEFT, NS_DOWN, NS_RGHT, ___x___, \
+    SC_CLSE, SC_PSTE, SC_COPY,  SC_CUT, SC_NWIN, ___x___, ___x___, ___x___, ___x___, ___x___, \
+                      ___x___, ___x___, _______,    WNAV, ___x___, ___x___
 // clang-format on
 
 /**
@@ -161,10 +162,10 @@ enum keycodes_keymap {
  */
 // clang-format off
 #define WNAV_split_3x5_3                                                                      \
-    WS_PREV,    WS_7,    WS_8,    WS_9, WS_NEXT, ___x___, WS_MPCI, WS_MPCD, ___x___, ___x___, \
-    ___x___,    WS_4,    WS_5,    WS_6, ___x___, ___x___, WS_MPSH, WS_MPEX, ___x___, ___x___, \
-       WS_0,    WS_1,    WS_2,    WS_3, ___x___, ___x___, WS_FPRV, WS_FNXT, ___x___, ___x___, \
-                      KC_LSFT,  WS_MOD, WS_MPPR, _______, ___x___, ___x___
+    ___x___,    WS_7,    WS_8,    WS_9, ___x___, WS_PREV, WS_MPCI, WS_MPCD, ___x___, WS_NEXT, \
+    ___x___,    WS_4,    WS_5,    WS_6, ___x___, ___x___, WS_MPSH, WS_MPEX, OS_LSFT, ___x___, \
+    ___x___,    WS_1,    WS_2,    WS_3, ___x___, ___x___, WS_FPRV, WS_FNXT, ___x___, ___x___, \
+                      ___x___,  WS_MOD, WS_MPPR, _______, ___x___, ___x___
 // clang-format on
 
 /**
@@ -176,7 +177,7 @@ enum keycodes_keymap {
     WS_PREV, ___x___, ___x___, ___x___, WS_NEXT, ___x___, ___x___, ___x___, ___x___, ___x___, \
     SC_SELA, KC_BTN3, KC_BTN1, KC_BTN2, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
     ___x___, SC_PSTE, SC_COPY,  SC_CUT, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
-                      _______, ___x___, ___x___, ___x___, ___x___, ___x___
+                      ___x___, ___x___, ___x___, ___x___, ___x___, ___x___
 // clang-format on
 
 /**
