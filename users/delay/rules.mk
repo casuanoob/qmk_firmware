@@ -41,6 +41,7 @@ endif
 ifeq ($(strip $(KEYMAP_ENABLE)), split36)
 	SRC += keymaps/split36.c
 	OPT_DEFS += -DDELAY_KEYMAP_SPLIT36
+	DEFERRED_EXEC_ENABLE = yes
 endif
 
 # Include split36-homerow keymap source and flags if enabled.

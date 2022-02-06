@@ -19,10 +19,6 @@
 #include "platform.h"
 
 #ifdef RGB_MATRIX_ENABLE
-#include "timer.h"
-#endif  // RGB_MATRIX_ENABLE
-
-#ifdef RGB_MATRIX_ENABLE
 #include "quantum/rgb_matrix/rgb_matrix.h"
 #include "quantum/rgblight/rgblight_list.h"
 #endif  // RGB_MATRIX_ENABLE
@@ -100,42 +96,36 @@ void matrix_scan_user_keymap(void) { matrix_scan_keymap(); }
 
 __attribute__((weak)) void matrix_scan_keymap(void) {}
 
-#ifdef RGB_MATRIX_ENABLE
-/** Timer that gets set in whenever the highest layer is the base layer.
- *
- * This timer is used to defer reseting the RGB matrix to its default value.
+#if defined(RGB_MATRIX_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
+/**
+ * Callback to defer reseting the RGB matrix to its default value.
  * This is useful when coming back from layers that use RGB matrix as indicator,
  * eg. the `SPECIAL` layer that hosts the `MACOS` keycode, which sets the RGB to
  * communicate which OS is currently selected.
- *
- * This timer is read in `housekeeping_task_*()`.
- *
- * TODO(delay): add a dedicated define for this feature, and make the timeout
- * configurable.
  */
-static uint16_t reset_rgb_matrix_timer = 0;
-#endif  // RGB_MATRIX_ENABLE
-
-void housekeeping_task_user(void) {
-#ifdef RGB_MATRIX_ENABLE
-  // If the timer is non-null, it was set in `layer_state_set_user_keymap()`.
-  // Resets the RGB matrix to the keyboard's default after at least 1 second.
-  if (reset_rgb_matrix_timer != 0 &&
-      TIMER_DIFF_16(timer_read(), reset_rgb_matrix_timer) >= 1000) {
-    rgb_matrix_reload_from_eeprom();
-    reset_rgb_matrix_timer = 0;
-  }
-#endif  // RGB_MATRIX_ENABLE
+uint32_t reset_rgb_matrix_callback(uint32_t trigger_time, void *cb_arg) {
+  rgb_matrix_reload_from_eeprom();
+  return 0;
 }
+#endif  // RGB_MATRIX_ENABLE && DEFERRED_EXEC_ENABLE
 
 /** Called on layer change. */
 layer_state_t layer_state_set_user_keymap(layer_state_t state) {
-#ifdef RGB_MATRIX_ENABLE
-  // Initialize the timer whenever coming back to the base layer.
+#if defined(RGB_MATRIX_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
   if (get_highest_layer(state) == _BASE) {
-    reset_rgb_matrix_timer = timer_read();
+    // Defer reseting the RGB matrix to its default value.
+    //
+    // TODO(delay): add a dedicated define for this feature, and make the
+    // timeout configurable.
+    static deferred_token reset_rgb_matrix_token = 0;
+    if (reset_rgb_matrix_token != 0) {
+      cancel_deferred_exec(reset_rgb_matrix_token);
+    }
+    reset_rgb_matrix_token =
+        defer_exec(/* delay_ms= */ 1000, reset_rgb_matrix_callback,
+                   /* cb_arg= */ NULL);
   }
-#endif  // RGB_MATRIX_ENABLE
+#endif  // RGB_MATRIX_ENABLE && DEFERRED_EXEC_ENABLE
   return layer_state_set_keymap(state);
 }
 
