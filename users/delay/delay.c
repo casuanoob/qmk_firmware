@@ -343,7 +343,11 @@ void keyboard_post_init_user(void) {
 
 __attribute__((weak)) void keyboard_post_init_user_keymap(void) {}
 
-void eeconfig_init_user(void) { eeconfig_update_rgb_matrix_default(); }
+void eeconfig_init_user(void) {
+#ifdef RGB_MATRIX_ENABLE
+  eeconfig_update_rgb_matrix_default();
+#endif  // RGB_MATRIX_ENABLE
+}
 
 /**
  * \brief Called when a one-shot layer "lock" status changes.
