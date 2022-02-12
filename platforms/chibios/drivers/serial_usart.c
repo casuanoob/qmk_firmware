@@ -8,12 +8,12 @@
 
 #if defined(SERIAL_USART_CONFIG)
 static QMKSerialConfig serial_config = SERIAL_USART_CONFIG;
-#else
+#elif defined(MCU_STM32) /* STM32 MCUs */
 static QMKSerialConfig serial_config = {
 #    if HAL_USE_SERIAL
-    .speed = (SERIAL_USART_SPEED), /* baudrate - mandatory */
+    .speed = (SERIAL_USART_SPEED),
 #    else
-    .baud = (SERIAL_USART_SPEED), /* baudrate - mandatory */
+    .baud = (SERIAL_USART_SPEED),
 #    endif
     .cr1   = (SERIAL_USART_CR1),
     .cr2   = (SERIAL_USART_CR2),
@@ -35,7 +35,7 @@ static QMKSerialConfig serial_config = {
 };
 // clang-format on
 #else
-#    error MCU Familiy not supported by default, supply your own serial_config by defining SERIAL_USART_CONFIG in your keyboard files.
+#    error MCU Familiy not supported by default, your own serial_config by defining SERIAL_USART_CONFIG in your keyboard files.
 #endif
 
 static QMKSerialDriver* serial_driver = (QMKSerialDriver*)&SERIAL_USART_DRIVER;
@@ -171,7 +171,7 @@ __attribute__((weak)) void usart_init(void) {
     USART_REMAP;
 #        endif
 #    elif defined(MCU_RP) /* Raspberry Pi MCUs */
-#        error Half-duplex with the SIO driver is not supported due to hardware limitations on the RP2040, switch to the PIO driver which has half-duplex support.
+#        error Half-duplex with the SIO driver is not supported due to hardware limitations on the RP2040, switch to the PIO driver which has Half-duplex support.
 #    else
 #        pragma message "usart_init: MCU Familiy not supported by default, please supply your own init code by implementing usart_init() in your keyboard files."
 #    endif
