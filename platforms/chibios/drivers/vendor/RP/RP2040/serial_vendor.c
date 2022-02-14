@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include "quantum.h"
-#include "serial_usart.h"
 #include "serial_protocol.h"
 #include "hardware/pio.h"
 #include "hardware/clocks.h"
@@ -183,7 +182,7 @@ static inline void leave_rx_state(void) {}
 /**
  * @brief Clear the RX and TX hardware FIFOs of the state machines.
  */
-inline void serial_transport_driver_clear(void) {
+inline void driver_clear(void) {
     osalSysLock();
     pio_sm_clear_fifos(pio, rx_state_machine);
     pio_sm_clear_fifos(pio, tx_state_machine);
@@ -237,7 +236,7 @@ static inline bool send_impl(const uint8_t* source, const size_t size) {
  * @return true Send success.
  * @return false Send failed.
  */
-inline bool serial_transport_send(const uint8_t* source, const size_t size) {
+inline bool send(const uint8_t* source, const size_t size) {
     leave_rx_state();
     bool result = send_impl(source, size);
     enter_rx_state();
@@ -290,7 +289,7 @@ static inline bool receive_impl(uint8_t* destination, const size_t size, sysinte
  * @return true Receive success.
  * @return false Receive failed, e.g. by timeout.
  */
-inline bool serial_transport_receive(uint8_t* destination, const size_t size) {
+inline bool receive(uint8_t* destination, const size_t size) {
     return receive_impl(destination, size, TIME_MS2I(SERIAL_USART_TIMEOUT));
 }
 
@@ -300,7 +299,7 @@ inline bool serial_transport_receive(uint8_t* destination, const size_t size) {
  * @return true Receive success.
  * @return false Receive failed.
  */
-inline bool serial_transport_receive_blocking(uint8_t* destination, const size_t size) {
+inline bool receive_blocking(uint8_t* destination, const size_t size) {
     return receive_impl(destination, size, TIME_INFINITE);
 }
 
@@ -425,7 +424,7 @@ static inline void pio_init(pin_t tx_pin, pin_t rx_pin) {
 /**
  * @brief PIO driver specific initialization function for the master side.
  */
-void serial_transport_driver_master_init(void) {
+void driver_master_init(void) {
 #if defined(SERIAL_USART_FULL_DUPLEX)
     pin_t tx_pin = SERIAL_USART_TX_PIN;
     pin_t rx_pin = SERIAL_USART_RX_PIN;
@@ -444,7 +443,7 @@ void serial_transport_driver_master_init(void) {
 /**
  * @brief PIO driver specific initialization function for the slave side.
  */
-void serial_transport_driver_slave_init(void) {
+void driver_slave_init(void) {
 #if defined(SERIAL_USART_FULL_DUPLEX)
     pin_t tx_pin = SERIAL_USART_TX_PIN;
     pin_t rx_pin = SERIAL_USART_RX_PIN;
