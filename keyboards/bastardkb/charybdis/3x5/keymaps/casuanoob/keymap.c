@@ -22,7 +22,7 @@
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BASE] = LAYOUT_charybdis_3x5_delay(DVORAK_ALT_3x5_3),
+  [_BASE] = LAYOUT_charybdis_3x5_delay(COLEMAKdhm_ALT_3x5_3),
   [_LMOD] = LAYOUT_charybdis_3x5_delay(LMOD_split_3x5_3),
   [_RMOD] = LAYOUT_charybdis_3x5_delay(RMOD_split_3x5_3),
   [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),

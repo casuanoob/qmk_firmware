@@ -108,7 +108,20 @@ enum keycodes_keymap {
      TD_SFT,    KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z, \
                          LMOD, NAV_SPC, MOD_TAB, MOD_ESC, NUM_ENT,    RMOD
 // clang-format on
-
+// clang-format off
+/** 
+ * \brief COLEMAK-dhm layout.
+ * 
+ * quote `'` replaces `;` on base layer to accommodate reduced keys.
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ * (plays well with oneshot shift).
+ */
+#define COLEMAKdhm_ALT_3x5_3                                                                    \
+       KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, NS_QUOT, \
+       KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O, \
+       KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H, NS_COMM,  NS_DOT,  TD_SFT, \
+                         LMOD, NAV_SPC, MOD_TAB, MOD_ESC, NUM_ENT,    RMOD
+// clang-format on
 /**
  * \brief Left-hand mods, right-hand symbols.
  */
@@ -148,7 +161,7 @@ enum keycodes_keymap {
  */
 // clang-format off
 #define FUN_split_3x5_3                                                                       \
-     KC_F12,   KC_F7,   KC_F8,   KC_F9, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+     KC_F12,   KC_F7,   KC_F8,   KC_F9, ___x___, ___x___, KC_NUM,  KC_INS,  KC_SCRL, KC_PAUS, \
      KC_F11,   KC_F4,   KC_F5,   KC_F6, ___x___, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
      KC_F10,   KC_F1,   KC_F2,   KC_F3, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
                       ___x___, ___x___, ___x___, ___x___, ___x___, ___x___
@@ -163,8 +176,8 @@ enum keycodes_keymap {
  */
 // clang-format off
 #define NAV_split_3x5_3                                                                       \
-    WS_PREV, RCS_TAB, LAUNCHR, CTL_TAB, WS_NEXT, ___x___, KC_HOME,   NS_UP,  KC_END, ___x___, \
-    SC_SELA, OS_LSFT, OS_LCTL, OS_LGUI, SC_NTAB, ___x___, NS_LEFT, NS_DOWN, NS_RGHT, ___x___, \
+    WS_PREV, RCS_TAB, LAUNCHR, CTL_TAB, WS_NEXT, ___x___, KC_HOME,   NS_UP,  KC_END, KC_PGUP, \
+    SC_SELA, OS_LSFT, OS_LCTL, OS_LGUI, SC_NTAB, ___x___, NS_LEFT, NS_DOWN, NS_RGHT, KC_PGDN, \
     SC_CLSE, SC_PSTE, SC_COPY,  SC_CUT, SC_NWIN, ___x___, ___x___, ___x___, ___x___, ___x___, \
                       ___x___, _______, ___x___, ___x___,    WNAV, ___x___
 // clang-format on
