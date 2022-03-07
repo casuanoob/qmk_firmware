@@ -1,5 +1,5 @@
 /**
- * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
+ * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,17 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #pragma once
 
-// Trackball angle adjustment.
-#undef ROTATIONAL_TRANSFORM_ANGLE
-#define ROTATIONAL_TRANSFORM_ANGLE -80
+#include "quantum.h"
 
-// Enable pointer acceleration.
-#define CHARYBDIS_POINTER_ACCELERATION_ENABLE
+typedef enum {
+  ONESHOT_UP_UNQUEUED = 0,
+  ONESHOT_UP_QUEUED,
+  ONESHOT_DOWN_UNUSED,
+  ONESHOT_DOWN_USED,
+} oneshot_mod_state_t;
 
-// macOS "Natural" scroll direction.
-// #define CHARYBDIS_DRAGSCROLL_REVERSE_Y
+void oneshot_mod_pre(oneshot_mod_state_t* state, uint16_t mod, uint16_t trigger,
+                     uint16_t keycode, keyrecord_t* record);
 
-// Disable unused keycodes.
-#define NO_CHARYBDIS_KEYCODES
+void oneshot_mod_post(oneshot_mod_state_t* state, uint16_t mod,
+                      uint16_t trigger, uint16_t keycode, keyrecord_t* record);
+
+bool is_oneshot_mod_cancel_key(uint16_t keycode);
+bool is_oneshot_mod_ignore_key(uint16_t keycode);
