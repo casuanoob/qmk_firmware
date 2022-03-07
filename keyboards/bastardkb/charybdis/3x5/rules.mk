@@ -12,7 +12,11 @@ MOUSEKEY_ENABLE = no        # Mouse keys
 EXTRAKEY_ENABLE = yes       # Audio control and System control
 CONSOLE_ENABLE = no         # Console for debug
 COMMAND_ENABLE = no         # Commands for debug and configuration
+<<<<<<< HEAD
 NKRO_ENABLE = yes           # Enable N-Key Rollover
+=======
+NKRO_ENABLE = no            # Enable N-Key Rollover
+>>>>>>> master
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 AUDIO_ENABLE = no           # Audio output
@@ -36,5 +40,8 @@ POINTING_DEVICE_ENABLE = yes # Enable trackball
 POINTING_DEVICE_DRIVER = pmw3360
 # https://qmk.fm/changes/2018-11-16-use-a-single-endpoint-for-hid-reports
 MOUSE_SHARED_EP = no # Unify multiple HID interfaces into a single Endpoint
+<<<<<<< HEAD
 
 COMBO_ENABLE = no
+=======
+>>>>>>> master

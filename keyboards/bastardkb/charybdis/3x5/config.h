@@ -85,7 +85,10 @@
 #    define RGB_DISABLE_WHEN_USB_SUSPENDED
 #    define RGB_MATRIX_KEYPRESSES
 #endif
+<<<<<<< HEAD
 
 #define USB_POLLING_INTERVAL_MS 1
 #define QMK_KEYS_PER_SCAN 12
 #define FORCE_NKRO
+=======
+>>>>>>> master
