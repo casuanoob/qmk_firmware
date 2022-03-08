@@ -54,9 +54,3 @@
 #if !defined(SERIAL_USART_RX_PIN)
 #    define SERIAL_USART_RX_PIN GP1
 #endif
-
-/**======================
- **    Double-tap
- *========================**/
-
-#define RP2040_BOOTLOADER_DOUBLE_TAP_RESET 
