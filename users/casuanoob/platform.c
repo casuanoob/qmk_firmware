@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+s
 #include "platform.h"
 
 // Whether the host platform is macOS or another OS.

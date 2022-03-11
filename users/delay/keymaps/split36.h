@@ -116,7 +116,7 @@ enum keycodes_keymap {
 #define LMOD_split_3x5_3                                                                      \
     SPECIAL,     FUN,  TD_DRG, ___x___, ___x___, KC_AMPR, KC_LCBR,  KC_EQL, KC_RCBR, KC_PERC, \
     OS_LALT, OS_LSFT, OS_LCTL, OS_LGUI, ___x___, KC_CIRC, KC_LPRN, KC_QUES, KC_RPRN,  KC_DLR, \
-    KC_MENU, KC_BTN2, KC_BTN1, KC_BTN3, ___x___, KC_PIPE, KC_LBRC,   KC_AT, KC_RBRC, KC_SCLN, \
+    ___x___, KC_BTN2, KC_BTN1, KC_BTN3, ___x___, KC_PIPE, KC_LBRC,   KC_AT, KC_RBRC, KC_SCLN, \
                       _______, ___x___, _______, ___x___,   CLEAR, ___x___
 // clang-format on
 
@@ -127,7 +127,7 @@ enum keycodes_keymap {
 #define RMOD_split_3x5_3                                                                      \
     KC_DQUO, KC_LABK,  KC_EQL, KC_RABK,  KC_GRV, ___x___, ___x___,  TD_DRG,     FUN, SPECIAL, \
     KC_HASH, KC_PLUS, KC_MINS, KC_COLN, KC_EXLM, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
-    KC_TILD, KC_BSLS, KC_ASTR, KC_SLSH, KC_UNDS, ___x___, KC_BTN3, KC_BTN1, KC_BTN2, KC_MENU, \
+    KC_TILD, KC_BSLS, KC_ASTR, KC_SLSH, KC_UNDS, ___x___, KC_BTN3, KC_BTN1, KC_BTN2, ___x___, \
                       ___x___, ___x___, ___x___, _______,   CLEAR, _______
 
 // clang-format on
