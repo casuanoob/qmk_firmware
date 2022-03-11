@@ -327,13 +327,14 @@ __attribute__((weak)) layer_state_t layer_state_set_user_keymap(
  * possible to tell macOS apart from other host OSes.
  */
 static void _init_host_platform(void) {
-  const uint8_t host_kb_leds = host_keyboard_leds();
+  //const uint8_t host_kb_leds = host_keyboard_leds();
   add_key(KC_NUM_LOCK);
   send_keyboard_report();
   wait_ms(50);
   del_key(KC_NUM_LOCK);
   send_keyboard_report();
-  set_is_macos(host_kb_leds == host_keyboard_leds());
+  //set_is_macos(host_kb_leds == host_keyboard_leds()); commenting this out because it doesn't work yet
+  set_is_macos(false); //workaround temporarily
 }
 
 void keyboard_post_init_user(void) {
