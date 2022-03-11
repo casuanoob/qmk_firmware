@@ -23,6 +23,7 @@
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_charybdis_3x5_delay(COLEMAKdhm_ALT_3x5_3),
+  [_GAME] = LAYOUT_charybdis_3x5_delay(GAMING_ALT_3x5_3),
   [_LMOD] = LAYOUT_charybdis_3x5_delay(LMOD_split_3x5_3),
   [_RMOD] = LAYOUT_charybdis_3x5_delay(RMOD_split_3x5_3),
   [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
@@ -30,5 +31,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NUM] = LAYOUT_charybdis_3x5_delay(NUM_split_3x5_3),
   [_FUN] = LAYOUT_charybdis_3x5_delay(FUN_split_3x5_3),
   [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
+  [_PTR] = LAYOUT_charybdis_3x5_delay(POINT_split_3x5_3),
+  [_EXT] = LAYOUT_charybdis_3x5_delay(EXT_split_3x5_3),
 };
 // clang-format on

@@ -37,6 +37,8 @@ static td_state_t get_current_state(qk_tap_dance_state_t *state) {
 }
 
 #ifdef TD_ONESHOT_SHIFT_ENABLE
+
+//TODO create bools to track lcap state for correct cancelling of lcap hold state
 void oneshot_shift_td_on_dance_finished(qk_tap_dance_state_t *state,
                                         void *user_data) {
   oneshot_shift_td_state_t *const oneshot_shift_td_state = user_data;
@@ -55,8 +57,8 @@ void oneshot_shift_td_on_dance_finished(qk_tap_dance_state_t *state,
       break;
     case TD_DOUBLE_TAP:
       clear_oneshot_mods();
-      set_oneshot_locked_mods(mod);
-      add_mods(mod);
+      set_oneshot_locked_mods(KC_LCAP);
+      add_mods(mod);  //is add_mods() actually necessary here?
       break;
     case TD_HOLD:
       clear_oneshot_mods();

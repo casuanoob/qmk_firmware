@@ -20,7 +20,7 @@
 // Split keyboards {{{
 
 #ifdef SPLIT_KEYBOARD
-#ifndef SPLIT_HAND_PIN
+//#ifndef SPLIT_HAND_PIN
 /**
  * \brief Flash each side with `-bl dfu-split-*` to set handedness in memory eg.
  *
@@ -34,8 +34,10 @@
  *
  *     `qmk flash -kb <keyboard> -km delay`
  */
+#undef SPLIT_HAND_PIN
+#undef MASTER_RIGHT
 #define EE_HANDS
-#endif  // SPLIT_HAND_PIN
+//#endif  // SPLIT_HAND_PIN
 
 // Enable split keyboards extensions, in order to sync state between the halves.
 #define SPLIT_MODS_ENABLE
@@ -274,3 +276,39 @@
 #endif  // RGB_MATRIX_ENABLE
 
 // }}}
+
+// Tacking on custom pointer dpi settings {{{
+
+#ifdef POINTING_DEVICE_ENABLE
+#    ifndef CHARYBDIS_MINIMUM_DEFAULT_DPI
+#        define CHARYBDIS_MINIMUM_DEFAULT_DPI 800
+#    endif  // CHARYBDIS_MINIMUM_DEFAULT_DPI
+
+#    ifndef CHARYBDIS_MINIMUM_SNIPING_DPI
+#        define CHARYBDIS_MINIMUM_SNIPING_DPI 200
+#    endif  // CHARYBDIS_MINIMUM_SNIPER_MODE_DPI
+
+// Fixed DPI for drag-scroll.
+#    ifndef CHARYBDIS_DRAGSCROLL_DPI
+#        define CHARYBDIS_DRAGSCROLL_DPI 100
+#    endif  // CHARYBDIS_DRAGSCROLL_DPI
+
+#    ifndef CHARYBDIS_DRAGSCROLL_BUFFER_SIZE
+#        define CHARYBDIS_DRAGSCROLL_BUFFER_SIZE 6
+#    endif  // !CHARYBDIS_DRAGSCROLL_BUFFER_SIZE
+
+#    ifndef CHARYBDIS_POINTER_ACCELERATION_FACTOR
+#        define CHARYBDIS_POINTER_ACCELERATION_FACTOR 24
+#    endif  // !CHARYBDIS_POINTER_ACCELERATION_FACTOR
+#endif  // POINTING_DEVICE_ENABLE && !NO_CHARYBDIS_KEYCODES
+
+// }}}
+
+// Defines for Locking caps and other {{{
+
+#define LOCKING_SUPPORT_ENABLE
+#define LOCKING_RESYNC_ENABLE
+
+// }}}
+
+#define FORCE_NKRO

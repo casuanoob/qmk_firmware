@@ -51,7 +51,7 @@ void process_record_paste_no_format(const keyrecord_t *record) {
 }
 
 void process_record_launcher(const keyrecord_t *record) {
-  const uint16_t keycode16 = LGUI(is_macos() ? KC_SPACE : KC_P);
+  const uint16_t keycode16 = LGUI(is_macos() ? KC_SPACE : KC_TAB);
   if (record->event.pressed) {
     register_code16(keycode16);
   } else {
@@ -77,7 +77,7 @@ void process_record_select_all(const keyrecord_t *record) {
 
 static void _process_record_space_shortcut(const keyrecord_t *record,
                                            uint16_t keycode) {
-  const uint16_t keycode16 = is_macos() ? LCTL(LOPT(keycode)) : LGUI(keycode);
+  const uint16_t keycode16 = is_macos() ? LCTL(LOPT(keycode)) : LCTL(LGUI(keycode));
   if (record->event.pressed) {
     register_code16(keycode16);
   } else {
