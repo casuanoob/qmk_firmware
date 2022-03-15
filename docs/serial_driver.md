@@ -78,7 +78,7 @@ Only one GPIO pin is needed for the Half-duplex driver, as only one wire is used
 
 ### Setup
 
-To use the Half-duplex driver follow these steps to activate it. If you target the Raspberry Pi RP2040 PIO implementation skip step 1.
+To use the Half-duplex driver follow these steps to activate it.
 
 1. Change the `SERIAL_DRIVER` to `usart` in your keyboards `rules.mk` file:
 
@@ -86,13 +86,7 @@ To use the Half-duplex driver follow these steps to activate it. If you target t
 SERIAL_DRIVER = usart
 ```
 
-2. (RP2040 PIO only!) Change the `SERIAL_DRIVER` to `vendor` in your keyboards `rules.mk` file:
-
-```make
-SERIAL_DRIVER = vendor
-```
-
-3. Configure the hardware of your keyboard via the `config.h` file:
+2. Configure the hardware of your keyboard via the `config.h` file:
 
 ```c
 #define SERIAL_USART_TX_PIN B6     // The GPIO pin that is used split communication.
@@ -105,7 +99,7 @@ For STM32 MCUs several GPIO configuration options can be changed as well. See th
 #define SERIAL_USART_TX_PAL_MODE 7 // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 7
 ```
 
-1. Decide either for `SERIAL`, `SIO` or `PIO` subsystem, see the section ["Choosing a driver subsystem"](#choosing-a-driver-subsystem).
+3. Decide either for ChibiOS `SERIAL` or `SIO` subsystem, see the section ["Choosing a ChibiOS driver subsystem"](#choosing-a-chibios-driver-subsystem).
 
 <hr>
 
@@ -135,7 +129,7 @@ To use this driver the usart peripherals `TX` and `RX` pins must be configured w
 
 ### Setup
 
-To use the Full-duplex driver follow these steps to activate it. If you target the Raspberry Pi RP2040 PIO implementation skip step 1.
+To use the Full-duplex driver follow these steps to activate it.
 
 1. Change the `SERIAL_DRIVER` to `usart` in your keyboards `rules.mk` file:
 
@@ -143,13 +137,7 @@ To use the Full-duplex driver follow these steps to activate it. If you target t
 SERIAL_DRIVER = usart
 ```
 
-2. (RP2040 PIO only!) Change the `SERIAL_DRIVER` to `vendor` in your keyboards `rules.mk` file:
-
-```make
-SERIAL_DRIVER = vendor
-```
-
-3. Configure the hardware of your keyboard via the `config.h` file:
+2. Configure the hardware of your keyboard via the `config.h` file:
 
 ```c
 #define SERIAL_USART_FULL_DUPLEX   // Enable full duplex operation mode.
@@ -165,11 +153,11 @@ For STM32 MCUs several GPIO configuration options, including the ability for `TX
 #define SERIAL_USART_TX_PAL_MODE 7 // Pin "alternate function", see the respective datasheet for the appropriate values for your MCU. default: 7
 ```
 
-1. Decide either for `SERIAL`, `SIO` or `PIO` subsystem, see the section ["Choosing a driver subsystem"](#choosing-a-driver-subsystem).
+3. Decide either for ChibiOS `SERIAL` or `SIO` subsystem, see the section ["Choosing a ChibiOS driver subsystem"](#choosing-a-chibios-driver-subsystem).
 
 <hr>
 
-## Choosing a driver subsystem
+## Choosing a ChibiOS driver subsystem
 
 ### The `SERIAL` driver
 
@@ -181,7 +169,7 @@ The `SERIAL` Subsystem is supported for the majority of ChibiOS MCUs and should 
 #define HAL_USE_SERIAL TRUE
 ```
 
-2. In your keyboards `mcuconf.h`: activate the USART peripheral that is used on your MCU. The shown example is for an STM32 MCU, so this will not work on MCUs by other manufacturers. You can find the correct names in the `mcuconf.h` files of your MCU that ship with ChibiOS. 
+3. In your keyboards `mcuconf.h:` activate the USART peripheral that is used on your MCU. The shown example is for an STM32 MCU, so this will not work on MCUs by other manufacturers. You can find the correct names in the `mcuconf.h` files of your MCU that ship with ChibiOS. 
  
 Just below `#include_next <mcuconf.h>` add:
 
@@ -194,15 +182,9 @@ Just below `#include_next <mcuconf.h>` add:
 
 Where 'n' matches the peripheral number of your selected USART on the MCU.
 
-3. In you keyboards `config.h`: override the default USART `SERIAL` driver if you use a USART peripheral that does not belong to the default selected `SD1` driver. For instance, if you selected `STM32_SERIAL_USE_USART3` the matching driver would be `SD3`.
-
-```c
- #define SERIAL_USART_DRIVER SD3
- ```
-
 ### The `SIO` driver
 
-The `SIO` Subsystem was added to ChibiOS with the 21.11 release and is only supported on selected MCUs. It should only be chosen when the `SERIAL` subsystem is not supported by your MCU.
+The `SIO` Subsystem was recently added to ChibiOS with the 21.11 release and is only supported on selected MCUs. It should only be chosen when the `SERIAL` subsystem is not supported by your MCU.
 
 Follow these steps in order to activate it:
 
@@ -225,23 +207,6 @@ Just below `#include_next <mcuconf.h>` add:
 
 Where 'n' matches the peripheral number of your selected USART on the MCU.
 
-3. In you keyboards `config.h`: override the default USART `SIO` driver if you use a USART peripheral that does not belong to the default selected `SIOD1` driver. For instance, if you selected `STM32_SERIAL_USE_USART3` the matching driver would be `SIOD3`.
-
-```c
- #define SERIAL_USART_DRIVER SIOD3
- ```
- 
-### The `PIO` driver
-
-The `PIO` subsystem is a Raspberry Pi RP2040 specific implementation, using the integrated PIO peripheral and is therefore only available on this MCU. Because of the flexible nature of the PIO peripherals, **any** GPIO pin can be used as a `TX` or `RX` pin. Half-duplex and Full-duplex operation is fully supported. The Half-duplex operation mode uses the built-in pull-ups and GPIO manipulation on the RP2040 to drive the line high by default. An external pull-up is therefore not necessary.
-
-Configure the hardware via your config.h:
-```c
-#define SERIAL_PIO_USE_PIO1 // Force the usage of PIO1 peripheral, by default the Serial implementation uses the PIO0 peripheral
-```
-
-The Serial PIO program uses 2 state machines, 13 instructions and the complete interrupt handler of the PIO peripheral it is running on.
-
 <hr>
 
 ## Advanced Configuration
@@ -253,7 +218,7 @@ There are several advanced configuration options that can be defined in your key
 If you're having issues or need a higher baudrate with serial communication, you can change the baudrate which in turn controls the communication speed for serial. You want to lower the baudrate if you experience failed transactions. 
 
 ```c
-#define SELECT_SOFT_SERIAL_SPEED {#}
+#define SELECT_SOFT_SERIAL_SPEED {#}`
 ```
 
 | Speed | Bitbang                    | Half-duplex and Full-duplex |
@@ -276,16 +241,6 @@ This is the default time window in milliseconds in which a successful communicat
 ```
 
 <hr>
-
-## Troubleshooting
-
-If you're having issues withe serial communication, you can enable debug messages that will give you insights which part of the communication failed. The enable these messages add to your keyboards `config.h` file:
-
-```c
-#define SERIAL_DEBUG
-```
- 
-?> The messages will be printed out to the `CONSOLE` output. For additional information, refer to [Debugging/Troubleshooting QMK](faq_debug.md).
 
 ## Alternate Functions for selected STM32 MCUs
 
