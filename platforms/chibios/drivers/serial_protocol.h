@@ -7,43 +7,47 @@
 
 #pragma once
 
-/**
- * @brief Clears any intermediate sending or receiving state of the driver to a known good
- * state. This happens after errors in the middle of transactions, to start with
- * a clean slate.
- */
-void serial_transport_driver_clear(void);
+void driver_clear(void);
+void driver_master_init(void);
+void driver_slave_init(void);
+bool __attribute__((nonnull)) receive(uint8_t* destination, const size_t size);
+bool __attribute__((nonnull)) receive_blocking(uint8_t* destination, const size_t size);
+bool __attribute__((nonnull)) send(const uint8_t* source, const size_t size);
 
-/**
- * @brief Driver specific initialization on the slave half.
- */
-void serial_transport_driver_slave_init(void);
+#if defined(SOFT_SERIAL_PIN)
+#    define SERIAL_USART_TX_PIN SOFT_SERIAL_PIN
+#endif
 
-/**
- * @brief Driver specific specific initialization on the master half.
- */
-void serial_transport_driver_master_init(void);
+#if !defined(SERIAL_USART_TX_PIN)
+#    define SERIAL_USART_TX_PIN A9
+#endif
 
-/**
- * @brief  Blocking receive of size * bytes.
- *
- * @return true Receive success.
- * @return false Receive failed, e.g. by bit errors.
- */
-bool __attribute__((nonnull, hot)) serial_transport_receive(uint8_t* destination, const size_t size);
+#if !defined(SERIAL_USART_RX_PIN)
+#    define SERIAL_USART_RX_PIN A10
+#endif
 
-/**
- * @brief Blocking receive of size * bytes with an implicitly defined timeout.
- *
- * @return true Receive success.
- * @return false Receive failed, e.g. by timeout or bit errors.
- */
-bool __attribute__((nonnull, hot)) serial_transport_receive_blocking(uint8_t* destination, const size_t size);
+#if !defined(SELECT_SOFT_SERIAL_SPEED)
+#    define SELECT_SOFT_SERIAL_SPEED 1
+#endif
 
-/**
- * @brief Blocking send of buffer with timeout.
- *
- * @return true Send success.
- * @return false Send failed, e.g. by timeout or bit errors.
- */
-bool __attribute__((nonnull, hot)) serial_transport_send(const uint8_t* source, const size_t size);
+#if defined(SERIAL_USART_SPEED)
+// Allow advanced users to directly set SERIAL_USART_SPEED
+#elif SELECT_SOFT_SERIAL_SPEED == 0
+#    define SERIAL_USART_SPEED 460800
+#elif SELECT_SOFT_SERIAL_SPEED == 1
+#    define SERIAL_USART_SPEED 230400
+#elif SELECT_SOFT_SERIAL_SPEED == 2
+#    define SERIAL_USART_SPEED 115200
+#elif SELECT_SOFT_SERIAL_SPEED == 3
+#    define SERIAL_USART_SPEED 57600
+#elif SELECT_SOFT_SERIAL_SPEED == 4
+#    define SERIAL_USART_SPEED 38400
+#elif SELECT_SOFT_SERIAL_SPEED == 5
+#    define SERIAL_USART_SPEED 19200
+#else
+#    error invalid SELECT_SOFT_SERIAL_SPEED value
+#endif
+
+#if !defined(SERIAL_USART_TIMEOUT)
+#    define SERIAL_USART_TIMEOUT 20
+#endif

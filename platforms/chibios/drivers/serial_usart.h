@@ -5,75 +5,8 @@
 
 #include "quantum.h"
 #include "serial.h"
+
 #include <hal.h>
-
-#if HAL_USE_SERIAL
-
-typedef SerialDriver QMKSerialDriver;
-typedef SerialConfig QMKSerialConfig;
-
-#    if !defined(SERIAL_USART_DRIVER)
-#        define SERIAL_USART_DRIVER SD1
-#    endif
-
-#elif HAL_USE_SIO
-
-typedef SIODriver QMKSerialDriver;
-typedef SIOConfig QMKSerialConfig;
-
-#    if !defined(SERIAL_USART_DRIVER)
-#        define SERIAL_USART_DRIVER SIOD1
-#    endif
-
-#endif
-
-#if !defined(USE_GPIOV1)
-/* The default PAL alternate modes are used to signal that the pins are used for USART. */
-#    if !defined(SERIAL_USART_TX_PAL_MODE)
-#        define SERIAL_USART_TX_PAL_MODE 7
-#    endif
-#    if !defined(SERIAL_USART_RX_PAL_MODE)
-#        define SERIAL_USART_RX_PAL_MODE 7
-#    endif
-#endif
-
-#if defined(SOFT_SERIAL_PIN)
-#    define SERIAL_USART_TX_PIN SOFT_SERIAL_PIN
-#endif
-
-#if !defined(SERIAL_USART_TX_PIN)
-#    define SERIAL_USART_TX_PIN A9
-#endif
-
-#if !defined(SERIAL_USART_RX_PIN)
-#    define SERIAL_USART_RX_PIN A10
-#endif
-
-#if !defined(SELECT_SOFT_SERIAL_SPEED)
-#    define SELECT_SOFT_SERIAL_SPEED 1
-#endif
-
-#if defined(SERIAL_USART_SPEED)
-// Allow advanced users to directly set SERIAL_USART_SPEED
-#elif SELECT_SOFT_SERIAL_SPEED == 0
-#    define SERIAL_USART_SPEED 460800
-#elif SELECT_SOFT_SERIAL_SPEED == 1
-#    define SERIAL_USART_SPEED 230400
-#elif SELECT_SOFT_SERIAL_SPEED == 2
-#    define SERIAL_USART_SPEED 115200
-#elif SELECT_SOFT_SERIAL_SPEED == 3
-#    define SERIAL_USART_SPEED 57600
-#elif SELECT_SOFT_SERIAL_SPEED == 4
-#    define SERIAL_USART_SPEED 38400
-#elif SELECT_SOFT_SERIAL_SPEED == 5
-#    define SERIAL_USART_SPEED 19200
-#else
-#    error invalid SELECT_SOFT_SERIAL_SPEED value
-#endif
-
-#if !defined(SERIAL_USART_TIMEOUT)
-#    define SERIAL_USART_TIMEOUT 20
-#endif
 
 #if HAL_USE_SERIAL
 
@@ -142,31 +75,3 @@ typedef SIOConfig QMKSerialConfig;
             (AFIO->MAPR |= AFIO_MAPR_USART3_REMAP_FULLREMAP); \
         } while (0)
 #endif
-
-#if !defined(SELECT_SOFT_SERIAL_SPEED)
-#    define SELECT_SOFT_SERIAL_SPEED 1
-#endif
-
-#if defined(SERIAL_USART_SPEED)
-// Allow advanced users to directly set SERIAL_USART_SPEED
-#elif SELECT_SOFT_SERIAL_SPEED == 0
-#    define SERIAL_USART_SPEED 460800
-#elif SELECT_SOFT_SERIAL_SPEED == 1
-#    define SERIAL_USART_SPEED 230400
-#elif SELECT_SOFT_SERIAL_SPEED == 2
-#    define SERIAL_USART_SPEED 115200
-#elif SELECT_SOFT_SERIAL_SPEED == 3
-#    define SERIAL_USART_SPEED 57600
-#elif SELECT_SOFT_SERIAL_SPEED == 4
-#    define SERIAL_USART_SPEED 38400
-#elif SELECT_SOFT_SERIAL_SPEED == 5
-#    define SERIAL_USART_SPEED 19200
-#else
-#    error invalid SELECT_SOFT_SERIAL_SPEED value
-#endif
-
-#if !defined(SERIAL_USART_TIMEOUT)
-#    define SERIAL_USART_TIMEOUT 20
-#endif
-
-#define HANDSHAKE_MAGIC 7U
