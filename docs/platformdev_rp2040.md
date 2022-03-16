@@ -2,58 +2,30 @@
 
 The following table shows the current driver status for peripherals on RP2040 MCUs:
 
-| System                                                           | Support                                        |
-| ---------------------------------------------------------------- | ---------------------------------------------- |
-| [ADC driver](adc_driver.md)                                      | Support planned (no ETA)                       |
-| [Audio](audio_driver.md)                                         | Support planned (no ETA)                       |
-| [I2C driver](i2c_driver.md)                                      | :heavy_check_mark:                             |
-| [SPI driver](spi_driver.md)                                      | :heavy_check_mark:                             |
-| [WS2812 driver](ws2812_driver.md)                                | :heavy_check_mark: using `PIO` driver          |
-| [External EEPROMs](eeprom_driver.md)                             | :heavy_check_mark: using `I2C` or `SPI` driver |
-| [EEPROM emulation](eeprom_driver.md#wear_leveling-configuration) | :heavy_check_mark:                             |
-| [serial driver](serial_driver.md)                                | :heavy_check_mark: using `SIO` or `PIO` driver |
-| [UART driver](uart_driver.md)                                    | Support planned (no ETA)                       |
+| System           | Support                                        |
+| ---------------- | ---------------------------------------------- |
+| ADC driver       | Support planned (no ETA)                       |
+| Audio            | Support planned (no ETA)                       |
+| I2C driver       | :heavy_check_mark:                             |
+| SPI driver       | :heavy_check_mark:                             |
+| WS2812 driver    | :heavy_check_mark: using `PIO` driver          |
+| External EEPROMs | :heavy_check_mark: using `I2C` or `SPI` driver |
+| EEPROM emulation | Support planned (no ETA)                       |
+| serial driver    | :heavy_check_mark: using `SIO` or `PIO` driver |
+| UART driver      | Support planned (no ETA)                       |
 
-## GPIO
+## GPIO pin nomenclature
 
-<img alt="Raspberry Pi Pico pinout" src="https://i.imgur.com/nLaiYDE.jpg" width="48%"/>
-<img alt="Sparkfun RP2040 Pro Micro pinout" src="https://i.imgur.com/1TPAhrs.jpg" width="48%"/>
+<img alt="Raspberry Pi Pico Pinout" src="gitbook/images/Pi_Pico_Pinout.webp" width="48%"/>
+<img alt="Adafruit KB2040 Pinout" src="gitbook/images/KB2040_Pinout.webp" width="48%"/>
 
 !> The GPIO pins of the RP2040 are not 5V tolerant!
 
-### Pin nomenclature
-
 To address individual pins on the RP2040, QMK uses the `GPx` abbreviation -- where the `x` stands for the GPIO number of the pin. This number can likely be found on the official pinout diagram of your board. Note that these GPIO numbers match the RP2040 MCU datasheet, and don't necessarily match the number you see printed on the board. For instance the Raspberry Pi Pico uses numbers from 1 to 40 for their pins, but these are not identical to the RP2040's GPIO numbers. So if you want to use the pin 11 of the Pico for your keyboard, you would refer to it as `GP8` in the config files.
 
-### Alternate functions
+## Double-tap reset boot-loader entry
 
-The RP2040 features flexible GPIO function multiplexing, this means that every pin can be connected to nearly all the internal peripherals like I2C, SPI, UART or PWM. This allows for flexible PCB designs that are much less restricted in the selection of GPIO pins. To find out which pin can use which peripheral refer to the official [Raspberry PI RP2040 datasheet](https://datasheets.raspberrypi.com/rp2040/rp2040-datasheet.pdf#page=14) section 1.4.3 GPIO functions.
-
-## Selecting hardware peripherals and drivers
-
-QMK RP2040 support builds upon ChibiOS and thus follows their convention for activating drivers and associated hardware peripherals. These tables only give a quick overview which values have to be used, please refer to the ChibiOS specific sections on the driver pages.
-
-### I2C Driver
-
-| RP2040 Peripheral | `mcuconf.h` values | `I2C_DRIVER` |
-| ----------------- | ------------------ | ------------ |
-| `I2C0`            | `RP_I2C_USE_I2C0`  | `I2CD1`      |
-| `I2C1`            | `RP_I2C_USE_I2C1`  | `I2CD2`      |
-
-To configure the I2C driver please read the [ChibiOS/ARM](i2c_driver.md#arm-configuration) section.
-
-### SPI Driver
-
-| RP2040 Peripheral | `mcuconf.h` values | `SPI_DRIVER` |
-| ----------------- | ------------------ | ------------ |
-| `SPI0`            | `RP_SPI_USE_SPI0`  | `SPID0`      |
-| `SPI1`            | `RP_SPI_USE_SPI1`  | `SPID1`      |
-
-To configure the SPI driver please read the [ChibiOS/ARM](spi_driver.md#chibiosarm-configuration) section.
-
-## Double-tap reset boot-loader entry :id=double-tap
-
-The double-tap reset mechanism is an alternate way in QMK to enter the embedded mass storage UF2 boot-loader of the RP2040. It enables bootloader entry by a fast double-tap of the reset pin on start up, which is similar to the behavior of AVR Pro Micros. This feature activated by default for the Pro Micro RP2040 board, but has to be configured for other boards. To activate it, add the following options to your keyboards `config.h` file:
+The double-tap reset mechanism is an alternate way in QMK to enter the embedded mass storage UF2 boot-loader of the RP2040. It works by a fast double-tap of the reset pin on start up, which is similar to the behavior of AVR Pro Micros. This feature is not activated by default and has to be configured. To activate it add the following options to your keyboards `config.h` file:
 
 ```c
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET // Activates the double-tap behavior
@@ -67,8 +39,7 @@ QMK defines two boards that you can choose from to base your RP2040 powered keyb
 
 ### Generic Pro Micro RP2040
 
-This is the default board that is chosen, unless any other RP2040 board is selected in your keyboards `rules.mk` file. It assumes a pin layout for the I2C, SPI and Serial drivers which is identical to the Sparkfun Pro Micro RP2040, however all values can be overwritten by defining them in your keyboards `config.h` file. The [double-tap](#double-tap) reset to enter boot-loader behavior is activated by default.
-
+This is the default board that is chosen, unless any other RP2040 board is selected in your keyboards `rules.mk` file. It assumes a pin layout for the I2C, SPI and Serial drivers which is identical to the Sparkfun Pro Micro RP2040, all values can be overwritten by defining them in your keyboards `config.h` file.
 
 | Driver configuration define                                                | Value                                |
 | -------------------------------------------------------------------------- | ------------------------------------ |
@@ -87,11 +58,9 @@ This is the default board that is chosen, unless any other RP2040 board is selec
 | `SERIAL_USART_TX_PIN`                                                      | `GP0`                                |
 | `SERIAL_USART_RX_PIN`                                                      | `GP1`                                |
 
-?> The pin-outs of Adafruit's KB2040 and Boardsource's Blok both deviate from the Sparkfun Pro Micro RP2040. Lookup the pin-out of these boards and adjust your keyboards pin definition accordingly if you want to use these boards.
-
 ### Generic RP2040 board
 
-This board can be chosen as a base for RP2040 keyboards which configure all necessary pins and drivers themselves and do not wish to leverage the configuration matching the Generic Pro Micro RP2040 board. Thus it doesn't provide any pre-configured pins or drivers. To select this board add the following line to your keyboards `rules.mk` file.
+This board can be chosen as a base for RP2040 keyboards that configure all necessary pins and drivers themselves and do not want to build their configuration on top of the Generic Pro Micro RP2040 board. Thus it doesn't provide any pre-configured pins or drivers. To select this board add the following line to your keyboards `rules.mk` file.
 
 ```make
 BOARD = GENERIC_RP_RP2040
@@ -99,7 +68,7 @@ BOARD = GENERIC_RP_RP2040
 
 ## Split keyboard support
 
-Split keyboards are fully supported using the [serial driver](serial_driver.md) in both full-duplex and half-duplex configurations. Two driver subsystems are supported by the RP2040, the hardware UART based `SIO` and the Programmable IO based `PIO` driver.
+Split keyboards are fully supported using the [serial driver](serial_driver.md) in both Full-duplex and Half-duplex configurations. For this to work two driver subsystems are supported by the RP2040, the hardware UART based `SIO` and the Programmable IO based `PIO` driver.
 
 | Feature                       | [SIO Driver](serial_driver.md#the-sio-driver) | [PIO Driver](serial_driver.md#the-pio-driver) |
 | ----------------------------- | --------------------------------------------- | --------------------------------------------- |
