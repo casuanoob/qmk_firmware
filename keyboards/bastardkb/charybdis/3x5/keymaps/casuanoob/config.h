@@ -28,3 +28,6 @@
 
 // Disable unused keycodes.
 #define NO_CHARYBDIS_KEYCODES
+
+//testing ee hands here
+#define EE_HANDS
