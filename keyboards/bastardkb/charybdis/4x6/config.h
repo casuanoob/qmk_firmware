@@ -34,6 +34,25 @@
 
 #define ROTATIONAL_TRANSFORM_ANGLE -25
 
+/* Handedness. */
+#define MASTER_RIGHT
+
+/* Bootmagic Lite configuration. */
+#define BOOTMAGIC_LITE_ROW 0
+#define BOOTMAGIC_LITE_COLUMN 0
+#define BOOTMAGIC_LITE_ROW_RIGHT 5
+#define BOOTMAGIC_LITE_COLUMN_RIGHT 0
+
+/* serial.c configuration (for split keyboard) */
+#define SOFT_SERIAL_PIN D2
+
+/* Set 0 if debouncing isn't needed */
+#define DEBOUNCE 5
+
+/* PMW3360 settings. */
+#define PMW3360_CS_PIN B0
+
+#define RGB_DI_PIN D3
 #define RGBLED_NUM 56
 #define RGBLED_SPLIT \
   { 29, 27 }
