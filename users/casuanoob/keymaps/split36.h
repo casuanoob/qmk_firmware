@@ -169,7 +169,7 @@ enum keycodes_keymap {
     KC_DQUO, KC_LABK,  KC_EQL, KC_RABK,  KC_GRV, ___x___, ___x___, ___x___,     FUN, SPECIAL, \
     KC_HASH, KC_PLUS, KC_MINS, KC_COLN, KC_EXLM, ___x___, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
     KC_TILD, KC_BSLS, KC_ASTR, KC_SLSH, KC_UNDS,  TD_DRG, KC_BTN3, KC_BTN1, KC_BTN2, KC_MENU, \
-                      ___x___, ___x___, ___x___, _______,   CLEAR, _______
+                      ___x___, ___x___, _______, _______,   CLEAR, _______
 
 // clang-format on
 
@@ -204,7 +204,7 @@ enum keycodes_keymap {
  */
 // clang-format off
 #define NAV_split_3x5_3                                                                       \
-    WS_PREV, RCS_TAB, LAUNCHR, CTL_TAB, WS_NEXT, ___x___, KC_HOME,   NS_UP,  KC_END, KC_PGUP, \
+    WS_PREV, RCS_TAB, LAUNCHR, CTL_TAB, WS_NEXT,  KC_DEL, KC_HOME,   NS_UP,  KC_END, KC_PGUP, \
     OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT, SC_NTAB, ___x___, NS_LEFT, NS_DOWN, NS_RGHT, KC_PGDN, \
     SC_CLSE,  SC_CUT, SC_COPY, SC_PSTE, SC_NWIN, ___x___, ___x___, ___x___, ___x___, ___x___, \
                       ___x___, _______, ___x___, ___x___,    WNAV, ___x___

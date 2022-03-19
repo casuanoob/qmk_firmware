@@ -36,7 +36,7 @@
   { C7, B7, D7, E6, B4 }
 
 /* Handedness. */
-#define MASTER_RIGHT
+#define EE_HANDS
 
 /* Bootmagic Lite configuration. */
 #define BOOTMAGIC_LITE_ROW 0
