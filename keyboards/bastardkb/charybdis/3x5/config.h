@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include "config_common.h"
+
 #define VENDOR_ID 0xA8F8
 #define PRODUCT_ID 0x1832
 #define DEVICE_VER 0x0001
@@ -31,15 +33,13 @@
 
 #define DIODE_DIRECTION ROW2COL
 
-/* Disable action features. */
-#define NO_ACTION_MACRO     // Disable old-style macro handling.
-#define NO_ACTION_FUNCTION  // Disable old-style function handling.
+/* Set 0 if debouncing isn't needed. */
+#define DEBOUNCE 5
 
 // Trackball angle adjustment.
 #define ROTATIONAL_TRANSFORM_ANGLE -25
 
 /* RGB settings. */
-
 #define RGBLED_NUM 35
 #define RGBLED_SPLIT \
   { 18, 17 }

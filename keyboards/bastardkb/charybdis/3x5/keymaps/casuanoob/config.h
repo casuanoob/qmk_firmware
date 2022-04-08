@@ -18,7 +18,7 @@
 
 // Trackball angle adjustment.
 #undef ROTATIONAL_TRANSFORM_ANGLE
-#define ROTATIONAL_TRANSFORM_ANGLE -40
+#define ROTATIONAL_TRANSFORM_ANGLE -25
 
 // Enable pointer acceleration.
 #define CHARYBDIS_POINTER_ACCELERATION_ENABLE
@@ -31,3 +31,10 @@
 
 //testing ee hands here
 #define EE_HANDS
+#define SPLIT_USB_DETECT
+
+// Enable split keyboards extensions, in order to sync state between the halves.
+#define SPLIT_MODS_ENABLE
+#define SPLIT_LED_STATE_ENABLE
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_TRANSPORT_MIRROR
