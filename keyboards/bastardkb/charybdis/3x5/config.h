@@ -18,6 +18,8 @@
 
 #pragma once
 
+#include "config_common.h"
+
 #define VENDOR_ID 0xA8F8
 #define PRODUCT_ID 0x1832
 #define DEVICE_VER 0x0001
@@ -31,29 +33,13 @@
 
 #define DIODE_DIRECTION ROW2COL
 
-/* Handedness. */
-#define MASTER_RIGHT
-
-/* Bootmagic Lite configuration. */
-#define BOOTMAGIC_LITE_ROW 0
-#define BOOTMAGIC_LITE_COLUMN 0
-#define BOOTMAGIC_LITE_ROW_RIGHT 4
-#define BOOTMAGIC_LITE_COLUMN_RIGHT 0
-
-/* serial.c configuration (for split keyboard) */
-#define SOFT_SERIAL_PIN D2
-
 /* Set 0 if debouncing isn't needed. */
 #define DEBOUNCE 5
-
-/* PMW3360 settings. */
-#define PMW3360_CS_PIN B0
 
 // Trackball angle adjustment.
 #define ROTATIONAL_TRANSFORM_ANGLE -25
 
 /* RGB settings. */
-
 #define RGBLED_NUM 35
 #define RGBLED_SPLIT \
   { 18, 17 }

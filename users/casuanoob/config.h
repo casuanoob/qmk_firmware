@@ -19,7 +19,7 @@
 
 // Split keyboards {{{
 
-#ifdef SPLIT_KEYBOARD
+//#ifdef SPLIT_KEYBOARD
 //#ifndef SPLIT_HAND_PIN
 /**
  * \brief Flash each side with `-bl dfu-split-*` to set handedness in memory eg.
@@ -37,13 +37,15 @@
 #undef SPLIT_HAND_PIN
 #undef MASTER_RIGHT
 #define EE_HANDS
+#define SPLIT_USB_DETECT
 //#endif  // SPLIT_HAND_PIN
 
 // Enable split keyboards extensions, in order to sync state between the halves.
 #define SPLIT_MODS_ENABLE
 #define SPLIT_LED_STATE_ENABLE
 #define SPLIT_LAYER_STATE_ENABLE
-#endif  // SPLIT_KEYBOARD
+#define SPLIT_TRANSPORT_MIRROR
+//#endif  // SPLIT_KEYBOARD
 
 // }}}
 // Keymap {{{
@@ -281,7 +283,7 @@
 
 #ifdef POINTING_DEVICE_ENABLE
 #    ifndef CHARYBDIS_MINIMUM_DEFAULT_DPI
-#        define CHARYBDIS_MINIMUM_DEFAULT_DPI 800
+#        define CHARYBDIS_MINIMUM_DEFAULT_DPI 700
 #    endif  // CHARYBDIS_MINIMUM_DEFAULT_DPI
 
 #    ifndef CHARYBDIS_MINIMUM_SNIPING_DPI

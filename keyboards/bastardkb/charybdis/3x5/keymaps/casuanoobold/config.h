@@ -35,15 +35,6 @@
 #define TAPPING_TERM 250
 //#endif  // TAPPING_TERM
 #define TAPPING_TERM_PER_KEY
-/**
- * \brief Enable rapid switch from tap to hold.
- *
- * Note that a side-effect of this setting is to disable auto-repeat when
- * pressing key twice, except for one-shot keys.
- *
- * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-force-hold
- */
-#define TAPPING_FORCE_HOLD
 
 /*
  * Tap-or-Hold decision modes.
@@ -54,6 +45,16 @@
  * See bit.ly/tap-or-hold for a visual explanation of the following tap-or-hold
  * decision modes.
  */
+/**
+ * \brief Enable rapid switch from tap to hold.
+ *
+ * Note that a side-effect of this setting is to disable auto-repeat when
+ * pressing key twice, except for one-shot keys.
+ *
+ * See docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-force-hold
+ */
+#define TAPPING_FORCE_HOLD
+#define TAPPING_FORCE_HOLD_PER_KEY
 
 /**
  * \brief Faster tap-hold trigger.
@@ -67,6 +68,18 @@
  */
 #define PERMISSIVE_HOLD
 #define PERMISSIVE_HOLD_PER_KEY
+
+/**
+ * \brief Faster layer-tap hold trigger.
+ *
+ * Without `HOLD_ON_OTHER_KEY_PRESS`, within `TAPPING_TERM`:
+ *     LT(2, a)🠗 e🠗 LT(2, a)🠕 e🠕 ➞ ae
+ * With `HOLD_ON_OTHER_KEY_PRESS`, within `TAPPING_TERM`:
+ *     LT(2, a)🠗 e🠗 LT(2, a)🠕 e🠕 ➞ <mapping of e on layer>
+ *
+ * https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#hold-on-other-key-press
+ */
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 /**
  * \brief Prevent normal rollover on alphas from accidentally triggering mods.

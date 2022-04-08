@@ -37,29 +37,19 @@
 
 /* Handedness. */
 #define EE_HANDS
+#define SPLIT_USB_DETECT
 
-/* Bootmagic Lite configuration. */
-#define BOOTMAGIC_LITE_ROW 0
-#define BOOTMAGIC_LITE_COLUMN 0
-#define BOOTMAGIC_LITE_ROW_RIGHT 4
-#define BOOTMAGIC_LITE_COLUMN_RIGHT 0
+// Enable split keyboards extensions, in order to sync state between the halves.
+#define SPLIT_MODS_ENABLE
+#define SPLIT_LED_STATE_ENABLE
+#define SPLIT_LAYER_STATE_ENABLE
+#define SPLIT_TRANSPORT_MIRROR
 
 /* serial.c configuration (for split keyboard) */
 #define SOFT_SERIAL_PIN D2
 
-/* Set 0 if debouncing isn't needed. */
-#define DEBOUNCE 5
-
-/* Disable action features. */
-#define NO_ACTION_MACRO     // Disable old-style macro handling.
-#define NO_ACTION_FUNCTION  // Disable old-style function handling.
+/* RGB settings. */
+#define RGB_DI_PIN D3
 
 /* PMW3360 settings. */
 #define PMW3360_CS_PIN B0
-
-// Trackball angle adjustment.
-#define ROTATIONAL_TRANSFORM_ANGLE -25
-
-/* RGB settings. */
-
-#define RGB_DI_PIN D3
