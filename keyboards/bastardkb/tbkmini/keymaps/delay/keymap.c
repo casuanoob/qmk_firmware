@@ -40,7 +40,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_WNAV] = LAYOUT_tbkmini(WNAV_split_3x5_3),
   [_NUM] = LAYOUT_tbkmini(NUM_split_3x5_3),
   [_FUN] = LAYOUT_tbkmini(FUN_split_3x5_3),
-  [_PTR] = LAYOUT_tbkmini(PTR_split_3x5_3),
   [_SPEC] = LAYOUT_tbkmini(SPEC_split_3x5_3),
 };
 // clang-format on

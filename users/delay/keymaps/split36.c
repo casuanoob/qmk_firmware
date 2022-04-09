@@ -27,23 +27,20 @@
 #include "oneshot_mod.h"
 #endif  // ONESHOT_MOD_ENABLE
 
+#ifdef TAP_DANCE_ENABLE
+#include "tap_dance.h"
+#endif  // TAP_DANCE_ENABLE
+
 #ifdef ONESHOT_MOD_ENABLE
-bool is_oneshot_mod_cancel_key(uint16_t keycode) {
-  switch (keycode) {
-    case CLEAR:
-    case LMOD:
-    case RMOD:
-      return true;
-    default:
-      return false;
-  }
-}
+bool is_oneshot_mod_cancel_key(uint16_t keycode) { return keycode == CLEAR; }
 
 bool is_oneshot_mod_ignore_key(uint16_t keycode) {
   switch (keycode) {
     case CLEAR:
     case LMOD:
     case RMOD:
+    case MOD_ESC:
+    case MOD_TAB:
     case OS_LALT:
     case OS_LCTL:
     case OS_LGUI:
@@ -55,6 +52,37 @@ bool is_oneshot_mod_ignore_key(uint16_t keycode) {
   }
 }
 #endif  // ONESHOT_MOD_ENABLE
+
+#if defined(TAP_DANCE_ENABLE) && defined(POINTING_DEVICE_ENABLE) && \
+    defined(TD_ONESHOT_DRAGSCROLL_ENABLE) &&                        \
+    defined(KEYBOARD_bastardkb_charybdis)
+/**
+ * \brief The state for the oneshot-shift tap-dance.
+ *
+ * This state is not meant to be accessed directly.  Instead, use the
+ * `user_data` value that is passed to each callback.
+ */
+static oneshot_dragscroll_td_state_t g_oneshot_dragscroll_td_state = {
+    .td_state = TD_NONE,
+};
+
+/**
+ * \brief Define global tap-dance actions.
+ */
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_ONESHOT_DRAGSCROLL] =
+        {
+            .fn = {
+                /* user_fn_on_each_tap= */ NULL,
+                oneshot_dragscroll_td_on_dance_finished,
+                oneshot_dragscroll_td_on_dance_reset,
+            },
+            .user_data = &g_oneshot_dragscroll_td_state,
+            .custom_tapping_term = DELAY_TD_TAPPING_TERM,
+        },
+};
+#endif  // TAP_DANCE_ENABLE && POINTING_DEVICE_ENABLE &&
+        // TD_ONESHOT_DRAGSCROLL_ENABLE && KEYBOARD_bastardkb_charybdis
 
 bool process_record_user_keymap(uint16_t keycode, keyrecord_t *record) {
   if (!process_record_keymap(keycode, record)) {
@@ -73,16 +101,6 @@ bool process_record_user_keymap(uint16_t keycode, keyrecord_t *record) {
       clear_oneshot_locked_mods();
       del_mods(MOD_MASK_SHIFT);
       break;
-    case MACOS:
-      if (record->event.pressed) {
-        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-        if (is_macos()) {
-          rgb_matrix_sethsv_noeeprom(HSV_CYAN);
-        } else {
-          rgb_matrix_sethsv_noeeprom(HSV_GREEN);
-        }
-      }
-      return false;
   }
   return true;
 };
@@ -107,23 +125,27 @@ uint32_t reset_rgb_matrix_callback(uint32_t trigger_time, void *cb_arg) {
   rgb_matrix_reload_from_eeprom();
   return 0;
 }
+
+void schedule_rgb_matrix_reset(uint16_t delay_ms) {
+  // Defer reseting the RGB matrix to its default value.
+  //
+  // TODO(delay): add a dedicated define for this feature, and make the
+  // timeout configurable.
+  static deferred_token reset_rgb_matrix_token = 0;
+  if (reset_rgb_matrix_token != 0) {
+    cancel_deferred_exec(reset_rgb_matrix_token);
+  }
+  reset_rgb_matrix_token = defer_exec(delay_ms, reset_rgb_matrix_callback,
+                                      /* cb_arg= */ NULL);
+}
 #endif  // RGB_MATRIX_ENABLE && DEFERRED_EXEC_ENABLE
 
 /** Called on layer change. */
 layer_state_t layer_state_set_user_keymap(layer_state_t state) {
 #if defined(RGB_MATRIX_ENABLE) && defined(DEFERRED_EXEC_ENABLE)
   if (get_highest_layer(state) == _BASE) {
-    // Defer reseting the RGB matrix to its default value.
-    //
-    // TODO(delay): add a dedicated define for this feature, and make the
-    // timeout configurable.
-    static deferred_token reset_rgb_matrix_token = 0;
-    if (reset_rgb_matrix_token != 0) {
-      cancel_deferred_exec(reset_rgb_matrix_token);
-    }
-    reset_rgb_matrix_token =
-        defer_exec(/* delay_ms= */ 1000, reset_rgb_matrix_callback,
-                   /* cb_arg= */ NULL);
+    // Reset the RGB matrix to its default value.
+    schedule_rgb_matrix_reset(/* delay_ms= */ 1000);
   }
 #endif  // RGB_MATRIX_ENABLE && DEFERRED_EXEC_ENABLE
   return layer_state_set_keymap(state);
