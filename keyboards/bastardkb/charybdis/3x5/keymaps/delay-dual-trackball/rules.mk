@@ -3,3 +3,7 @@ ONESHOT_MOD_ENABLE = yes
 TD_ONESHOT_DRAGSCROLL_ENABLE = yes
 
 KEYMAP_ENABLE = split36 # Use "split36" keymap (from /users/delay).
+
+# Loads /users/delay userspace.
+USER_NAME := delay
+#CONSOLE_ENABLE = yes
