@@ -18,11 +18,18 @@
 
 #ifdef TAP_DANCE_ENABLE
 #ifndef DELAY_TD_TAPPING_TERM
-/** TODO(delay) */
+/** Default tap-dance tapping term if not already set.  Relative to
+ * `TAPPING_TERM`. */
 #define DELAY_TD_TAPPING_TERM TAPPING_TERM + 125
 #endif  // DELAY_TD_TAPPING_TERM
 
-/** TODO(delay) */
+/**
+ * Tap-dance possible state.  Supports:
+ *   - single tap
+ *   - double tap
+ *   - hold
+ *   - double hold (ie. double tap and hold)
+ */
 typedef enum {
   TD_NONE,
   TD_UNKNOWN,
@@ -33,26 +40,52 @@ typedef enum {
 } td_state_t;
 
 #ifdef TD_ONESHOT_SHIFT_ENABLE
-/** TODO(delay) */
+/** One-shot shift tap-dance state. */
 typedef struct {
   const uint8_t single_hold_layer;
   const uint8_t double_hold_layer;
   td_state_t td_state;
 } oneshot_shift_td_state_t;
 
-/** TODO(delay) */
+/** Tap-dance `on_dance_finished_fn` callback for one-shot shift implementation.
+ */
 void oneshot_shift_td_on_dance_finished(qk_tap_dance_state_t *state,
                                         void *user_data);
 
-/** TODO(delay) */
+/** Tap-dance `on_dance_reset_fn` callback for one-shot shift implementation. */
 void oneshot_shift_td_on_dance_reset(qk_tap_dance_state_t *state,
                                      void *user_data);
-#endif  // TD_ONESHOT_SHIFT_ENABLE
+#endif  // DELAY_TD_ONESHOT_SHIFT_ENABLE
 
-/** TODO(delay) */
+#if defined(TD_ONESHOT_DRAGSCROLL_ENABLE) && \
+    defined(KEYBOARD_bastardkb_charybdis)
+/** Dragscroll tap-dance state. */
+typedef struct {
+  td_state_t td_state;
+} oneshot_dragscroll_td_state_t;
+
+/**
+ * Tap-dance `on_dance_finished_fn` callback for one-shot dragscroll
+ * implementantion.
+ */
+void oneshot_dragscroll_td_on_dance_finished(qk_tap_dance_state_t *state,
+                                             void *user_data);
+
+/** Tap-dance `on_dance_reset_fn` callback for one-shot dragscroll. */
+void oneshot_dragscroll_td_on_dance_reset(qk_tap_dance_state_t *state,
+                                          void *user_data);
+#endif  // TD_ONESHOT_DRAGSCROLL_ENABLE && KEYBOARD_bastardkb_charybdis
+
+/** Tap-dance keycodes. */
 enum tap_dances_user {
 #ifdef TD_ONESHOT_SHIFT_ENABLE
   TD_ONESHOT_SHIFT,  // Custom OSM Shift with layer on hold.
 #endif               // TD_ONESHOT_SHIFT_ENABLE
+#if defined(POINTING_DEVICE_ENABLE) &&       \
+    defined(TD_ONESHOT_DRAGSCROLL_ENABLE) && \
+    defined(KEYBOARD_bastardkb_charybdis)
+  TD_ONESHOT_DRAGSCROLL,  // Custom dragscroll that toggles on tap.
+#endif  // POINTING_DEVICE_ENABLE && TD_ONESHOT_DRAGSCROLL_ENABLE &&
+        // KEYBOARD_bastardkb_charybdis
 };
 #endif  // TAP_DANCE_ENABLE

@@ -162,11 +162,6 @@ static bool process_record_user_internal(uint16_t keycode,
   }
 #endif  // COMPOSE_ENABLE
   switch (keycode) {
-    case MACOS:
-      if (record->event.pressed) {
-        toggle_macos();
-      }
-      break;
     case NS_1 ... NS_0:
       NO_ONESHOT_SHIFT_LOCKED_CODE(keycode - NS_1 + KC_1);
     case NS_BSLASH:
@@ -195,30 +190,6 @@ static bool process_record_user_internal(uint16_t keycode,
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
     case NS_RIGHT:
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
-    case SC_CUT:
-      process_record_cut(record);
-      break;
-    case SC_COPY:
-      process_record_copy(record);
-      break;
-    case SC_PASTE:
-      process_record_paste(record);
-      break;
-    case SC_PASTE_NO_FORMAT:
-      process_record_paste_no_format(record);
-      break;
-    case SC_CLOSE:
-      process_record_close(record);
-      break;
-    case SC_NEW_TAB:
-      process_record_new_tab(record);
-      break;
-    case SC_NEW_WINDOW:
-      process_record_new_window(record);
-      break;
-    case SC_SELECT_ALL:
-      process_record_select_all(record);
-      break;
     case WS_GOTO_1 ... WS_GOTO_0:
       process_record_space_goto_index(record, keycode - WS_GOTO_1);
       break;
@@ -315,26 +286,7 @@ __attribute__((weak)) layer_state_t layer_state_set_user_keymap(
   return state;
 }
 
-/**
- * Init the host platform (whether host is macOS or not).
- *
- * This relies on a macOS oddity to detect whether the host platform is macOS
- * or another system: macOS does not support some features (in this case, num
- * lock), so by manually setting num lock, and checking for its value, it's
- * possible to tell macOS apart from other host OSes.
- */
-static void _init_host_platform(void) {
-  const uint8_t host_kb_leds = host_keyboard_leds();
-  add_key(KC_NUM_LOCK);
-  send_keyboard_report();
-  wait_ms(50);
-  del_key(KC_NUM_LOCK);
-  send_keyboard_report();
-  set_is_macos(host_kb_leds == host_keyboard_leds());
-}
-
 void keyboard_post_init_user(void) {
-  _init_host_platform();
 #ifdef COMPOSE_ENABLE
   keyboard_post_init_compose(&g_compose_state);
 #endif  // COMPOSE_ENABLE

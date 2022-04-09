@@ -28,19 +28,6 @@ enum keycodes_user {
 #else
   COMPOSE = SAFE_RANGE,
 #endif
-  // Keycodes to change the target platform (changes some keycodes at runtime).
-  MACOS,
-  // Cut/copy/paste shortcuts that change at runtime based on the current
-  // platform.
-  SC_CUT,              // ^X or Cmd+X based on the platform.
-  SC_COPY,             // ^C or Cmd+C based on the platform.
-  SC_PASTE,            // ^V or Cmd+V based on the platform.
-  SC_PASTE_NO_FORMAT,  // Shifted ^V or Cmd+V based on the platform.
-  // Other platform-specific shortcuts.
-  SC_CLOSE,       // ^W or Cmd+W based on the platform.
-  SC_NEW_TAB,     // ^T or Cmd+T based on the platform.
-  SC_NEW_WINDOW,  // ^N or Cmd+N based on the platform.
-  SC_SELECT_ALL,  // ^A or Cmd+A based on the platform.
   // Custom version of these keycodes that don't shift when only oneshot shift
   // mod is locked.
   NS_1,
@@ -97,6 +84,15 @@ enum keycodes_user {
   SAFE_RANGE_KEYMAP,
 };
 
+#define SC_CUT LGUI(KC_X)
+#define SC_COPY LGUI(KC_C)
+#define SC_PASTE LGUI(KC_V)
+#define SC_PASTE_NO_FORMAT LGUI(S(KC_V))
+#define SC_LAUNCHER LGUI(KC_SPACE)
+#define SC_CLOSE LGUI(KC_W)
+#define SC_NEW_TAB LGUI(KC_T)
+#define SC_NEW_WINDOW LGUI(KC_N)
+
 // Shorthands.
 #define NS_BSLS NS_BSLASH
 #define NS_COMM NS_COMMA
@@ -112,6 +108,7 @@ enum keycodes_user {
 #define SC_NTAB SC_NEW_TAB
 #define SC_NWIN SC_NEW_WINDOW
 #define SC_SELA SC_SELECT_ALL
+#define LAUNCHR SC_LAUNCHER
 #define WS_1 WS_GOTO_1
 #define WS_2 WS_GOTO_2
 #define WS_3 WS_GOTO_3

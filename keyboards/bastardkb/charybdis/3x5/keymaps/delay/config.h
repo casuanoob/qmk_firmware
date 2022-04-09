@@ -16,11 +16,13 @@
  */
 #pragma once
 
-// Enable pointer acceleration.
-#define CHARYBDIS_POINTER_ACCELERATION_ENABLE
+// Trackball angle adjustment.
+#undef ROTATIONAL_TRANSFORM_ANGLE
+#define ROTATIONAL_TRANSFORM_ANGLE -80
 
-// macOS "Natural" scroll direction.
-#define CHARYBDIS_DRAGSCROLL_REVERSE_Y
+// Custom DPI.
+#define CHARYBDIS_MINIMUM_DEFAULT_DPI 800
+#define CHARYBDIS_MINIMUM_SNIPING_DPI 300
 
 // Disable unused keycodes.
 #define NO_CHARYBDIS_KEYCODES

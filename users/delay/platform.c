@@ -17,58 +17,9 @@
 
 #include "platform.h"
 
-// Whether the host platform is macOS or another OS.
-static bool g_is_macos = false;
-
-bool is_macos(void) { return g_is_macos; }
-void toggle_macos(void) { g_is_macos ^= 1; }
-void set_is_macos(bool is_macos) { g_is_macos = is_macos; }
-
-static void _process_record_simple_shortcut(const keyrecord_t *record,
-                                            uint16_t keycode) {
-  const uint16_t keycode16 = is_macos() ? LGUI(keycode) : LCTL(keycode);
-  if (record->event.pressed) {
-    register_code16(keycode16);
-  } else {
-    unregister_code16(keycode16);
-  }
-}
-
-void process_record_cut(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, KC_X);
-}
-
-void process_record_copy(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, KC_C);
-}
-
-void process_record_paste(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, KC_V);
-}
-
-void process_record_paste_no_format(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, S(KC_V));
-}
-
-void process_record_close(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, KC_W);
-}
-
-void process_record_new_tab(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, KC_T);
-}
-
-void process_record_new_window(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, KC_N);
-}
-
-void process_record_select_all(const keyrecord_t *record) {
-  _process_record_simple_shortcut(record, KC_A);
-}
-
 static void _process_record_space_shortcut(const keyrecord_t *record,
                                            uint16_t keycode) {
-  const uint16_t keycode16 = is_macos() ? LCTL(LOPT(keycode)) : LGUI(keycode);
+  const uint16_t keycode16 = LCTL(LOPT(keycode));
   if (record->event.pressed) {
     register_code16(keycode16);
   } else {

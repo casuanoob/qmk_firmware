@@ -17,6 +17,13 @@
 #include "quantum.h"
 #include "tap_dance.h"
 
+#if defined(POINTING_DEVICE_ENABLE) &&       \
+    defined(TD_ONESHOT_DRAGSCROLL_ENABLE) && \
+    defined(KEYBOARD_bastardkb_charybdis)
+#include "charybdis.h"
+#endif  // POINTING_DEVICE_ENABLE && TD_ONESHOT_DRAGSCROLL_ENABLE &&
+        // KEYBOARD_bastardkb_charybdis
+
 #ifdef TAP_DANCE_ENABLE
 static td_state_t get_current_state(qk_tap_dance_state_t *state) {
   if (state->count == 1) {
@@ -80,4 +87,36 @@ void oneshot_shift_td_on_dance_reset(qk_tap_dance_state_t *state,
   oneshot_shift_td_state->td_state = TD_NONE;
 }
 #endif  // TD_ONESHOT_SHIFT_ENABLE
+
+#if defined(POINTING_DEVICE_ENABLE) &&       \
+    defined(TD_ONESHOT_DRAGSCROLL_ENABLE) && \
+    defined(KEYBOARD_bastardkb_charybdis)
+void oneshot_dragscroll_td_on_dance_finished(qk_tap_dance_state_t *state,
+                                             void *user_data) {
+  oneshot_dragscroll_td_state_t *const oneshot_dragscroll_td_state = user_data;
+  oneshot_dragscroll_td_state->td_state = get_current_state(state);
+
+  switch (oneshot_dragscroll_td_state->td_state) {
+    case TD_SINGLE_TAP:
+      charybdis_set_pointer_dragscroll_enabled(
+          !charybdis_get_pointer_dragscroll_enabled());
+      break;
+    case TD_HOLD:
+      charybdis_set_pointer_dragscroll_enabled(true);
+      break;
+    default:
+      break;
+  }
+}
+
+void oneshot_dragscroll_td_on_dance_reset(qk_tap_dance_state_t *state,
+                                          void *user_data) {
+  oneshot_dragscroll_td_state_t *const oneshot_dragscroll_td_state = user_data;
+  if (oneshot_dragscroll_td_state->td_state == TD_HOLD) {
+    charybdis_set_pointer_dragscroll_enabled(false);
+  }
+  oneshot_dragscroll_td_state->td_state = TD_NONE;
+}
+#endif  // POINTING_DEVICE_ENABLE && TD_ONESHOT_DRAGSCROLL_ENABLE &&
+        // KEYBOARD_bastardkb_charybdis
 #endif  // TAP_DANCE_ENABLE
