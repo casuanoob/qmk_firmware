@@ -190,6 +190,6 @@ enum keycodes_keymap {
 #define SPEC_split_3x5_3                                                                      \
      KC_ESC, ___x___, ___x___, ___x___, RGB_TOG, RGB_TOG, ___x___, ___x___, ___x___,  KC_ESC, \
     ___x___, SC_NWIN, SC_NTAB, ___x___, ___x___, ___x___, ___x___, SC_NTAB, SC_NWIN, ___x___, \
-      RESET, EEP_RST, SC_CLSE, ___x___, ___x___, ___x___, ___x___, SC_CLSE, EEP_RST,   RESET, \
+    QK_BOOT, EEP_RST, SC_CLSE, ___x___, ___x___, ___x___, ___x___, SC_CLSE, EEP_RST, QK_BOOT, \
                       ___x___, ___x___, ___x___, ___x___, ___x___, ___x___
 // clang-format on
