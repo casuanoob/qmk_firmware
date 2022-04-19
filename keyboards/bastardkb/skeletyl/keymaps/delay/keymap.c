@@ -16,19 +16,17 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "keymaps/split36.h"
+#include "keymaps/split34.h"
 
 #define LAYOUT_skeletyl(...) LAYOUT_split_3x5_3(__VA_ARGS__)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BASE] = LAYOUT_skeletyl(DVORAK_ALT_3x5_3),
-  [_LMOD] = LAYOUT_skeletyl(LMOD_split_3x5_3),
-  [_RMOD] = LAYOUT_skeletyl(RMOD_split_3x5_3),
+  [_BASE] = LAYOUT_skeletyl(DVORAK_split_3x5_3),
   [_NAV] = LAYOUT_skeletyl(NAV_split_3x5_3),
-  [_WNAV] = LAYOUT_skeletyl(WNAV_split_3x5_3),
+  [_SYM] = LAYOUT_skeletyl(SYM_split_3x5_3),
   [_NUM] = LAYOUT_skeletyl(NUM_split_3x5_3),
-  [_FUN] = LAYOUT_skeletyl(FUN_split_3x5_3),
+  [_WNAV] = LAYOUT_skeletyl(WNAV_split_3x5_3),
   [_SPEC] = LAYOUT_skeletyl(SPEC_split_3x5_3),
 };
 // clang-format on
