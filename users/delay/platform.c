@@ -27,10 +27,6 @@ static void _process_record_space_shortcut(const keyrecord_t *record,
   }
 }
 
-void process_record_space_goto_index(const keyrecord_t *record, uint8_t index) {
-  _process_record_space_shortcut(record, KC_1 + index);
-}
-
 void process_record_space_goto_previous(const keyrecord_t *record) {
   _process_record_space_shortcut(record, KC_LEFT);
 }

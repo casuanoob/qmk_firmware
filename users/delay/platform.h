@@ -19,7 +19,6 @@
 
 #include "quantum.h"
 
-void process_record_space_goto_index(const keyrecord_t *record, uint8_t index);
 void process_record_space_goto_previous(const keyrecord_t *record);
 void process_record_space_goto_next(const keyrecord_t *record);
 void process_record_space_focus_previous(const keyrecord_t *record);

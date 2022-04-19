@@ -45,10 +45,10 @@ ifeq ($(strip $(ONESHOT_MOD_ENABLE)), yes)
 	OPT_DEFS += -DONESHOT_MOD_ENABLE
 endif
 
-# Include split36 keymap source and flags if enabled.
-ifeq ($(strip $(KEYMAP_ENABLE)), split36)
-	SRC += $(USER_PATH)/keymaps/split36.c
-	OPT_DEFS += -DDELAY_KEYMAP_SPLIT36
+# Include split34 keymap source and flags if enabled.
+ifeq ($(strip $(KEYMAP_ENABLE)), split34)
+	SRC += $(USER_PATH)/keymaps/split34.c
+	OPT_DEFS += -DDELAY_KEYMAP_SPLIT34
 	DEFERRED_EXEC_ENABLE = yes
 endif
 
