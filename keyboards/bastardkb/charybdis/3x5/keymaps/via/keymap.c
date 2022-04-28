@@ -247,7 +247,7 @@ report_mouse_t pointing_device_task_user(report_mouse_t mouse_report) {
     return mouse_report;
 }
 
-void matrix_scan_kb(void) {
+void matrix_scan_user(void) {
     if (auto_pointer_layer_timer != 0 && TIMER_DIFF_16(timer_read(), auto_pointer_layer_timer) >= CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_TIMEOUT_MS) {
         auto_pointer_layer_timer = 0;
         layer_off(LAYER_POINTER);
@@ -255,12 +255,11 @@ void matrix_scan_kb(void) {
         rgb_matrix_mode_noeeprom(RGB_MATRIX_STARTUP_MODE);
 #        endif // RGB_MATRIX_ENABLE
     }
-    matrix_scan_user();
 }
 #    endif // CHARYBDIS_AUTO_POINTER_LAYER_TRIGGER_ENABLE
 
 #    ifdef CHARYBDIS_AUTO_SNIPING_ON_LAYER
-layer_state_t layer_state_set_kb(layer_state_t state) {
+layer_state_t layer_state_set_user(layer_state_t state) {
     state = layer_state_set_user(state);
     charybdis_set_pointer_sniping_enabled(layer_state_cmp(state, CHARYBDIS_AUTO_SNIPING_ON_LAYER));
     return state;
@@ -269,7 +268,8 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
 #endif     // POINTING_DEVICE_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
-// Forward-declare this helper function since it is defined in rgb_matrix.c.
+// Forward-declare this helper function since it is defined in
+// rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif
 
