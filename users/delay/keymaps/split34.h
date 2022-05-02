@@ -22,8 +22,8 @@
 #include "quantum.h"
 
 #ifdef TAP_DANCE_ENABLE
-#include "tap_dance.h"
-#endif  // TAP_DANCE_ENABLE
+#    include "tap_dance.h"
+#endif // TAP_DANCE_ENABLE
 
 /**
  * \brief Similar to `_kb`, `_user`, `_user_keymap`, and other variants, but for
@@ -31,20 +31,20 @@
  *
  * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
  */
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
-void matrix_scan_keymap(void);
+bool          process_record_keymap(uint16_t keycode, keyrecord_t *record);
+void          matrix_scan_keymap(void);
 layer_state_t layer_state_set_keymap(layer_state_t state);
-void keyboard_post_init_keymap(void);
-void oneshot_locked_mods_changed_keymap(uint8_t mods);
-void shutdown_keymap(void);
+void          keyboard_post_init_keymap(void);
+void          oneshot_locked_mods_changed_keymap(uint8_t mods);
+void          shutdown_keymap(void);
 
 enum layers_keymap {
-  _BASE = 0,
-  _NAV,   // Navigation.
-  _SYM,   // Symbols.
-  _WNAV,  // Workspace navigation.
-  _NUM,   // Number pad.
-  _SPEC,  // Specials.
+    _BASE = 0,
+    _NAV,  // Navigation.
+    _SYM,  // Symbols.
+    _WNAV, // Workspace navigation.
+    _NUM,  // Number pad.
+    _SPEC, // Specials.
 };
 
 // Layers.
@@ -86,9 +86,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define NAV_split_3x5_2                                                                       \
-    WS_PREV, WS_NEXT, RCS_TAB, CTL_TAB,    WNAV,    WNAV, KC_HOME,   NS_UP,  KC_END, KC_BSPC, \
+    SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB,    WNAV,    WNAV, KC_HOME,   NS_UP,  KC_END, KC_BSPC, \
     OS_LALT, OS_LSFT, OS_LCTL, OS_LGUI, ___x___, ___x___, NS_LEFT, NS_DOWN, NS_RGHT,  KC_ENT, \
-    SPECIAL,  SC_CUT, SC_COPY, SC_PSTE, ___x___, ___x___, KC_BTN3, KC_BTN1, KC_BTN2,  KC_TAB, \
+    WS_PREV, WS_NEXT, SC_COPY, SC_PSTE, LAUNCHR, ___x___, KC_BTN3, KC_BTN1, KC_BTN2, ___x___, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -97,9 +97,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define SYM_split_3x5_2                                                                       \
-     KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_LPRN, KC_RPRN, NS_SCLN,  NS_GRV, \
+     KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_LPRN, KC_RPRN, NS_SCLN, SPECIAL, \
     KC_EXLM, KC_PLUS, KC_MINS,  KC_EQL, KC_HASH, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
-    KC_TILD,  KC_DLR, KC_ASTR, KC_SLSH, KC_AMPR, KC_PIPE, KC_LCBR, KC_RCBR, NS_BSLS, SPECIAL, \
+    KC_TILD,  KC_DLR, KC_ASTR, KC_SLSH, KC_AMPR, KC_PIPE, KC_LCBR, KC_RCBR, NS_BSLS,  NS_GRV, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -141,7 +141,7 @@ enum layers_keymap {
 
 // clang-format off
 /**
- * \brief Converts a 3x5_2 layout into the more common 3x5_3 layout.
+ * \brief Converts a 3x5_2 layout into the more community 3x5_3 layout.
  *
  * In other words, converts a split-34 keymap into a split-36 one.
  */
