@@ -141,7 +141,7 @@ enum keycodes_keymap {
                          LMOD, NAV_SPC, MOD_TAB, MOD_ESC, NUM_ENT,    RMOD
 // clang-format on
 /** 
- * \brief COLEMAK layout (3 rows, 10 columns). 
+ * \brief Gaming layout (3 rows, 10 columns). 
  */
 // clang-format off
 #define GAMING_ALT_3x5_3                                                                     \
