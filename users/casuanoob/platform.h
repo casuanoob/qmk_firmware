@@ -1,5 +1,4 @@
-/*
- * Copyright 2020 Nick Brassel (tzarc)
+/**
  * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,12 +17,15 @@
 
 #pragma once
 
-#define HAL_USE_PWM TRUE
-#define HAL_USE_SERIAL TRUE
-//#define HAL_USE_I2C     TRUE
-#define HAL_USE_SPI TRUE
-#define SPI_USE_WAIT TRUE
-#define SPI_SELECT_MODE SPI_SELECT_MODE_PAD
-#define HAL_USE_GPT TRUE
+#include "quantum.h"
 
-#include_next <halconf.h>
+void process_record_space_goto_previous(const keyrecord_t *record);
+void process_record_space_goto_next(const keyrecord_t *record);
+void process_record_space_focus_previous(const keyrecord_t *record);
+void process_record_space_focus_next(const keyrecord_t *record);
+void process_record_space_main_pane_expand(const keyrecord_t *record);
+void process_record_space_main_pane_shrink(const keyrecord_t *record);
+void process_record_space_main_pane_count_increase(const keyrecord_t *record);
+void process_record_space_main_pane_count_decrease(const keyrecord_t *record);
+void process_record_space_main_pane_promote(const keyrecord_t *record);
+void process_record_space_cycle_mode(const keyrecord_t *record);
