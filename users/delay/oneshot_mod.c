@@ -30,7 +30,7 @@ void oneshot_mod_pre(oneshot_mod_state_t* state, uint16_t mod, uint16_t trigger,
       // Trigger keyup.
       switch (*state) {
         case ONESHOT_DOWN_UNUSED:
-          // If we didn't usehe mod while trigger was held, queue it.
+          // If we didn't use the mod while trigger was held, queue it.
           *state = ONESHOT_UP_QUEUED;
           break;
         case ONESHOT_DOWN_USED:

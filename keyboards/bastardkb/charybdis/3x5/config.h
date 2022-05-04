@@ -20,29 +20,26 @@
 
 #include "config_common.h"
 
-#define VENDOR_ID 0xA8F8
-#define PRODUCT_ID 0x1832
-#define DEVICE_VER 0x0001
-#define MANUFACTURER Bastard Keyboards
-
 /* Key matrix configuration. */
-
-// Rows are doubled-up.
-#define MATRIX_ROWS 8
+#define MATRIX_ROWS 8 // Rows are doubled-up.
 #define MATRIX_COLS 5
 
 #define DIODE_DIRECTION ROW2COL
 
+/* Disable action features. */
+#define NO_ACTION_MACRO    // Disable old-style macro handling.
+#define NO_ACTION_FUNCTION // Disable old-style function handling.
+
 /* Set 0 if debouncing isn't needed. */
 #define DEBOUNCE 5
 
-// Trackball angle adjustment.
+/* Trackball angle adjustment. */
 #define ROTATIONAL_TRANSFORM_ANGLE -25
 
 /* RGB settings. */
-#define RGBLED_NUM 35
+#define RGBLED_NUM 36
 #define RGBLED_SPLIT \
-  { 18, 17 }
+    { 18, 18 }
 
 /* RGB matrix support. */
 #ifdef RGB_MATRIX_ENABLE

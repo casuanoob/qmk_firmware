@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include "quantum.h"
+
 /**
  * \brief Custom keycodes.
  *
@@ -24,27 +26,13 @@
  */
 enum keycodes_user {
 #ifdef VIA_ENABLE
-  COMPOSE = USER00,
+  KEYCODE_USER_BEGIN = USER00,
 #else
-  COMPOSE = SAFE_RANGE,
+  KEYCODE_USER_BEGIN = SAFE_RANGE,
 #endif
-  // Keycodes to change the target platform (changes some keycodes at runtime).
-  MACOS,
-  // Cut/copy/paste shortcuts that change at runtime based on the current
-  // platform.
-  SC_CUT,              // ^X or Cmd+X based on the platform.
-  SC_COPY,             // ^C or Cmd+C based on the platform.
-  SC_PASTE,            // ^V or Cmd+V based on the platform.
-  SC_PASTE_NO_FORMAT,  // Shifted ^V or Cmd+V based on the platform.
-  // Other platform-specific shortcuts.
-  SC_LAUNCHER,    // Platform launcher.
-  SC_CLOSE,       // ^W or Cmd+W based on the platform.
-  SC_NEW_TAB,     // ^T or Cmd+T based on the platform.
-  SC_NEW_WINDOW,  // ^N or Cmd+N based on the platform.
-  SC_SELECT_ALL,  // ^A or Cmd+A based on the platform.
   // Custom version of these keycodes that don't shift when only oneshot shift
   // mod is locked.
-  NS_1,
+  NS_1 = KEYCODE_USER_BEGIN,
   NS_2,
   NS_3,
   NS_4,
@@ -73,18 +61,7 @@ enum keycodes_user {
   OS_LCTL,
   OS_LGUI,
   OS_LSFT,
-  OS_RALT,
   // Workspace navigation.
-  WS_GOTO_1,
-  WS_GOTO_2,
-  WS_GOTO_3,
-  WS_GOTO_4,
-  WS_GOTO_5,
-  WS_GOTO_6,
-  WS_GOTO_7,
-  WS_GOTO_8,
-  WS_GOTO_9,
-  WS_GOTO_0,
   WS_CYCLE_MODE,
   WS_FOCUS_PREVIOUS,
   WS_FOCUS_NEXT,
@@ -97,6 +74,15 @@ enum keycodes_user {
   WS_MAIN_PANE_PROMOTE,
   SAFE_RANGE_KEYMAP,
 };
+
+#define SC_CUT LGUI(KC_X)
+#define SC_COPY LGUI(KC_C)
+#define SC_PASTE LGUI(KC_V)
+#define SC_PASTE_NO_FORMAT LGUI(S(KC_V))
+#define SC_LAUNCHER LGUI(KC_SPACE)
+#define SC_CLOSE LGUI(KC_W)
+#define SC_NEW_TAB LGUI(KC_T)
+#define SC_NEW_WINDOW LGUI(KC_N)
 
 // Shorthands.
 #define NS_BSLS NS_BSLASH
@@ -114,16 +100,6 @@ enum keycodes_user {
 #define SC_NWIN SC_NEW_WINDOW
 #define SC_SELA SC_SELECT_ALL
 #define LAUNCHR SC_LAUNCHER
-#define WS_1 WS_GOTO_1
-#define WS_2 WS_GOTO_2
-#define WS_3 WS_GOTO_3
-#define WS_4 WS_GOTO_4
-#define WS_5 WS_GOTO_5
-#define WS_6 WS_GOTO_6
-#define WS_7 WS_GOTO_7
-#define WS_8 WS_GOTO_8
-#define WS_9 WS_GOTO_9
-#define WS_0 WS_GOTO_0
 #define WS_MOD WS_CYCLE_MODE
 #define WS_FPRV WS_FOCUS_PREVIOUS
 #define WS_FNXT WS_FOCUS_NEXT
@@ -151,13 +127,6 @@ layer_state_t layer_state_set_user_keymap(layer_state_t state);
 void keyboard_post_init_user_keymap(void);
 void oneshot_locked_mods_changed_user_keymap(uint8_t mods);
 void shutdown_user_keymap(void);
-
-#ifdef COMPOSE_ENABLE
-/**
- * \brief Augment COMPOSE composition at the keymap level.
- */
-void compose_keymap(compose_state_t *state);
-#endif  // COMPOSE_ENABLE
 
 #ifdef RGB_MATRIX_ENABLE
 /**
