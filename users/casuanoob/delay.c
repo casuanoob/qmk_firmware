@@ -93,6 +93,8 @@ static bool process_record_user_internal(uint16_t keycode,
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
     case NS_RIGHT:
       NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
+    case NS_MINUS:
+      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_MINUS);
     case WS_CYCLE_MODE:
       process_record_space_cycle_mode(record);
       break;

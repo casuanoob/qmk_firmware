@@ -274,3 +274,24 @@
 #endif  // RGB_MATRIX_ENABLE
 
 // }}}
+// Mechanical lock switch {{{
+
+/**
+ * \brief Add KC_LCAP.
+ *
+ * TODO test using KC_LCAP, which is for mechanical locking CAPS, with TD_SFT.
+ *
+ */
+#define LOCKING_SUPPORT_ENABLE
+#define LOCKING_RESYNC_ENABLE
+
+// }}}
+// Layer Tap Toggle {{{
+
+/**
+ * \brief Tapping this number of times Toggles the layer on instead of Momentary behaviour.
+ *
+ */
+#define TAPPING_TOGGLE 1
+
+// }}}

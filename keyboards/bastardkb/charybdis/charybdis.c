@@ -49,10 +49,6 @@
 #        define CHARYBDIS_DRAGSCROLL_BUFFER_SIZE 6
 #    endif  // !CHARYBDIS_DRAGSCROLL_BUFFER_SIZE
 
-#    ifndef CHARYBDIS_POINTER_ACCELERATION_FACTOR
-#        define CHARYBDIS_POINTER_ACCELERATION_FACTOR 24
-#    endif  // !CHARYBDIS_POINTER_ACCELERATION_FACTOR
-
 typedef union {
     uint8_t raw;
     struct {
@@ -354,4 +350,4 @@ void matrix_scan_kb(void) {
     }
     matrix_scan_user();
 }
-#endif  // __arm__
+#endif // __arm__

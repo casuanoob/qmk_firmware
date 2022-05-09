@@ -1,13 +1,13 @@
-COMPOSE_ENABLE = no          # Enable composition.
+# Loads /users/casuanoob userspace.
+USER_NAME := casuanoob
+
+KEYMAP_ENABLE = split34  # Use "split34" keymap (from /users/casuanoob).
 ONESHOT_MOD_ENABLE = yes
+
 TAP_DANCE_ENABLE = no
 TD_ONESHOT_SHIFT_ENABLE = no
-TD_ONESHOT_DRAGSCROLL_ENABLE = yes
+TD_ONESHOT_DRAGSCROLL_ENABLE = no
+
 COMBOS_ENABLE = no
 
 NKRO_ENABLE = yes
-BACKLIGHT_ENABLE = no
-RGB_MATRIX_ENABLE = no
-
-LTO_ENABLE = yes
-KEYMAP_ENABLE = split36 # Use "split36" keymap (from /users/casuanoob).
