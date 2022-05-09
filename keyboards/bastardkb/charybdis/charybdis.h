@@ -1,3 +1,4 @@
+
 /*
  * Copyright 2021 Quentin LEBASTARD <qlebastard@gmail.com>
  * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
@@ -21,6 +22,8 @@
 // clang-format off
 #if defined(KEYBOARD_bastardkb_charybdis_3x5)
 #    include "3x5.h"
+#elif defined(KEYBOARD_bastardkb_charybdis_3x6)
+#    include "3x6.h"
 #elif defined(KEYBOARD_bastardkb_charybdis_4x6)
 #    include "4x6.h"
 #else

@@ -18,6 +18,7 @@
 #pragma once
 
 #include "quantum.h"
+#include "charybdis.h"
 
 /**
  * \brief Custom keycodes.
@@ -25,11 +26,13 @@
  * Use `SAFE_RANGE_KEYMAP` for keymap specific codes, instead of `SAFE_RANGE`.
  */
 enum keycodes_user {
-#ifdef VIA_ENABLE
+#ifndef NO_CHARYBDIS_KEYCODES
+  KEYCODE_USER_BEGIN = CHARYBDIS_SAFE_RANGE,
+# elif defined(VIA_ENABLE)
   KEYCODE_USER_BEGIN = USER00,
-#else
+# else
   KEYCODE_USER_BEGIN = SAFE_RANGE,
-#endif
+# endif 
   // Custom version of these keycodes that don't shift when only oneshot shift
   // mod is locked.
   NS_1 = KEYCODE_USER_BEGIN,
@@ -51,6 +54,8 @@ enum keycodes_user {
   NS_RBRACKET,
   NS_SCOLON,
   NS_SLASH,
+  NS_MINUS,
+
   // Custom version of up/down/left/right keycodes that can't be shifted.
   NS_UP,
   NS_DOWN,
@@ -75,14 +80,16 @@ enum keycodes_user {
   SAFE_RANGE_KEYMAP,
 };
 
-#define SC_CUT LGUI(KC_X)
-#define SC_COPY LGUI(KC_C)
-#define SC_PASTE LGUI(KC_V)
-#define SC_PASTE_NO_FORMAT LGUI(S(KC_V))
-#define SC_LAUNCHER LGUI(KC_SPACE)
-#define SC_CLOSE LGUI(KC_W)
-#define SC_NEW_TAB LGUI(KC_T)
+#define SC_CUT LCTL(KC_X)
+#define SC_COPY LCTL(KC_C)
+#define SC_PASTE LCTL(KC_V)
+#define SC_PASTE_NO_FORMAT LCTL(S(KC_V))
+#define SC_LAUNCHER LGUI(KC_TAB)
+#define SC_CLOSE LCTL(KC_W)
+#define SC_NEW_TAB LCTL(KC_T)
 #define SC_NEW_WINDOW LGUI(KC_N)
+#define SC_NEXT_DESK LCTL(LGUI(KC_RIGHT))
+#define SC_PREV_DESK LCTL(LGUI(KC_LEFT))
 
 // Shorthands.
 #define NS_BSLS NS_BSLASH
@@ -94,11 +101,14 @@ enum keycodes_user {
 #define NS_RGHT NS_RIGHT
 #define NS_SCLN NS_SCOLON
 #define NS_SLSH NS_SLASH
+#define NS_MINS NS_MINUS
 #define SC_PSTE SC_PASTE
 #define SC_CLSE SC_CLOSE
 #define SC_NTAB SC_NEW_TAB
 #define SC_NWIN SC_NEW_WINDOW
 #define SC_SELA SC_SELECT_ALL
+#define SC_NEXW SC_NEXT_DESK
+#define SC_PRVW SC_PREV_DESK
 #define LAUNCHR SC_LAUNCHER
 #define WS_MOD WS_CYCLE_MODE
 #define WS_FPRV WS_FOCUS_PREVIOUS
