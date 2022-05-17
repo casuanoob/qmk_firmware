@@ -135,7 +135,7 @@ ifneq ($(findstring RP2040, $(MCU)),)
   # - it should exist either in <chibios>/os/common/ports/ARMCMx/compilers/GCC/ld/
   #   or <keyboard_dir>/ld/
   STARTUPLD_CONTRIB = $(CHIBIOS_CONTRIB)/os/common/startup/ARMCMx/compilers/GCC/ld
-  MCU_LDSCRIPT ?= RP2040_FLASH_TIMECRIT
+  MCU_LDSCRIPT ?= RP2040_FLASH
   LDFLAGS += -L $(STARTUPLD_CONTRIB)
 
   # Startup code to use
@@ -144,7 +144,7 @@ ifneq ($(findstring RP2040, $(MCU)),)
 
   # Board: it should exist either in <chibios>/os/hal/boards/,
   # <keyboard_dir>/boards/, or drivers/boards/
-  BOARD ?= GENERIC_PROMICRO_RP2040
+  BOARD ?= GENERIC_RP_RP2040
 
   # Default UF2 Bootloader settings
   UF2_FAMILY ?= RP2040

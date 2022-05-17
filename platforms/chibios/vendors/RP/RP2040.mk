@@ -1,13 +1,3 @@
-#
-# Raspberry Pi RP2040 specific drivers
-##############################################################################
-COMMON_VPATH += $(PLATFORM_PATH)/$(PLATFORM_KEY)/$(DRIVER_DIR)/vendor/$(MCU_FAMILY)/$(MCU_SERIES)
-
-ifeq ($(strip $(WS2812_DRIVER)), vendor)
-    OPT_DEFS += -DRP_DMA_REQUIRED=TRUE
-endif
-
-#
 # Raspberry Pi Pico SDK Support
 ##############################################################################
 ADEFS  += -DCRT0_VTOR_INIT=1 \
@@ -24,7 +14,6 @@ PICOSDKROOT   := $(TOP_DIR)/lib/pico-sdk
 PICOSDKSRC     = $(PICOSDKROOT)/src/rp2_common/hardware_clocks/clocks.c \
                  $(PICOSDKROOT)/src/rp2_common/hardware_pll/pll.c \
                  $(PICOSDKROOT)/src/rp2_common/hardware_pio/pio.c \
-                 $(PICOSDKROOT)/src/rp2_common/hardware_flash/flash.c \
                  $(PICOSDKROOT)/src/rp2_common/hardware_gpio/gpio.c \
                  $(PICOSDKROOT)/src/rp2_common/hardware_claim/claim.c \
                  $(PICOSDKROOT)/src/rp2_common/hardware_watchdog/watchdog.c \
@@ -37,7 +26,6 @@ PICOSDKINC     = $(CHIBIOS)//os/various/pico_bindings/dumb/include \
                  $(PICOSDKROOT)/src/rp2_common/hardware_base/include \
                  $(PICOSDKROOT)/src/rp2_common/hardware_clocks/include \
                  $(PICOSDKROOT)/src/rp2_common/hardware_claim/include \
-                 $(PICOSDKROOT)/src/rp2_common/hardware_flash/include \
                  $(PICOSDKROOT)/src/rp2_common/hardware_gpio/include \
                  $(PICOSDKROOT)/src/rp2_common/hardware_irq/include \
                  $(PICOSDKROOT)/src/rp2_common/hardware_pll/include \
