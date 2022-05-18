@@ -205,7 +205,9 @@ void oneshot_locked_mods_changed_user(uint8_t mods) {
 #ifdef RGB_MATRIX_ENABLE
   if (mods & MOD_MASK_SHIFT) {
     rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-    rgb_matrix_set_color_all(0, 0, 127); //(r, g, b) sets to blue
+    rgb_matrix_sethsv_noeeprom(HSV_BLUE);
+    //rgb_matrix_set_color_all(0, 0, 127); //(r, g, b) sets to blue RGB_BLUE  
+    //rgb_matrix_set_color_all(RGB_BLUE);
   } else if (!mods) {
     rgb_matrix_reload_from_eeprom();  // Load default values.
   }
