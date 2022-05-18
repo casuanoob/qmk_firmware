@@ -36,9 +36,13 @@
 
 /* Define encoder pads. 
  * \brief Encoder pads wired to MISO and SCLK
-
-#define ENCODERS_PAD_A { A7 }
-#define ENCODERS_PAD_B { A6 }
 */
+#define ENCODERS_PAD_A { A6 }
+#define ENCODERS_PAD_B { A7 }
+//#define ENCODERS_PAD_A { B0 } //row1, unused in 3x5
+//#define ENCODERS_PAD_B { B15 } //col1, unused in 3x5
+#define ENCODERS_PAD_A_RIGHT { B12 }
+#define ENCODERS_PAD_B_RIGHT { B13 }
+
 // Disable unused keycodes.
 //#define NO_CHARYBDIS_KEYCODES
