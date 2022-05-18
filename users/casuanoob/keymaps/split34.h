@@ -112,7 +112,7 @@ enum layers_keymap {
 #define APTmod_ALT_3x5_2                                                                      \
        KC_W,    KC_C,    KC_G,    KC_D,    KC_K,    KC_Q,    KC_L,    KC_U,    KC_O,    KC_Y, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_B,    KC_J,    KC_N,    KC_E,    KC_A,    KC_I, \
-       KC_Z,    KC_V,    KC_M,    KC_F,    KC_P,    KC_X, NS_COMM,  NS_DOT, NS_QUOT, KC_UNDS, \
+       KC_Z,    KC_V,    KC_M,    KC_F,    KC_P,    KC_X,  NS_DOT, NS_COMM, NS_QUOT, KC_UNDS, \
                                    NAV,  KC_SPC,  TD_SFT,    SYM
 // clang-format on
 
@@ -136,7 +136,7 @@ enum layers_keymap {
  */
 // clang-format off
 #define NAV_split_3x5_2                                                                       \
-    SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB,   NUMPD,   NUMPD, KC_HOME,   NS_UP,  KC_END, KC_BSPC, \
+    SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB,   NUMPD,   NUMPD, KC_HOME,   NS_UP,  KC_END,  KC_DEL, \
     OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT,   KC_F2, KC_BSPC, NS_LEFT, NS_DOWN, NS_RGHT,  KC_ENT, \
     SC_PRVW, SC_NEXW, SC_COPY, SC_PSTE, LAUNCHR, DRG_TOG, KC_BTN3, KC_BTN1, KC_BTN2, SNIPING, \
                                _______, _______, _______, _______
@@ -161,8 +161,8 @@ enum layers_keymap {
 // clang-format off
 #define NUMROW_split_3x5_2                                                                       \
     OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT, ___x___, ___x___, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
-       NS_4,    NS_3,    NS_2,    NS_1, ___x___,  KC_DEL,    NS_0,    NS_6,    NS_7,    NS_8, \
-     ___x___, NS_COMM,  NS_DOT,   NS_5, ___x___, ___x___,    NS_9, NS_LBRC, NS_RBRC, ___x___, \
+       NS_4,    NS_3,    NS_2,    NS_1, ___x___, KC_BSPC,    NS_0,    NS_6,    NS_7,    NS_8, \
+        FUN, NS_COMM,  NS_DOT,    NS_5, ___x___, ___x___,    NS_9, NS_LBRC, NS_RBRC,     FUN, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -171,9 +171,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define NUMPAD_split_3x5_2                                                                       \
-     NS_DOT,    NS_7,    NS_8,    NS_9, KC_ASTR, ___x___, ___x___, ___x___, ___x___, KC_BSPC, \
+     NS_DOT,    NS_7,    NS_8,    NS_9, KC_ASTR,   NUMPD, ___x___, ___x___, ___x___,  KC_DEL, \
      KC_EQL,    NS_4,    NS_5,    NS_6, KC_PLUS, KC_BSPC, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
-    NS_SLSH,    NS_1,    NS_2,    NS_3, NS_MINS, ___x___, ___x___, ___x___, ___x___, ___x___, \
+    NS_SLSH,    NS_1,    NS_2,    NS_3, NS_MINS, ___x___, ___x___, ___x___, ___x___,     FUN, \
                                   NS_0,   NUMPD,   NUMPD,   NUMPD
 // clang-format on
 
@@ -198,7 +198,7 @@ enum layers_keymap {
 #define FUN_split_3x5_2                                                                       \
      KC_F12,   KC_F7,   KC_F8,   KC_F9, KC_CAPS, KC_CAPS, KC_NUM,  KC_INS,  KC_SCRL, KC_PAUS, \
      KC_F11,   KC_F4,   KC_F5,   KC_F6, ___x___, ___x___, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
-     KC_F10,   KC_F1,   KC_F2,   KC_F3, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+     KC_F10,   KC_F1,   KC_F2,   KC_F3, ___x___, ___x___, ___x___, ___x___, ___x___,     FUN, \
                                ___x___, ___x___, ___x___, ___x___
 // clang-format on
 
@@ -207,10 +207,10 @@ enum layers_keymap {
  */
 // clang-format off
 #define SPEC_split_3x5_2                                                                      \
-    ___x___,   BASE,    GAME,      APT, RGB_TOG, RGB_TOG,     APT,    GAME,    BASE, ___x___, \
+    SPECIAL,   BASE,    GAME,      APT, RGB_TOG, RGB_TOG,     APT,    GAME,    BASE, SPECIAL, \
     ___x___, SC_NWIN, SC_NTAB, RGB_MOD, EEP_RST, EEP_RST, RGB_MOD, SC_NTAB, SC_NWIN, ___x___, \
     ___x___, ___x___, SC_CLSE, ___x___, QK_BOOT, QK_BOOT, ___x___, SC_CLSE, ___x___, ___x___, \
-                               LAUNCHR, ___x___, ___x___, LAUNCHR
+                               _______, ___x___, ___x___, _______
 // clang-format on
 
 // clang-format off

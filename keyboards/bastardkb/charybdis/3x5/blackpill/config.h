@@ -40,7 +40,7 @@
 
 /* Serial configuration for split keyboard. */
 #define SERIAL_USART_TX_PIN A9
-#define SERIAL_USART_SPEED 921600
+//#define SERIAL_USART_SPEED 460800
 
 /* CRC. */
 #define CRC8_USE_TABLE
