@@ -87,7 +87,7 @@ enum keycodes_user {
 #define SC_LAUNCHER LGUI(KC_TAB)
 #define SC_CLOSE LCTL(KC_W)
 #define SC_NEW_TAB LCTL(KC_T)
-#define SC_NEW_WINDOW LGUI(KC_N)
+#define SC_NEW_WINDOW LCTL(KC_N)
 #define SC_NEXT_DESK LCTL(LGUI(KC_RIGHT))
 #define SC_PREV_DESK LCTL(LGUI(KC_LEFT))
 
