@@ -1,0 +1,69 @@
+/**
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include QMK_KEYBOARD_H
+#include "keymaps/split34.h"
+
+#define LAYOUT_charybdis_3x5_delay(...) LAYOUT_split_3x5_3(__VA_ARGS__)
+
+// clang-format off
+const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+  [_BASE] = LAYOUT_charybdis_3x5_delay(COLEMAKdhm_ALT_3x5_3),
+  [_GAME] = LAYOUT_charybdis_3x5_delay(GAMING_ALT_3x5_3),
+  [_APT] = LAYOUT_charybdis_3x5_delay(APTmod_ALT_3x5_3),
+  [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
+  [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
+  [_NUM] = LAYOUT_charybdis_3x5_delay(NUMROW_split_3x5_3),
+  [_NUMPD] = LAYOUT_charybdis_3x5_delay(NUMPAD_split_3x5_3),
+  //[_WNAV] = LAYOUT_charybdis_3x5_delay(WNAV_split_3x5_3),
+  [_FUN] = LAYOUT_charybdis_3x5_delay(FUN_split_3x5_3),
+  [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
+};
+// clang-format on
+
+bool encoder_update_user(uint8_t index, bool clockwise) {
+    if (get_highest_layer(layer_state|default_layer_state) > 0) {
+        if (index == 0) {
+            if (clockwise) {
+                tap_code(KC_WH_D);
+            } else {
+                tap_code(KC_WH_U);
+            }
+        } else if (index == 1) {
+            if (clockwise) {
+                tap_code_delay(KC_VOLU, 10);
+            } else {
+                tap_code_delay(KC_VOLD, 10);
+            }
+        }
+    } else {  /* Layer 0 */
+        if (index == 0) {
+            if (clockwise) {
+                tap_code(KC_PGDN);
+            } else {
+                tap_code(KC_PGUP);
+            }
+        } else if (index == 1) {
+            if (clockwise) {
+                rgb_matrix_increase_speed();
+            } else {
+                rgb_matrix_decrease_speed();
+            }
+        }
+    }
+    return false;
+}
