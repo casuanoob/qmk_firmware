@@ -34,3 +34,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
 };
 // clang-format on
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+    case _GAME:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_TEAL);
+        break;
+    case _APT:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_TURQUOISE);
+        break;
+    case _NUMPD:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_AZURE);
+        break;
+    case _FUN:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_CORAL);
+        break;
+    case _SPEC:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_GOLDENROD);
+        break;
+    default: //  for any other layers, or the default layer
+        rgb_matrix_reload_from_eeprom();  // Load default values.
+        break;
+    }
+  return state;
+}

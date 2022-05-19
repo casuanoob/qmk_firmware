@@ -22,8 +22,8 @@
 #define POINTING_DEVICE_INVERT_X
 
 // Custom DPI.
-#define CHARYBDIS_MINIMUM_DEFAULT_DPI 600
-#define CHARYBDIS_MINIMUM_SNIPING_DPI 400
+#define CHARYBDIS_MINIMUM_DEFAULT_DPI 1000
+#define CHARYBDIS_MINIMUM_SNIPING_DPI 500
 
 /* Override RGB settings. 
  * \brief 12 LEDs are added by the falcon PCB to the original 36
@@ -37,6 +37,7 @@
 /* Define encoder pads. 
  * \brief Encoder pads wired to MISO and MOSI
 */
+#define ENCODER_DEFAULT_POS 0x3
 #define ENCODERS_PAD_A { A6 }
 #define ENCODERS_PAD_B { A7 }
 //Encoders right define is required to prevent the trackball SPI pins from being overridden
