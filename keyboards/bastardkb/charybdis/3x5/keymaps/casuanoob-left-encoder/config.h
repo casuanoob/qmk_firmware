@@ -35,14 +35,13 @@
     { 30, 18 }
 
 /* Define encoder pads. 
- * \brief Encoder pads wired to MISO and SCLK
+ * \brief Encoder pads wired to MISO and MOSI
 */
 #define ENCODERS_PAD_A { A6 }
 #define ENCODERS_PAD_B { A7 }
-//#define ENCODERS_PAD_A { B0 } //row1, unused in 3x5
-//#define ENCODERS_PAD_B { B15 } //col1, unused in 3x5
-#define ENCODERS_PAD_A_RIGHT { B12 }
-#define ENCODERS_PAD_B_RIGHT { B13 }
+//Encoders right define is required to prevent the trackball SPI pins from being overridden
+#define ENCODERS_PAD_A_RIGHT { B12 } //completely unused pin
+#define ENCODERS_PAD_B_RIGHT { B13 } //completely unused pin
 
 // Disable unused keycodes.
 //#define NO_CHARYBDIS_KEYCODES
