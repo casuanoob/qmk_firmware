@@ -16,7 +16,7 @@ ifndef SPACE_CADET_ENABLE
 endif
 
 # Include common sources.
-SRC += $(USER_PATH)/delay.c $(USER_PATH)/platform.c
+SRC += $(USER_PATH)/delay.c
 
 # Include compose source and flags if enabled.
 ifeq ($(strip $(COMPOSE_ENABLE)), yes)

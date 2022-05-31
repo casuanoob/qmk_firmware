@@ -37,7 +37,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NAV] = LAYOUT_tbkmini(NAV_split_3x5_3),
   [_SYM] = LAYOUT_tbkmini(SYM_split_3x5_3),
   [_NUM] = LAYOUT_tbkmini(NUM_split_3x5_3),
-  [_WNAV] = LAYOUT_tbkmini(WNAV_split_3x5_3),
   [_SPEC] = LAYOUT_tbkmini(SPEC_split_3x5_3),
 };
 // clang-format on
