@@ -146,7 +146,7 @@ __attribute__((weak)) layer_state_t layer_state_set_user_keymap(layer_state_t st
 }
 
 void keyboard_post_init_user(void) {
-    oneshot_disable();
+    oneshot_enable();
     keyboard_post_init_user_keymap();
 }
 
