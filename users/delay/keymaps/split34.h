@@ -42,7 +42,6 @@ enum layers_keymap {
     _BASE = 0,
     _NAV,  // Navigation.
     _SYM,  // Symbols.
-    _WNAV, // Workspace navigation.
     _NUM,  // Number pad.
     _SPEC, // Specials.
 };
@@ -86,9 +85,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define NAV_split_3x5_2                                                                       \
-    SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB,    WNAV,    WNAV, KC_HOME,   NS_UP,  KC_END, KC_BSPC, \
+    SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB, ___x___, ___x___, KC_HOME,   NS_UP,  KC_END, KC_BSPC, \
     OS_LALT, OS_LSFT, OS_LCTL, OS_LGUI, ___x___, ___x___, NS_LEFT, NS_DOWN, NS_RGHT,  KC_ENT, \
-    WS_PREV, WS_NEXT, SC_COPY, SC_PSTE, LAUNCHR, ___x___, KC_BTN3, KC_BTN1, KC_BTN2, ___x___, \
+    SC_COPY, WS_PREV, LAUNCHR, WS_NEXT, SC_PSTE, ___x___, KC_BTN3, KC_BTN1, KC_BTN2, ___x___, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -97,9 +96,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define SYM_split_3x5_2                                                                       \
-     KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_LPRN, KC_RPRN, NS_SCLN, SPECIAL, \
-    KC_EXLM, KC_PLUS, KC_MINS,  KC_EQL, KC_HASH, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
-    KC_TILD,  KC_DLR, KC_ASTR, KC_SLSH, KC_AMPR, KC_PIPE, KC_LCBR, KC_RCBR, NS_BSLS,  NS_GRV, \
+     KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_LPRN, NS_SCLN, KC_RPRN, SPECIAL, \
+    KC_EXLM, KC_PLUS, KC_MINS,  KC_EQL, KC_HASH, CK_ELPS, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
+    KC_TILD,  KC_DLR, KC_ASTR, KC_SLSH, KC_AMPR, KC_PIPE, KC_LCBR, NS_BSLS, KC_RCBR,  NS_GRV, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -108,24 +107,10 @@ enum layers_keymap {
  */
 // clang-format off
 #define NUM_split_3x5_2                                                                       \
-       NS_7,    NS_5,    NS_3,    NS_1,    NS_9,    NS_8,    NS_0,    NS_2,    NS_4,    NS_6, \
-    OS_LALT, OS_LSFT, OS_LCTL, OS_LGUI, ___x___, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
-    ___x___, ___x___, NS_COMM,  NS_DOT, ___x___, ___x___, NS_LBRC, NS_RBRC, ___x___, ___x___, \
+    ___x___,    NS_7,    NS_8,    NS_9, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+    ___x___,    NS_4,    NS_5,    NS_6, ___x___, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
+    ___x___,    NS_1,    NS_2,    NS_3, ___x___, ___x___, NS_LBRC,    NS_0, NS_RBRC, ___x___, \
                                _______, _______, _______, _______
-// clang-format on
-
-/**
- * \brief Workspace navigation layers.
- *
- * Contains platform-dependent shortcuts for moving between virtual workspaces
- * and interacting with tiling window managers.
- */
-// clang-format off
-#define WNAV_split_3x5_2                                                                      \
-    ___x___,  WS_MOD, WS_MPCD, WS_MPCI,    WNAV,    WNAV, WS_MPCI, WS_MPCD,  WS_MOD, ___x___, \
-    ___x___, WS_MPPR, WS_MPEX, WS_MPSH, ___x___, ___x___, WS_MPSH, WS_MPEX, WS_MPPR, ___x___, \
-    ___x___, ___x___, WS_FNXT, WS_FPRV, ___x___, ___x___, WS_FPRV, WS_FNXT, ___x___, ___x___, \
-                               _______, KC_LSFT, KC_LSFT, _______
 // clang-format on
 
 /**
@@ -134,9 +119,9 @@ enum layers_keymap {
 // clang-format off
 #define SPEC_split_3x5_2                                                                      \
     ___x___, ___x___, ___x___, ___x___, RGB_TOG, RGB_TOG, ___x___, ___x___, ___x___, ___x___, \
-    ___x___, SC_NWIN, SC_NTAB, ___x___, EEP_RST, EEP_RST, ___x___, SC_NTAB, SC_NWIN, ___x___, \
-    ___x___, ___x___, SC_CLSE, ___x___, QK_BOOT, QK_BOOT, ___x___, SC_CLSE, ___x___, ___x___, \
-                               LAUNCHR, ___x___, ___x___, LAUNCHR
+    ___x___, ___x___, ___x___, ___x___, EEP_RST, EEP_RST, ___x___, ___x___, ___x___, ___x___, \
+    ___x___, ___x___, ___x___, ___x___, QK_BOOT, QK_BOOT, ___x___, ___x___, ___x___, ___x___, \
+                               ___x___, ___x___, ___x___, ___x___
 // clang-format on
 
 // clang-format off
@@ -162,6 +147,5 @@ enum layers_keymap {
 #define NAV_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NAV_split_3x5_2)
 #define SYM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SYM_split_3x5_2)
 #define NUM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUM_split_3x5_2)
-#define WNAV_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(WNAV_split_3x5_2)
 #define SPEC_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SPEC_split_3x5_2)
 // clang-format on

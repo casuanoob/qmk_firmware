@@ -26,7 +26,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
   [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
   [_NUM] = LAYOUT_charybdis_3x5_delay(NUM_split_3x5_3),
-  [_WNAV] = LAYOUT_charybdis_3x5_delay(WNAV_split_3x5_3),
   [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
 };
 // clang-format on

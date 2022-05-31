@@ -27,43 +27,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
   [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
   [_NUM] = LAYOUT_charybdis_3x5_delay(NUM_split_3x5_3),
-  [_WNAV] = LAYOUT_charybdis_3x5_delay(WNAV_split_3x5_3),
   [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
 };
 // clang-format on
 
 void keyboard_post_init_keymap(void) {
-  pointing_device_set_cpi_on_side(true, 100);   // Left side, drag-scroll.
-  pointing_device_set_cpi_on_side(false, 800);  // Right side, pointer motion.
-#if 0
-  debug_enable = true;
-  debug_mouse = false;
-#endif
+    pointing_device_set_cpi_on_side(true, 100);  // Left side, drag-scroll.
+    pointing_device_set_cpi_on_side(false, 800); // Right side, pointer motion.
 }
 
-report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report,
-                                                  report_mouse_t right_report) {
-  static int16_t scroll_buffer_x = 0;
-  static int16_t scroll_buffer_y = 0;
-  scroll_buffer_x -= left_report.x;
-  scroll_buffer_y -= left_report.y;
-  left_report.x = 0;
-  left_report.y = 0;
-  left_report.h = 0;
-  left_report.v = 0;
-  if (abs(scroll_buffer_x) > DRAGSCROLL_PADDING) {
-    left_report.h = scroll_buffer_x > 0 ? 1 : -1;
-    scroll_buffer_x = 0;
-  }
-  if (abs(scroll_buffer_y) > DRAGSCROLL_PADDING) {
-    left_report.v = scroll_buffer_y > 0 ? 1 : -1;
-    scroll_buffer_y = 0;
-  }
+report_mouse_t pointing_device_task_combined_user(report_mouse_t left_report, report_mouse_t right_report) {
+    static int16_t scroll_buffer_x = 0;
+    static int16_t scroll_buffer_y = 0;
+    scroll_buffer_x -= left_report.x;
+    scroll_buffer_y -= left_report.y;
+    left_report.x = 0;
+    left_report.y = 0;
+    left_report.h = 0;
+    left_report.v = 0;
+    if (abs(scroll_buffer_x) > DRAGSCROLL_PADDING) {
+        left_report.h   = scroll_buffer_x > 0 ? 1 : -1;
+        scroll_buffer_x = 0;
+    }
+    if (abs(scroll_buffer_y) > DRAGSCROLL_PADDING) {
+        left_report.v   = scroll_buffer_y > 0 ? 1 : -1;
+        scroll_buffer_y = 0;
+    }
 #ifdef POINTING_DEVICE_INVERT_X
-  right_report.x = -right_report.x;
-#endif  // POINTING_DEVICE_INVERT_X
+    right_report.x = -right_report.x;
+#endif // POINTING_DEVICE_INVERT_X
 #ifdef POINTING_DEVICE_INVERT_Y
-  right_report.y = -right_report.y;
-#endif  // POINTING_DEVICE_INVERT_Y
-  return pointing_device_combine_reports(left_report, right_report);
+    right_report.y = -right_report.y;
+#endif // POINTING_DEVICE_INVERT_Y
+    return pointing_device_combine_reports(left_report, right_report);
 }
