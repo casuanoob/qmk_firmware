@@ -17,9 +17,11 @@
 
 #pragma once
 
+#ifdef MCU_RP
 /* Handedness.  Assume adapter v2 for personal boards. */
-#undef MASTER_RIGHT
+#    undef MASTER_RIGHT
 
 // To use the handedness pin, resistors need to be installed on the adapter PCB.
-#define SPLIT_HAND_PIN GP13
-#define SPLIT_HAND_PIN_LOW_IS_LEFT // High -> right, Low -> left.
+#    define SPLIT_HAND_PIN GP13
+#    define SPLIT_HAND_PIN_LOW_IS_LEFT // High -> right, Low -> left.
+#endif
