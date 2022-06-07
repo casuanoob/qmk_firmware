@@ -20,6 +20,7 @@
 
 #define HAL_USE_PWM TRUE
 #define HAL_USE_SERIAL TRUE
+<<<<<<< HEAD
 //#define HAL_USE_I2C     TRUE
 #define HAL_USE_SPI TRUE
 #define SPI_USE_WAIT TRUE
@@ -27,3 +28,12 @@
 #define HAL_USE_GPT TRUE
 
 #include_next <halconf.h>
+=======
+//#define HAL_USE_I2C TRUE
+#define HAL_USE_SPI TRUE
+#define SPI_USE_WAIT TRUE
+#define SPI_SELECT_MODE SPI_SELECT_MODE_PAD
+//#define HAL_USE_GPT TRUE
+
+#include_next "halconf.h"
+>>>>>>> ac19e2581d36d9bb0fec7132d4e50fb1f16264a0

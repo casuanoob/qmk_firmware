@@ -12,7 +12,11 @@ MOUSEKEY_ENABLE = no        # Mouse keys
 EXTRAKEY_ENABLE = yes       # Audio control and System control
 CONSOLE_ENABLE = no         # Console for debug
 COMMAND_ENABLE = no         # Commands for debug and configuration
+<<<<<<< HEAD
 NKRO_ENABLE = yes           # Enable N-Key Rollover
+=======
+NKRO_ENABLE = no            # Enable N-Key Rollover
+>>>>>>> ac19e2581d36d9bb0fec7132d4e50fb1f16264a0
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 AUDIO_ENABLE = no           # Audio output
@@ -20,7 +24,11 @@ AUDIO_ENABLE = no           # Audio output
 AUDIO_SUPPORTED = no        # Audio is not supported
 RGB_MATRIX_SUPPORTED = yes  # RGB matrix is supported and enabled by default
 RGBLIGHT_SUPPORTED = yes    # RGB underglow is supported, but not enabled by default
+<<<<<<< HEAD
 RGB_MATRIX_ENABLE = no     # Enable keyboard RGB matrix functionality
+=======
+RGB_MATRIX_ENABLE = yes     # Enable keyboard RGB matrix functionality
+>>>>>>> ac19e2581d36d9bb0fec7132d4e50fb1f16264a0
 RGB_MATRIX_DRIVER = WS2812
 
 # Charybdis nano is a split 3x5 keyboard with a maximum of 3 thumb keys (2 on
