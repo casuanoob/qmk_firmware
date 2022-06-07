@@ -81,8 +81,33 @@ __attribute__((weak)) void matrix_scan_keymap(void) {}
 
 /** Called on layer change. */
 layer_state_t layer_state_set_user_keymap(layer_state_t state) {
-  return layer_state_set_keymap(
-      update_tri_layer_state(state, _NAV, _SYM, _NUM));
+  state = update_tri_layer_state(state, _NAV, _SYM, _NUM);
+    switch (get_highest_layer(state | default_layer_state)) {
+      case _GAME:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_TEAL);
+        break;
+      case _APT:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_AZURE);
+        break;
+      case _NUMPD:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_SPRINGGREEN);
+        break;
+      case _FUN:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_CORAL);
+        break;
+      case _SPEC:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_GOLDENROD);
+        break;
+      default: //  for any other layers, or the default layer
+        rgb_matrix_reload_from_eeprom();  // Load default values.
+        break;
+    }
+  return state;
 }
 
 __attribute__((weak)) layer_state_t layer_state_set_keymap(

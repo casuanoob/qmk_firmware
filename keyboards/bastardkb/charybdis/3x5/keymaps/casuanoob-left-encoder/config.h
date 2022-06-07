@@ -46,3 +46,7 @@
 
 // Disable unused keycodes.
 //#define NO_CHARYBDIS_KEYCODES
+
+// Speed test
+#define DEBUG_MATRIX_SCAN_RATE
+#define FORCE_NKRO
