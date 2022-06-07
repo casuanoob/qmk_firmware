@@ -13,3 +13,11 @@ COMBOS_ENABLE = no
 NKRO_ENABLE = yes
 
 ENCODER_ENABLE = yes # testing encoder function
+
+# Speed testing
+OPT = 3
+CONSOLE_ENABLE = yes
+
+DEBOUNCE_TYPE = sym_eager_pk
+
+CAPS_WORD_ENABLE = yes

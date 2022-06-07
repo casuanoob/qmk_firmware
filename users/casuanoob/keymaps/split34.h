@@ -209,7 +209,7 @@ enum layers_keymap {
 #define SPEC_split_3x5_2                                                                      \
     SPECIAL,   BASE,    GAME,      APT, RGB_TOG, RGB_TOG,     APT,    GAME,    BASE, SPECIAL, \
     ___x___, SC_NWIN, SC_NTAB, RGB_MOD, EEP_RST, EEP_RST, RGB_MOD, SC_NTAB, SC_NWIN, ___x___, \
-    ___x___, ___x___, SC_CLSE, ___x___, QK_BOOT, QK_BOOT, ___x___, SC_CLSE, ___x___, ___x___, \
+    ___x___, ___x___, SC_CLSE, DB_TOGG, QK_BOOT, QK_BOOT, DB_TOGG, SC_CLSE, ___x___, ___x___, \
                                _______, ___x___, ___x___, _______
 // clang-format on
 
