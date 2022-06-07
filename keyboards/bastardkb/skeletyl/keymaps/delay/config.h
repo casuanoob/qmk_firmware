@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include QMK_KEYBOARD_H
-#include "keymaps/split34.h"
+#pragma once
 
-#define LAYOUT_charybdis_3x5_delay(...) LAYOUT_split_3x5_3(__VA_ARGS__)
+#ifdef MCU_RP
+/* Handedness.  Assume adapter v2 for personal boards. */
+#    undef MASTER_RIGHT
 
-// clang-format off
-const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BASE] = LAYOUT_charybdis_3x5_delay(DVORAK_split_3x5_3),
-  [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
-  [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
-  [_NUM] = LAYOUT_charybdis_3x5_delay(NUM_split_3x5_3),
-  [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
-};
-// clang-format on
+// To use the handedness pin, resistors need to be installed on the adapter PCB.
+#    define SPLIT_HAND_PIN GP13
+#    define SPLIT_HAND_PIN_LOW_IS_LEFT // High -> right, Low -> left.
+#endif

@@ -31,11 +31,7 @@ LAYOUTS = split_3x5_3 # Support community layout, in particular Manna-Harbour's 
 POINTING_DEVICE_ENABLE = yes # Enable trackball
 POINTING_DEVICE_DRIVER = pmw3360
 # https://qmk.fm/changes/2018-11-16-use-a-single-endpoint-for-hid-reports
-<<<<<<< HEAD
 MOUSE_SHARED_EP = yes # Unify multiple HID interfaces into a single Endpoint
-=======
-MOUSE_SHARED_EP = no # Unify multiple HID interfaces into a single Endpoint
->>>>>>> ac19e2581d36d9bb0fec7132d4e50fb1f16264a0
 KEYBOARD_SHARED_EP = yes
 
 EEPROM_DRIVER = spi

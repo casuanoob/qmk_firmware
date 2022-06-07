@@ -34,20 +34,13 @@
 #define WS2812_PWM_CHANNEL 2
 #define WS2812_PWM_PAL_MODE 1
 #define WS2812_EXTERNAL_PULLUP
-<<<<<<< HEAD
 #define WS2812_DMA_STREAM STM32_DMA1_STREAM7
-=======
-#define WS2812_DMA_STREAM STM32_DMA1_STREAM1
->>>>>>> ac19e2581d36d9bb0fec7132d4e50fb1f16264a0
 #define WS2812_DMA_CHANNEL 3
 #define WS2812_PWM_TARGET_PERIOD 800000
 
 /* Serial configuration for split keyboard. */
 #define SERIAL_USART_TX_PIN A9
-<<<<<<< HEAD
 #define SERIAL_USART_SPEED 921600
-=======
->>>>>>> ac19e2581d36d9bb0fec7132d4e50fb1f16264a0
 
 /* CRC. */
 #define CRC8_USE_TABLE

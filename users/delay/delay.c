@@ -17,24 +17,23 @@
 
 #include "config.h"
 #include "delay.h"
-#include "platform.h"
 #include "quantum.h"
 
 #ifdef RGB_MATRIX_ENABLE
-#include "quantum/rgb_matrix/rgb_matrix.h"
-#include "quantum/rgblight/rgblight_list.h"
-#endif  // RGB_MATRIX_ENABLE
+#    include "quantum/rgb_matrix/rgb_matrix.h"
+#    include "quantum/rgblight/rgblight_list.h"
+#endif // RGB_MATRIX_ENABLE
 
 #ifdef ONESHOT_MOD_ENABLE
-#include "oneshot_mod.h"
+#    include "oneshot_mod.h"
 
 typedef struct {
-  oneshot_mod_state_t lalt;
-  oneshot_mod_state_t lctl;
-  oneshot_mod_state_t lgui;
-  oneshot_mod_state_t lsft;
+    oneshot_mod_state_t lalt;
+    oneshot_mod_state_t lctl;
+    oneshot_mod_state_t lgui;
+    oneshot_mod_state_t lsft;
 } osm_state_t;
-#endif  // ONESHOT_MOD_ENABLE
+#endif // ONESHOT_MOD_ENABLE
 
 /**
  * \brief Do not shift `keycode` if only oneshot-shift is locked.
@@ -44,150 +43,119 @@ typedef struct {
  * identifier names in some programming language/coding style).
  */
 #ifndef NO_ONESHOT_SHIFT_LOCKED_CODE
-#define NO_ONESHOT_SHIFT_LOCKED_CODE(keycode)                  \
-  {                                                            \
-    if (record->event.pressed) {                               \
-      if (get_oneshot_locked_mods() & MOD_MASK_SHIFT) {        \
-        const uint8_t mod_shift = get_mods() & MOD_MASK_SHIFT; \
-        unregister_mods(mod_shift);                            \
-        register_code(keycode);                                \
-        register_mods(mod_shift);                              \
-      } else {                                                 \
-        register_code(keycode);                                \
-      }                                                        \
-    } else {                                                   \
-      unregister_code(keycode);                                \
-    }                                                          \
-    break;                                                     \
-  }
-#endif  // NO_ONESHOT_SHIFT_LOCKED_CODE
+#    define NO_ONESHOT_SHIFT_LOCKED_CODE(keycode)                          \
+        {                                                                  \
+            if (record->event.pressed) {                                   \
+                if (get_oneshot_locked_mods() & MOD_MASK_SHIFT) {          \
+                    const uint8_t mod_shift = get_mods() & MOD_MASK_SHIFT; \
+                    unregister_mods(mod_shift);                            \
+                    register_code(keycode);                                \
+                    register_mods(mod_shift);                              \
+                } else {                                                   \
+                    register_code(keycode);                                \
+                }                                                          \
+            } else {                                                       \
+                unregister_code(keycode);                                  \
+            }                                                              \
+            break;                                                         \
+        }
+#endif // NO_ONESHOT_SHIFT_LOCKED_CODE
 
-static bool process_record_user_internal(uint16_t keycode,
-                                         keyrecord_t *record) {
-  switch (keycode) {
-    case NS_1 ... NS_0:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(keycode - NS_1 + KC_1);
-    case NS_BSLASH:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_BSLASH);
-    case NS_COMMA:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_COMMA);
-    case NS_DOT:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOT);
-    case NS_GRAVE:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_GRAVE);
-    case NS_QUOTE:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_QUOTE);
-    case NS_LBRACKET:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LBRC);
-    case NS_RBRACKET:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RBRC);
-    case NS_SCOLON:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SCOLON);
-    case NS_SLASH:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SLASH);
-    case NS_UP:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_UP);
-    case NS_DOWN:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOWN);
-    case NS_LEFT:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
-    case NS_RIGHT:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
-    case WS_CYCLE_MODE:
-      process_record_space_cycle_mode(record);
-      break;
-    case WS_FOCUS_PREVIOUS:
-      process_record_space_focus_previous(record);
-      break;
-    case WS_FOCUS_NEXT:
-      process_record_space_focus_next(record);
-      break;
-    case WS_GOTO_PREVIOUS:
-      process_record_space_goto_previous(record);
-      break;
-    case WS_GOTO_NEXT:
-      process_record_space_goto_next(record);
-      break;
-    case WS_MAIN_PANE_EXPAND:
-      process_record_space_main_pane_expand(record);
-      break;
-    case WS_MAIN_PANE_SHRINK:
-      process_record_space_main_pane_shrink(record);
-      break;
-    case WS_MAIN_PANE_COUNT_DECREASE:
-      process_record_space_main_pane_count_decrease(record);
-      break;
-    case WS_MAIN_PANE_COUNT_INCREASE:
-      process_record_space_main_pane_count_increase(record);
-      break;
-    case WS_MAIN_PANE_PROMOTE:
-      process_record_space_main_pane_promote(record);
-      break;
-  }
-  return process_record_user_keymap(keycode, record);
+static bool process_record_user_internal(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case NS_1 ... NS_0:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(keycode - NS_1 + KC_1);
+        case NS_BSLASH:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_BSLASH);
+        case NS_COMMA:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_COMMA);
+        case NS_DOT:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOT);
+        case NS_GRAVE:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_GRAVE);
+        case NS_QUOTE:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_QUOTE);
+        case NS_LBRACKET:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LBRC);
+        case NS_RBRACKET:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RBRC);
+        case NS_SCOLON:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SCOLON);
+        case NS_SLASH:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SLASH);
+        case NS_UP:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_UP);
+        case NS_DOWN:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOWN);
+        case NS_LEFT:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
+        case NS_RIGHT:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
+    }
+    return process_record_user_keymap(keycode, record);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef ONESHOT_MOD_ENABLE
-  static osm_state_t osm_state = {
-      .lalt = ONESHOT_UP_UNQUEUED,
-      .lctl = ONESHOT_UP_UNQUEUED,
-      .lgui = ONESHOT_UP_UNQUEUED,
-      .lsft = ONESHOT_UP_UNQUEUED,
-  };
-  oneshot_mod_pre(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
-  oneshot_mod_pre(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
-  oneshot_mod_pre(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
-  oneshot_mod_pre(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
-#endif  // ONESHOT_MOD_ENABLE
-  const bool result = process_record_user_internal(keycode, record);
+    static osm_state_t osm_state = {
+        .lalt = ONESHOT_UP_UNQUEUED,
+        .lctl = ONESHOT_UP_UNQUEUED,
+        .lgui = ONESHOT_UP_UNQUEUED,
+        .lsft = ONESHOT_UP_UNQUEUED,
+    };
+    oneshot_mod_pre(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
+    oneshot_mod_pre(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
+    oneshot_mod_pre(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
+    oneshot_mod_pre(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
+#endif // ONESHOT_MOD_ENABLE
+    const bool result = process_record_user_internal(keycode, record);
 #ifdef ONESHOT_MOD_ENABLE
-  oneshot_mod_post(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
-  oneshot_mod_post(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
-  oneshot_mod_post(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
-  oneshot_mod_post(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
-#endif  // ONESHOT_MOD_ENABLE
-  return result;
+    oneshot_mod_post(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
+    oneshot_mod_post(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
+    oneshot_mod_post(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
+    oneshot_mod_post(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
+#endif // ONESHOT_MOD_ENABLE
+    return result;
 }
 
-__attribute__((weak)) bool process_record_user_keymap(uint16_t keycode,
-                                                      keyrecord_t *record) {
-  return true;
+__attribute__((weak)) bool process_record_user_keymap(uint16_t keycode, keyrecord_t *record) {
+    return true;
 }
 
 #ifdef RGB_MATRIX_ENABLE
 void rgb_matrix_reset(void) {
-  rgb_matrix_mode(RGB_MATRIX_STARTUP_MODE);
-  rgb_matrix_sethsv(RGB_MATRIX_STARTUP_HSV);
-  rgb_matrix_set_speed(RGB_MATRIX_STARTUP_SPD);
+    rgb_matrix_mode(RGB_MATRIX_STARTUP_MODE);
+    rgb_matrix_sethsv(RGB_MATRIX_STARTUP_HSV);
+    rgb_matrix_set_speed(RGB_MATRIX_STARTUP_SPD);
 }
-#endif  // RGB_MATRIX_ENABLE
+#endif // RGB_MATRIX_ENABLE
 
-void matrix_scan_user(void) { matrix_scan_user_keymap(); }
+void matrix_scan_user(void) {
+    matrix_scan_user_keymap();
+}
 
 __attribute__((weak)) void matrix_scan_user_keymap(void) {}
 
 /** Called on layer change. */
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return layer_state_set_user_keymap(state);
+    return layer_state_set_user_keymap(state);
 }
 
-__attribute__((weak)) layer_state_t layer_state_set_user_keymap(
-    layer_state_t state) {
-  return state;
+__attribute__((weak)) layer_state_t layer_state_set_user_keymap(layer_state_t state) {
+    return state;
 }
 
 void keyboard_post_init_user(void) {
-  oneshot_disable();
-  keyboard_post_init_user_keymap();
+    oneshot_enable();
+    keyboard_post_init_user_keymap();
 }
 
 __attribute__((weak)) void keyboard_post_init_user_keymap(void) {}
 
 void eeconfig_init_user(void) {
 #ifdef RGB_MATRIX_ENABLE
-  eeconfig_update_rgb_matrix_default();
-#endif  // RGB_MATRIX_ENABLE
+    eeconfig_update_rgb_matrix_default();
+#endif // RGB_MATRIX_ENABLE
 }
 
 /**
@@ -201,38 +169,37 @@ void eeconfig_init_user(void) {
  */
 void oneshot_locked_mods_changed_user(uint8_t mods) {
 #ifdef RGB_MATRIX_ENABLE
-  if (mods & MOD_MASK_SHIFT) {
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-    rgb_matrix_sethsv_noeeprom(HSV_BLUE);
-  } else if (!mods) {
-    rgb_matrix_reload_from_eeprom();  // Load default values.
-  }
-#endif  // RGB_MATRIX_ENABLE
-  oneshot_locked_mods_changed_user_keymap(mods);
+    if (mods & MOD_MASK_SHIFT) {
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_BLUE);
+    } else if (!mods) {
+        rgb_matrix_reload_from_eeprom(); // Load default values.
+    }
+#endif // RGB_MATRIX_ENABLE
+    oneshot_locked_mods_changed_user_keymap(mods);
 }
 
-__attribute__((weak)) void oneshot_locked_mods_changed_user_keymap(
-    uint8_t mods) {}
+__attribute__((weak)) void oneshot_locked_mods_changed_user_keymap(uint8_t mods) {}
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
-#endif  // RGB_MATRIX_ENABLE
+#endif // RGB_MATRIX_ENABLE
 
 void shutdown_user(void) {
 #ifdef RGBLIGHT_ENABLE
-  rgblight_enable_noeeprom();
-  rgblight_mode_noeeprom(1);
-  rgblight_setrgb_red();
-#endif  // RGBLIGHT_ENABLE
+    rgblight_enable_noeeprom();
+    rgblight_mode_noeeprom(1);
+    rgblight_setrgb_red();
+#endif // RGBLIGHT_ENABLE
 #ifdef RGB_MATRIX_ENABLE
-  rgb_matrix_set_color_all(RGB_RED);
-  rgb_matrix_update_pwm_buffers();
-#endif  // RGB_MATRIX_ENABLE
+    rgb_matrix_set_color_all(RGB_RED);
+    rgb_matrix_update_pwm_buffers();
+#endif // RGB_MATRIX_ENABLE
 #ifdef OLED_ENABLE
-  oled_off();
-#endif  // OLED_ENABLE
-  shutdown_user_keymap();
+    oled_off();
+#endif // OLED_ENABLE
+    shutdown_user_keymap();
 }
 
 __attribute__((weak)) void shutdown_user_keymap(void) {}
