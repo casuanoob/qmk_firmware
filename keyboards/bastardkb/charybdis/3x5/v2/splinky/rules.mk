@@ -33,5 +33,9 @@ LAYOUTS = split_3x5_3
 #POINTING_DEVICE_ENABLE = yes # Enable trackball
 #POINTING_DEVICE_DRIVER = pmw3360
 
-SERIAL_DRIVER = pio
-WS2812_DRIVER = pio
+SERIAL_DRIVER = vendor
+WS2812_DRIVER = vendor
+
+# Enable if the Falcon encoder is installed.
+ENCODER_ENABLE = yes
+DIP_SWITCH_ENABLE = yes
