@@ -1,5 +1,4 @@
-/*
- * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
+/* Copyright 2022 QMK
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +16,10 @@
 
 #pragma once
 
-#include_next "mcuconf.h"
+#define HAL_USE_I2C TRUE
+//#define HAL_USE_SPI TRUE
+// #define SPI_USE_WAIT    TRUE
+// #define SPI_SELECT_MODE SPI_SELECT_MODE_PAD
+// #define HAL_USE_GPT     TRUE
 
-//#undef RP_SIO_I2C_USE_I20
-//#define RP_SIO_I2C_USE_I20 FALSE
-
-#undef RP_I2C_USE_I2C1
-#define RP_I2C_USE_I2C1 TRUE
-
-//#undef RP_SPI_USE_SPI0
-//#define RP_SPI_USE_SPI0 TRUE
+#include_next <halconf.h>

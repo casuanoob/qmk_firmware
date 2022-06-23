@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include "config_common.h"
+
 /* Key matrix configuration. */
 #define MATRIX_ROW_PINS \
     { GP26, GP5, GP4, GP9 }
@@ -61,34 +63,53 @@
 //    Falcon encoder is installed where the SPI device (trackball) would be.
 //    Note: this only works if the half where the rotary encoder is installed is
 //    primary.
-//  - GP2, GP3 (replaces I2C): used for SDA/SDC.  Only available if I2C is not
+//  - GP2, GP3 (replaces I2C): used for SDA/SCL.  Only available if I2C is not
 //    used, which is typically the case on regular Charybdis because the Falcon
 //    encoder is installed where the I2C device (trackpad) would be.
 //  - GP10, GP11, GP12: unused pin from the Splinky bottom pinout row.  These
 //    are not broken out on the v2 adapter, and require a bodge wire.
 
+#if 0
 // Encoder R1 and R2.
-#define ENCODERS_PAD_A \
-    { GP19 }
-#define ENCODERS_PAD_B \
-    { GP20 }
-#define ENCODER_RESOLUTION 2
+#    define ENCODERS_PAD_A \
+        { GP19 }
+#    define ENCODERS_PAD_B \
+        { GP20 }
+#    define ENCODER_RESOLUTION 2
 
 // Uncomment if R1 and R2 are flipped.  (ie. if "clockwise" is actually
 // "counter-clockwise".)
-// #define ENCODER_DIRECTION_FLIP
+#    define ENCODER_DIRECTION_FLIP
 
 // Direct access pin for the encoder button.  Bridge PCB pads accordingly.  Use
 // if encoder is not integrated with the key matrix.
-#define DIP_SWITCH_PINS \
-    { GP14 }
+#    define DIP_SWITCH_PINS \
+        { GP14 }
 
 /* SPI & PMW3360 settings. */
-#define SPI_DRIVER SPID0
-#define SPI_SCK_PIN GP18
-#define SPI_MOSI_PIN GP19
-#define SPI_MISO_PIN GP20
-#define PMW3360_CS_PIN GP14
+#    define SPI_DRIVER SPID0
+#    define SPI_SCK_PIN GP18
+#    define SPI_MOSI_PIN GP19
+#    define SPI_MISO_PIN GP20
+#    define PMW3360_CS_PIN GP14
+#endif // 0
+
+/* I2C & Cirque trackpad settings. */
+//#define CIRQUE_PINNACLE_ADDR 0x2A
+//#define I2C_DRIVER I2CD2
+//#define I2C1_SCL_PIN GP2
+//#define I2C1_SDA_PIN GP3
+//#define I2C1_CLOCK_SPEED 400000
+//#define I2C1_DUTY_CYCLE FAST_DUTY_CYCLE_2
+//#define SPLIT_POINTING_ENABLE
+//#define POINTING_DEVICE_COMBINED
+//#define POINTING_DEVICE_TASK_THROTTLE_MS 1
+
+//#define POINTING_DEVICE_ROTATION_180
+//#define POINTING_DEVICE_ROTATION_180_RIGHT
+
+//#define SPLIT_TRANSACTION_IDS_KB RPC_ID_KB_CONFIG_SYNC, RPC_ID_SYNC_STATE_KB
+//#define SPLIT_MAX_CONNECTION_ERRORS 10
 
 /* Reset. */
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
