@@ -36,16 +36,16 @@
 /* serial.c configuration (for split keyboard). */
 
 // Uncommend for half duplex.
-//#define SOFT_SERIAL_PIN GP1
+#define SOFT_SERIAL_PIN GP1
 
 // Full-duplex configuration.  Requires bodge wire from GP10 (bottom row on the
 // Splinky) to the TRRS connector's second serial pin.  Also requires the use of
 // a TRRS cable.
-#define SERIAL_USART_FULL_DUPLEX // Enable full duplex operation mode.
+/**#define SERIAL_USART_FULL_DUPLEX // Enable full duplex operation mode.
 #define SERIAL_USART_TX_PIN GP1  // USART TX pin.
 #define SERIAL_USART_RX_PIN GP10 // USART RX pin.
 #define SERIAL_USART_PIN_SWAP    // Auto-swap TX and RX on master to properly setup full-duplex.
-
+*/
 #define CRC8_USE_TABLE
 #define CRC8_OPTIMIZE_SPEED
 
@@ -77,7 +77,11 @@
     { GP18 }
 #define ENCODERS_PAD_B \
     { GP19 }
-#define ENCODER_RESOLUTION 2
+#define ENCODER_RESOLUTION 4
+#define ENCODERS_PAD_A_RIGHT {  }
+#define ENCODERS_PAD_B_RIGHT {  }
+#define ENCODER_RESOLUTIONS_RIGHT {  }
+#define ENCODER_DEFAULT_POS 0x3
 
 // Uncomment if R1 and R2 are flipped.  (ie. if "clockwise" is actually
 // "counter-clockwise".)
@@ -87,15 +91,23 @@
 // if encoder is not integrated with the key matrix.
 #define DIP_SWITCH_PINS \
     { GP14 }
+#define DIP_SWITCH_PINS_RIGHT {  }
 
-#if 0
+//#if 0
 /* SPI & PMW3360 settings. */
-#    define SPI_DRIVER SPID0
-#    define SPI_SCK_PIN GP18
-#    define SPI_MOSI_PIN GP19
-#    define SPI_MISO_PIN GP20
-#    define PMW3360_CS_PIN GP14
-#endif // 0
+//#    define SPI_DRIVER SPID0
+//#    define SPI_SCK_PIN GP18
+//#    define SPI_MOSI_PIN GP19
+//#    define SPI_MISO_PIN GP20
+//#    define PMW3360_CS_PIN GP14
+//#endif // 0
+
+/* SPI & PMW3360 settings. */
+#define SPI_DRIVER SPID0
+#define SPI_SCK_PIN GP18
+#define SPI_MOSI_PIN GP19
+#define SPI_MISO_PIN GP20
+#define PMW3360_CS_PIN GP14
 
 /* I2C & Cirque trackpad settings. */
 //#define CIRQUE_PINNACLE_ADDR 0x2A

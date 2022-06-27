@@ -31,8 +31,8 @@ SPLIT_KEYBOARD = yes
 LAYOUTS = split_3x5_3
 
 POINTING_DEVICE_ENABLE = yes # Enable trackpad
-POINTING_DEVICE_DRIVER = cirque_pinnacle_i2c
-#POINTING_DEVICE_DRIVER = pmw3360
+#POINTING_DEVICE_DRIVER = cirque_pinnacle_i2c
+POINTING_DEVICE_DRIVER = pmw3360
 #MOUSE_SHARED_EP = yes
 #DEBOUNCE_TYPE = asym_eager_defer_pk
 #KEYBOARD_SHARED_EP = yes   # Free up some extra endpoints - needed if console+mouse+extra

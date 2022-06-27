@@ -64,7 +64,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 */
-
+/**
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (get_highest_layer(layer_state|default_layer_state) > 0) {
         if (index == 0) {
@@ -79,9 +79,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             } else {
                 tap_code_delay(KC_VOLD, 10);
             }
-        }
-    } else {  /* Layer 0 */
-        if (index == 0) {
+        }*/
+//    } else {  /* Layer 0 */
+/**        if (index == 0) {
             if (clockwise) {
                 tap_code(KC_PGDN);
             } else {
@@ -97,11 +97,8 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
     }
     return false;
 }
-/** old
-void matrix_io_delay(void) {
-    __asm__ volatile("nop\nnop\nnop\n");
-}
 */
+
 void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
     for (int32_t i = 0; i < 40; i++) {
         __asm__ volatile("nop" ::: "memory");

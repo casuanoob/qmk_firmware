@@ -23,8 +23,40 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
 }
 
 // TODO(delay): move to keymap.
+//bool encoder_update_user(uint8_t index, bool clockwise) {
+//    tap_code_delay(clockwise ? KC_VOLU : KC_VOLD, 10);
+//    return false;
+//}
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    tap_code_delay(clockwise ? KC_VOLU : KC_VOLD, 10);
+    if (get_highest_layer(layer_state|default_layer_state) > 0) {
+        if (index == 0) {
+            if (clockwise) {
+                tap_code(KC_WH_D);
+            } else {
+                tap_code(KC_WH_U);
+            }
+        } else if (index == 1) {
+            if (clockwise) {
+                tap_code_delay(KC_VOLU, 10);
+            } else {
+                tap_code_delay(KC_VOLD, 10);
+            }
+        }
+    } else {  /* Layer 0 */
+        if (index == 0) {
+            if (clockwise) {
+                tap_code(KC_PGDN);
+            } else {
+                tap_code(KC_PGUP);
+            }
+        } else if (index == 1) {
+            if (clockwise) {
+                rgb_matrix_increase_speed();
+            } else {
+                rgb_matrix_decrease_speed();
+            }
+        }
+    }
     return false;
 }
 #endif // ENCODER_ENABLE

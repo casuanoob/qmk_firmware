@@ -28,25 +28,6 @@
 // Caps Word config.
 #define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
 
-/* Override RGB settings. 
- * \brief 12 LEDs are added by the falcon PCB to the original 36
-*/
-#undef RGBLED_NUM 
-#undef RGBLED_SPLIT
-#define RGBLED_NUM 48
-#define RGBLED_SPLIT \
-    { 30, 18 }
-
-/* Define encoder pads. 
- * \brief Encoder pads wired to MISO and MOSI
-*/
-#define ENCODER_DEFAULT_POS 0x3
-#define ENCODERS_PAD_A { A6 }
-#define ENCODERS_PAD_B { A7 }
-//Encoders right define is required to prevent the trackball SPI pins from being overridden
-#define ENCODERS_PAD_A_RIGHT { B12 } //completely unused pin
-#define ENCODERS_PAD_B_RIGHT { B13 } //completely unused pin
-
 // Disable unused keycodes.
 //#define NO_CHARYBDIS_KEYCODES
 
