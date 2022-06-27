@@ -1,4 +1,5 @@
-/* Copyright 2017 Jack Humbert
+/*
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +17,7 @@
 
 #pragma once
 
-#include "quantum.h"
+#include_next "mcuconf.h"
 
-extern const char keycode_to_ascii_lut[58];
-extern const char shifted_keycode_to_ascii_lut[58];
-extern const char terminal_prompt[8];
-bool              process_terminal(uint16_t keycode, keyrecord_t *record);
+#undef RP_SPI_USE_SPI0
+#define RP_SPI_USE_SPI0 TRUE

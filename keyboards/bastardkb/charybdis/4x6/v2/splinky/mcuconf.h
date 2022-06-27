@@ -1,4 +1,5 @@
-/* Copyright 2017 Jack Humbert
+/*
+ * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +17,7 @@
 
 #pragma once
 
-#include "quantum.h"
+#include_next "mcuconf.h"
 
-#define TERM_ON KC_NO
-#define TERM_OFF KC_NO
+#undef RP_SPI_USE_SPI0
+#define RP_SPI_USE_SPI0 TRUE

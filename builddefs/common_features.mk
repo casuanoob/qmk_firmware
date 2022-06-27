@@ -500,7 +500,7 @@ ifeq ($(strip $(BACKLIGHT_ENABLE)), yes)
     endif
 endif
 
-VALID_WS2812_DRIVER_TYPES := bitbang pwm spi i2c
+VALID_WS2812_DRIVER_TYPES := bitbang pwm spi i2c vendor
 
 WS2812_DRIVER ?= bitbang
 ifeq ($(strip $(WS2812_DRIVER_REQUIRED)), yes)
@@ -540,12 +540,6 @@ endif
 
 ifeq ($(strip $(LED_TABLES)), yes)
     SRC += $(QUANTUM_DIR)/led_tables.c
-endif
-
-ifeq ($(strip $(TERMINAL_ENABLE)), yes)
-    SRC += $(QUANTUM_DIR)/process_keycode/process_terminal.c
-    OPT_DEFS += -DTERMINAL_ENABLE
-    OPT_DEFS += -DUSER_PRINT
 endif
 
 ifeq ($(strip $(VIA_ENABLE)), yes)
@@ -624,6 +618,7 @@ ifeq ($(strip $(SPLIT_KEYBOARD)), yes)
         ifeq ($(strip $(SERIAL_DRIVER)), bitbang)
             QUANTUM_LIB_SRC += serial.c
         else
+            QUANTUM_LIB_SRC += serial_protocol.c
             QUANTUM_LIB_SRC += serial_$(strip $(SERIAL_DRIVER)).c
         endif
     endif
