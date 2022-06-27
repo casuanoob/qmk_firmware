@@ -50,7 +50,6 @@ led_config_t g_led_config = { {
     {     19,     22,     25,     28,     31 }, // Middle row
     {     18,     23,     24,     29,     32 }, // Bottom row
     {     33, NO_LED,     34, NO_LED, NO_LED }, // Thumb cluster
-
 }, {
     /* LED index to physical position. */
     // Left split.
@@ -59,12 +58,6 @@ led_config_t g_led_config = { {
     /* index=6  */ {  36,  42 }, {  36,  21 }, {  36,   0 },
     /* index=9  */ {  54,   0 }, {  54,  21 }, {  54,  42 },
     /* index=12 */ {  72,   0 }, {  72,  21 }, {  72,  42 },
-
-    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
-    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
-    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
-    {   0,   0 }, {   0,   0 }, {   0,   0 }, //Falcon left
-
     /* index=15 */ {  72,  64 }, {  90,  64 }, { 108,  64 }, // Thumb cluster
     // Right split.
     /* index=18 */ { 224,  42 }, { 224,  21 }, { 224,   0 }, // col 10 (right most)
@@ -72,7 +65,7 @@ led_config_t g_led_config = { {
     /* index=24 */ { 188,  42 }, { 188,  21 }, { 188,   0 },
     /* index=27 */ { 170,   0 }, { 170,  21 }, { 170,  42 },
     /* index=30 */ { 152,   0 }, { 152,  21 }, { 152,  42 },
-    /* index=33 */ { 134,  64 }, { 152,  64 }, {   0,   0 }, // Thumb cluster
+    /* index=33 */ { 134,  64 }, { 152,  64 }, {   0,   0 },
 }, {
     /* LED index to flag. */
     // Left split.
@@ -81,14 +74,7 @@ led_config_t g_led_config = { {
     /* index=6  */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=9  */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=12 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
-
-    LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
-    LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
-    LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
-    LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, //Falcon left
-
-    /* index=15 */ LED_FLAG_INDICATOR, LED_FLAG_INDICATOR, LED_FLAG_INDICATOR,
-//    /* index=15 */ LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, // Thumb cluster
+    /* index=15 */ LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, // Thumb cluster
     // Right split.
     /* index=18 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // col 10
     /* index=21 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // col 9
