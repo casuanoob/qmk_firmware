@@ -44,89 +44,58 @@ typedef struct {
  * identifier names in some programming language/coding style).
  */
 #ifndef NO_ONESHOT_SHIFT_LOCKED_CODE
-#define NO_ONESHOT_SHIFT_LOCKED_CODE(keycode)                  \
-  {                                                            \
-    if (record->event.pressed) {                               \
-      if (get_oneshot_locked_mods() & MOD_MASK_SHIFT) {        \
-        const uint8_t mod_shift = get_mods() & MOD_MASK_SHIFT; \
-        unregister_mods(mod_shift);                            \
-        register_code(keycode);                                \
-        register_mods(mod_shift);                              \
-      } else {                                                 \
-        register_code(keycode);                                \
-      }                                                        \
-    } else {                                                   \
-      unregister_code(keycode);                                \
-    }                                                          \
-    break;                                                     \
-  }
-#endif  // NO_ONESHOT_SHIFT_LOCKED_CODE
+#    define NO_ONESHOT_SHIFT_LOCKED_CODE(keycode)                          \
+        {                                                                  \
+            if (record->event.pressed) {                                   \
+                if (get_oneshot_locked_mods() & MOD_MASK_SHIFT) {          \
+                    const uint8_t mod_shift = get_mods() & MOD_MASK_SHIFT; \
+                    unregister_mods(mod_shift);                            \
+                    register_code(keycode);                                \
+                    register_mods(mod_shift);                              \
+                } else {                                                   \
+                    register_code(keycode);                                \
+                }                                                          \
+            } else {                                                       \
+                unregister_code(keycode);                                  \
+            }                                                              \
+            break;                                                         \
+        }
+#endif // NO_ONESHOT_SHIFT_LOCKED_CODE
 
-static bool process_record_user_internal(uint16_t keycode,
-                                         keyrecord_t *record) {
-  switch (keycode) {
-    case NS_1 ... NS_0:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(keycode - NS_1 + KC_1);
-    case NS_BSLASH:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_BSLASH);
-    case NS_COMMA:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_COMMA);
-    case NS_DOT:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOT);
-    case NS_GRAVE:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_GRAVE);
-    case NS_QUOTE:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_QUOTE);
-    case NS_LBRACKET:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LBRC);
-    case NS_RBRACKET:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RBRC);
-    case NS_SCOLON:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SCOLON);
-    case NS_SLASH:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SLASH);
-    case NS_UP:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_UP);
-    case NS_DOWN:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOWN);
-    case NS_LEFT:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
-    case NS_RIGHT:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
-    case NS_MINUS:
-      NO_ONESHOT_SHIFT_LOCKED_CODE(KC_MINUS);
-    case WS_CYCLE_MODE:
-      process_record_space_cycle_mode(record);
-      break;
-    case WS_FOCUS_PREVIOUS:
-      process_record_space_focus_previous(record);
-      break;
-    case WS_FOCUS_NEXT:
-      process_record_space_focus_next(record);
-      break;
-    case WS_GOTO_PREVIOUS:
-      process_record_space_goto_previous(record);
-      break;
-    case WS_GOTO_NEXT:
-      process_record_space_goto_next(record);
-      break;
-    case WS_MAIN_PANE_EXPAND:
-      process_record_space_main_pane_expand(record);
-      break;
-    case WS_MAIN_PANE_SHRINK:
-      process_record_space_main_pane_shrink(record);
-      break;
-    case WS_MAIN_PANE_COUNT_DECREASE:
-      process_record_space_main_pane_count_decrease(record);
-      break;
-    case WS_MAIN_PANE_COUNT_INCREASE:
-      process_record_space_main_pane_count_increase(record);
-      break;
-    case WS_MAIN_PANE_PROMOTE:
-      process_record_space_main_pane_promote(record);
-      break;
-  }
-  return process_record_user_keymap(keycode, record);
+static bool process_record_user_internal(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case NS_1 ... NS_0:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(keycode - NS_1 + KC_1);
+        case NS_BSLASH:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_BSLASH);
+        case NS_COMMA:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_COMMA);
+        case NS_DOT:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOT);
+        case NS_GRAVE:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_GRAVE);
+        case NS_QUOTE:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_QUOTE);
+        case NS_LBRACKET:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LBRC);
+        case NS_RBRACKET:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RBRC);
+        case NS_SCOLON:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SCOLON);
+        case NS_SLASH:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SLASH);
+        case NS_UP:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_UP);
+        case NS_DOWN:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOWN);
+        case NS_LEFT:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
+        case NS_RIGHT:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
+        case NS_MINUS:
+            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_MINUS);
+    }
+    return process_record_user_keymap(keycode, record);
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -180,7 +149,7 @@ __attribute__((weak)) layer_state_t layer_state_set_user_keymap(
 }
 
 void keyboard_post_init_user(void) {
-  oneshot_disable();
+  oneshot_enable();
   keyboard_post_init_user_keymap();
 }
 

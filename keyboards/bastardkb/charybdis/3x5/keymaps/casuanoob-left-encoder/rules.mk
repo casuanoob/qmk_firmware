@@ -18,6 +18,6 @@ ENCODER_ENABLE = yes # testing encoder function
 OPT = 3
 CONSOLE_ENABLE = yes
 
-DEBOUNCE_TYPE = sym_eager_pk
+#DEBOUNCE_TYPE = sym_eager_pk
 
 CAPS_WORD_ENABLE = yes

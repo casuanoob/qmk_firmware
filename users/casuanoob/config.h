@@ -87,7 +87,7 @@
  *
  * https://beta.docs.qmk.fm/using-qmk/software-features/one_shot_keys
  */
-#define ONESHOT_TAP_TOGGLE 2
+#define ONESHOT_TAP_TOGGLE 5
 
 /**
  * \brief Time (in ms) before the one shot key is released.

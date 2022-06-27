@@ -25,6 +25,9 @@
 #define CHARYBDIS_MINIMUM_DEFAULT_DPI 1000
 #define CHARYBDIS_MINIMUM_SNIPING_DPI 500
 
+// Caps Word config.
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
+
 /* Override RGB settings. 
  * \brief 12 LEDs are added by the falcon PCB to the original 36
 */
@@ -49,4 +52,4 @@
 
 // Speed test
 #define DEBUG_MATRIX_SCAN_RATE
-#define FORCE_NKRO
+//#define FORCE_NKRO

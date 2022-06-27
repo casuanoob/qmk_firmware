@@ -22,9 +22,9 @@
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_BASE] = LAYOUT_charybdis_3x5_delay(COLEMAKdhm_ALT_3x5_3),
-  [_GAME] = LAYOUT_charybdis_3x5_delay(GAMING_ALT_3x5_3),
-  [_APT] = LAYOUT_charybdis_3x5_delay(APTmod_ALT_3x5_3),
+  [_BASE] = LAYOUT_charybdis_3x5_delay(COLEMAKdhm_split_3x5_3),
+  [_GAME] = LAYOUT_charybdis_3x5_delay(GAMING_split_3x5_3),
+  [_APT] = LAYOUT_charybdis_3x5_delay(APTmod_split_3x5_3),
   [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
   [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
   [_NUM] = LAYOUT_charybdis_3x5_delay(NUMROW_split_3x5_3),
@@ -64,7 +64,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return state;
 }
 */
-#define CHARYBDIS_AUTO_SNIPING_ON_LAYER _NAV
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (get_highest_layer(layer_state|default_layer_state) > 0) {

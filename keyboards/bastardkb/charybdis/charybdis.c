@@ -345,8 +345,4 @@ void matrix_scan_kb(void) {
     }
     matrix_scan_user();
 }
-<<<<<<< HEAD
 #endif // __arm__
-=======
-#endif // __arm__
->>>>>>> ac19e2581d36d9bb0fec7132d4e50fb1f16264a0
