@@ -94,7 +94,7 @@ enum layers_keymap {
  * (plays well with oneshot shift).
  */
 // clang-format off
-#define COLEMAKdhm_ALT_3x5_2                                                                  \
+#define COLEMAKdhm_split_3x5_2                                                                  \
        KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_UNDS, \
        KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O, \
        KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H, NS_COMM,  NS_DOT, NS_QUOT, \
@@ -109,7 +109,7 @@ enum layers_keymap {
  * (plays well with oneshot shift).
  */
 // clang-format off
-#define APTmod_ALT_3x5_2                                                                      \
+#define APTmod_split_3x5_2                                                                      \
        KC_W,    KC_C,    KC_G,    KC_D,    KC_K,    KC_Q,    KC_L,    KC_U,    KC_O,    KC_Y, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_B,    KC_J,    KC_N,    KC_E,    KC_A,    KC_I, \
        KC_Z,    KC_V,    KC_M,    KC_F,    KC_P,    KC_X,  NS_DOT, NS_COMM, NS_QUOT, KC_UNDS, \
@@ -120,7 +120,7 @@ enum layers_keymap {
  * \brief Gaming layout (3 rows, 10 columns). 
  */
 // clang-format off
-#define GAMING_ALT_3x5_2                                                                     \
+#define GAMING_split_3x5_2                                                                     \
        KC_T,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, \
     KC_LCTL,   KC_A,    KC_S,    KC_D,    KC_F,    KC_H,    KC_J,    KC_K,    KC_L, NS_QUOT, \
     KC_LSFT,   KC_Z,    KC_X,    KC_C,    KC_V, DRGSCRL, KC_BTN3, KC_BTN1, KC_BTN2, SNIPING, \
@@ -138,7 +138,7 @@ enum layers_keymap {
 #define NAV_split_3x5_2                                                                       \
     SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB,   NUMPD,   NUMPD, KC_HOME,   NS_UP,  KC_END,  KC_DEL, \
     OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT,   KC_F2, KC_BSPC, NS_LEFT, NS_DOWN, NS_RGHT,  KC_ENT, \
-    SC_PRVW, SC_NEXW, SC_COPY, SC_PSTE, LAUNCHR, DRG_TOG, KC_BTN3, KC_BTN1, KC_BTN2, SNIPING, \
+    WS_PREV, WS_NEXT, SC_COPY, SC_PSTE, LAUNCHR, DRG_TOG, KC_BTN3, KC_BTN1, KC_BTN2, SNIPING, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -208,8 +208,8 @@ enum layers_keymap {
 // clang-format off
 #define SPEC_split_3x5_2                                                                      \
     SPECIAL,   BASE,    GAME,      APT, RGB_TOG, RGB_TOG,     APT,    GAME,    BASE, SPECIAL, \
-    ___x___, SC_NWIN, SC_NTAB, RGB_MOD, EEP_RST, EEP_RST, RGB_MOD, SC_NTAB, SC_NWIN, ___x___, \
-    ___x___, ___x___, SC_CLSE, DB_TOGG, QK_BOOT, QK_BOOT, DB_TOGG, SC_CLSE, ___x___, ___x___, \
+      NK_ON, SC_NWIN, SC_NTAB, RGB_MOD, EEP_RST, EEP_RST, RGB_MOD, SC_NTAB, SC_NWIN,   NK_ON, \
+     NK_OFF, ___x___, SC_CLSE, DB_TOGG, QK_BOOT, QK_BOOT, DB_TOGG, SC_CLSE, ___x___,  NK_OFF, \
                                _______, ___x___, ___x___, _______
 // clang-format on
 
@@ -227,7 +227,7 @@ enum layers_keymap {
            k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
            k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
            k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
-                   k33, KC_A, k34, k35, k36, KC_NO 
+                     k33, KC_A, k34, k35, k36, KC_NO 
 
 #define LAYOUT_split_3x5_2_to_split_3x5_3(...) _LAYOUT_split_3x5_2_to_split_3x5_3(__VA_ARGS__)
 
@@ -238,9 +238,40 @@ enum layers_keymap {
 #define NUMROW_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUMROW_split_3x5_2)
 #define WNAV_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(WNAV_split_3x5_2)
 #define SPEC_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SPEC_split_3x5_2)
-#define COLEMAKdhm_ALT_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(COLEMAKdhm_ALT_3x5_2)
-#define APTmod_ALT_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(APTmod_ALT_3x5_2)
-#define GAMING_ALT_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(GAMING_ALT_3x5_2)
+#define COLEMAKdhm_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(COLEMAKdhm_split_3x5_2)
+#define APTmod_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(APTmod_split_3x5_2)
+#define GAMING_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(GAMING_split_3x5_2)
 #define NUMPAD_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUMPAD_split_3x5_2)
 #define FUN_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(FUN_split_3x5_2)
+// clang-format on
+
+// clang-format off
+/**
+ * \brief Converts a 3x5_2 layout into the more community 3x5_3 layout for cnano.
+ *
+ * In other words, converts a split-34 keymap into a split-36 one.
+ */
+#define _LAYOUT_split_3x5_2_to_charybdis_3x5_3(                  \
+           k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
+           k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
+           k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
+                          k33, k34, k35, k36)                \
+           k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
+           k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
+           k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
+                     k33, k34, TD_SFT, k35, k36, KC_NO 
+
+#define LAYOUT_split_3x5_2_to_charybdis_3x5_3(...) _LAYOUT_split_3x5_2_to_charybdis_3x5_3(__VA_ARGS__)
+/* Converts the 3x5_2 layouts into 3x5_3 layouts. */
+#define DVORAK_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(DVORAK_split_3x5_2)
+#define NAV_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NAV_split_3x5_2)
+#define SYM_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(SYM_split_3x5_2)
+#define NUMROW_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NUMROW_split_3x5_2)
+#define WNAV_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(WNAV_split_3x5_2)
+#define SPEC_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(SPEC_split_3x5_2)
+#define COLEMAKdhm_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(COLEMAKdhm_split_3x5_2)
+#define APTmod_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTmod_split_3x5_2)
+#define GAMING_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(GAMING_split_3x5_2)
+#define NUMPAD_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NUMPAD_split_3x5_2)
+#define FUN_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(FUN_split_3x5_2)
 // clang-format on

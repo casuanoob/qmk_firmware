@@ -88,8 +88,8 @@ enum keycodes_user {
 #define SC_CLOSE LCTL(KC_W)
 #define SC_NEW_TAB LCTL(KC_T)
 #define SC_NEW_WINDOW LCTL(KC_N)
-#define SC_NEXT_DESK LCTL(LGUI(KC_RIGHT))
-#define SC_PREV_DESK LCTL(LGUI(KC_LEFT))
+#define WS_PREVIOUS LCTL(LGUI(KC_LEFT))
+#define WS_NEXT LCTL(LGUI(KC_RIGHT))
 
 // Shorthands.
 #define NS_BSLS NS_BSLASH
@@ -107,19 +107,8 @@ enum keycodes_user {
 #define SC_NTAB SC_NEW_TAB
 #define SC_NWIN SC_NEW_WINDOW
 #define SC_SELA SC_SELECT_ALL
-#define SC_NEXW SC_NEXT_DESK
-#define SC_PRVW SC_PREV_DESK
+#define WS_PREV WS_PREVIOUS
 #define LAUNCHR SC_LAUNCHER
-#define WS_MOD WS_CYCLE_MODE
-#define WS_FPRV WS_FOCUS_PREVIOUS
-#define WS_FNXT WS_FOCUS_NEXT
-#define WS_PREV WS_GOTO_PREVIOUS
-#define WS_NEXT WS_GOTO_NEXT
-#define WS_MPCD WS_MAIN_PANE_COUNT_DECREASE
-#define WS_MPCI WS_MAIN_PANE_COUNT_INCREASE
-#define WS_MPEX WS_MAIN_PANE_EXPAND
-#define WS_MPSH WS_MAIN_PANE_SHRINK
-#define WS_MPPR WS_MAIN_PANE_PROMOTE
 
 /**
  * \brief Similar to `_kb`, `_user`, and other variants, but for
