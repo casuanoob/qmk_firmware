@@ -46,6 +46,9 @@
 #define SERIAL_USART_RX_PIN GP10 // USART RX pin.
 #define SERIAL_USART_PIN_SWAP    // Auto-swap TX and RX on master to properly setup full-duplex.
 
+#define CRC8_USE_TABLE
+#define CRC8_OPTIMIZE_SPEED
+
 /* RGB settings. */
 #define RGB_DI_PIN GP0
 
@@ -69,23 +72,23 @@
 //  - GP10, GP11, GP12: unused pin from the Splinky bottom pinout row.  These
 //    are not broken out on the v2 adapter, and require a bodge wire.
 
-#if 0
 // Encoder R1 and R2.
-#    define ENCODERS_PAD_A \
-        { GP19 }
-#    define ENCODERS_PAD_B \
-        { GP20 }
-#    define ENCODER_RESOLUTION 2
+#define ENCODERS_PAD_A \
+    { GP18 }
+#define ENCODERS_PAD_B \
+    { GP19 }
+#define ENCODER_RESOLUTION 2
 
 // Uncomment if R1 and R2 are flipped.  (ie. if "clockwise" is actually
 // "counter-clockwise".)
-#    define ENCODER_DIRECTION_FLIP
+#define ENCODER_DIRECTION_FLIP
 
 // Direct access pin for the encoder button.  Bridge PCB pads accordingly.  Use
 // if encoder is not integrated with the key matrix.
-#    define DIP_SWITCH_PINS \
-        { GP14 }
+#define DIP_SWITCH_PINS \
+    { GP14 }
 
+#if 0
 /* SPI & PMW3360 settings. */
 #    define SPI_DRIVER SPID0
 #    define SPI_SCK_PIN GP18
@@ -103,7 +106,8 @@
 //#define I2C1_DUTY_CYCLE FAST_DUTY_CYCLE_2
 //#define SPLIT_POINTING_ENABLE
 //#define POINTING_DEVICE_COMBINED
-//#define POINTING_DEVICE_TASK_THROTTLE_MS 1
+#undef POINTING_DEVICE_TASK_THROTTLE_MS
+#define POINTING_DEVICE_TASK_THROTTLE_MS 10
 
 //#define POINTING_DEVICE_ROTATION_180
 //#define POINTING_DEVICE_ROTATION_180_RIGHT
