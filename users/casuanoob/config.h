@@ -254,7 +254,7 @@
 // Limit maximum brightness to keep power consumption reasonable, and avoid
 // disconnects.
 #undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 64
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 35
 
 // Rainbow swirl as startup mode.
 #ifndef ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON

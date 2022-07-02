@@ -25,6 +25,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_charybdis_3x5_delay(COLEMAKdhm_split_3x5_3),
   [_GAME] = LAYOUT_charybdis_3x5_delay(GAMING_split_3x5_3),
   [_APT] = LAYOUT_charybdis_3x5_delay(APTmod_split_3x5_3),
+  [_CAN] = LAYOUT_charybdis_3x5_delay(Canary_split_3x5_3),
   [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
   [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
   [_NUM] = LAYOUT_charybdis_3x5_delay(NUMROW_split_3x5_3),
