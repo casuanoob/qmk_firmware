@@ -334,7 +334,8 @@ void matrix_init_kb(void) {
 }
 #endif // POINTING_DEVICE_ENABLE
 
-#if defined(KEYBOARD_charybdis_3x5_blackpill) || defined(KEYBOARD_charybdis_4x6_blackpill)
+//#if defined(KEYBOARD_charybdis_3x5_blackpill) || defined(KEYBOARD_charybdis_4x6_blackpill)
+#if defined(MCU_STM32)
 void keyboard_pre_init_kb(void) {
     setPinInputHigh(A0);
     keyboard_pre_init_user();

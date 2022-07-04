@@ -58,6 +58,14 @@ led_config_t g_led_config = { {
     /* index=6  */ {  36,  42 }, {  36,  21 }, {  36,   0 },
     /* index=9  */ {  54,   0 }, {  54,  21 }, {  54,  42 },
     /* index=12 */ {  72,   0 }, {  72,  21 }, {  72,  42 },
+/**
+#if defined(KEYBOARD_charybdis_3x5_blackpill) || defined(MCU_STM32)
+    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
+    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
+    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
+    {   0,   0 }, {   0,   0 }, {   0,   0 }, //Falcon left
+#endif // KEYBOARD_charybdis_3x5_blackpill
+*/
     /* index=15 */ {  72,  64 }, {  90,  64 }, { 108,  64 }, // Thumb cluster
     // Right split.
     /* index=18 */ { 224,  42 }, { 224,  21 }, { 224,   0 }, // col 10 (right most)
@@ -74,6 +82,14 @@ led_config_t g_led_config = { {
     /* index=6  */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=9  */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=12 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+/**
+#if defined(KEYBOARD_charybdis_3x5_blackpill) || defined(MCU_STM32)
+    LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+    LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+    LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+    LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, //Falcon left
+#endif // KEYBOARD_charybdis_3x5_blackpill
+*/
     /* index=15 */ LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, // Thumb cluster
     // Right split.
     /* index=18 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // col 10
@@ -85,3 +101,4 @@ led_config_t g_led_config = { {
 } };
 #endif
 // clang-format on
+

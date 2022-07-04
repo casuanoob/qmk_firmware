@@ -1,0 +1,8 @@
+# Ignore image/font files
+*.gif
+*.jpg
+*.png
+*.ttf
+*.otf
+
+!assets/split34.png

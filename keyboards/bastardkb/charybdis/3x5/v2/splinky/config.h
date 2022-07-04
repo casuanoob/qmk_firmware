@@ -24,15 +24,31 @@
   { GP28, GP15, GP6, GP7, GP8 }
 
 /* Handedness. */
-#define MASTER_RIGHT
+//#define MASTER_RIGHT
 
 // To use the handedness pin, resistors need to be installed on the adapter PCB.
 // If so, uncomment the following code, and undefine MASTER_RIGHT above.
-// #define SPLIT_HAND_PIN GP13
-// #define SPLIT_HAND_PIN_LOW_IS_LEFT  // High -> right, Low -> left.
+#define SPLIT_HAND_PIN GP13
+#define SPLIT_HAND_PIN_LOW_IS_LEFT  // High -> right, Low -> left.
 
 /* serial.c configuration (for split keyboard). */
 #define SOFT_SERIAL_PIN GP1
+
+// Full-duplex configuration.  Requires bodge wire from GP10 (bottom row on the
+// Splinky) to the TRRS connector's second serial pin.  Also requires the use of
+// a TRRS cable.
+//#define SERIAL_USART_FULL_DUPLEX // Enable full duplex operation mode.
+//#define SERIAL_USART_TX_PIN GP1  // USART TX pin.
+//#define SERIAL_USART_RX_PIN GP10 // USART RX pin.
+//#define SERIAL_USART_PIN_SWAP    // Auto-swap TX and RX on master to properly setup full-duplex.
+//uncomment for full duplex
+
+/* Serial baudrate configuration*/
+#define SERIAL_USART_SPEED 691200
+
+/* CRC. */
+#define CRC8_USE_TABLE
+#define CRC8_OPTIMIZE_SPEED
 
 /* RGB settings. */
 #define RGB_DI_PIN GP0
@@ -48,3 +64,44 @@
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP17
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 1000U
+
+/* Falcon encoder (https://docs.qmk.fm/#/feature_encoders). */
+
+// Available pins on the v2 adapter:
+//  - GP27, GP29 (for < 4x6 only): extra col/row pin available exclusively on
+//    3x5 and 3x6 (3x5 has both available, 3x6 only has GP29 available).
+//  - GP18, GP19, GP20 (replaces SPI): used for SCK/MOSI/MISO.  Only available
+//    if SPI is not used, which is typically the case on regular Charybdis
+//    because the Falcon encoder is installed where the SPI device (trackball)
+//    would be.
+//  - GP14 (replaces trackball): used for Trackball SS.  Only available if SPI
+//    is not used, which is typically the case on regular Charybdis because the
+//    Falcon encoder is installed where the SPI device (trackball) would be.
+//    Note: this only works if the half where the rotary encoder is installed is
+//    primary.
+//  - GP2, GP3 (replaces I2C): used for SDA/SCL.  Only available if I2C is not
+//    used, which is typically the case on regular Charybdis because the Falcon
+//    encoder is installed where the I2C device (trackpad) would be.
+//  - GP10, GP11, GP12: unused pin from the Splinky bottom pinout row.  These
+//    are not broken out on the v2 adapter, and require a bodge wire.
+
+// Encoder R1 and R2.
+#define ENCODERS_PAD_A \
+    { GP18 }
+#define ENCODERS_PAD_B \
+    { GP19 }
+#define ENCODER_RESOLUTION 4
+#define ENCODERS_PAD_A_RIGHT {  }
+#define ENCODERS_PAD_B_RIGHT {  }
+#define ENCODER_RESOLUTIONS_RIGHT {  }
+#define ENCODER_DEFAULT_POS 0x3
+
+// Uncomment if R1 and R2 are flipped.  (ie. if "clockwise" is actually
+// "counter-clockwise".)
+#define ENCODER_DIRECTION_FLIP
+
+// Direct access pin for the encoder button.  Bridge PCB pads accordingly.  Use
+// if encoder is not integrated with the key matrix.
+#define DIP_SWITCH_PINS \
+    { GP14 }
+//#define DIP_SWITCH_PINS_RIGHT {  }

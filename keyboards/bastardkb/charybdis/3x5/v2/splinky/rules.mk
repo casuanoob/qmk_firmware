@@ -35,3 +35,7 @@ POINTING_DEVICE_DRIVER = pmw3360
 
 SERIAL_DRIVER = vendor
 WS2812_DRIVER = vendor
+
+DEBOUNCE_TYPE = asym_eager_defer_pk
+
+DIP_SWITCH_ENABLE = yes #testing encoder function
