@@ -17,7 +17,6 @@
 
 #include "config.h"
 #include "delay.h"
-#include "platform.h"
 #include "quantum.h"
 
 #ifdef RGB_MATRIX_ENABLE

@@ -40,27 +40,27 @@ void          shutdown_keymap(void);
 
 enum layers_keymap {
     _BASE = 0,
-    _APT,   // APTmod layer.
+    _APTm,  // APTmod layer.
+    _APT4,  // APTv4 layer.
     _CAN,   // Canary layer.
     _GAME,  // Gaming layer.
     _NAV,  // Navigation.
     _SYM,  // Symbols.
-    _WNAV, // Workspace navigation.
     _NUM,  // Numrow.
-    _NUMPD,// Numpad.
-    _FUN, // Function key layer
-    _SPEC, // Specials.
+    _NUMPD,  // Numpad.
+    _FUN,  // Function key layer
+    _SPEC,  // Specials.
 };
 
 // Layers.
 #define NAV MO(_NAV)
 #define SYM MO(_SYM)
-#define WNAV TG(_WNAV)
 #define NUMPD TG(_NUMPD)
 #define FUN OSL(_FUN)
 #define SPECIAL OSL(_SPEC)
 #define GAME DF(_GAME)
-#define APT DF(_APT)
+#define APTm DF(_APTm)
+#define APT4 DF(_APT4)
 #define CAN DF(_CAN)
 #define BASE DF(_BASE)
 
@@ -119,6 +119,21 @@ enum layers_keymap {
 // clang-format on
 
 /** 
+ * \brief APTv3 modified layout.
+ * 
+ * Slightly modified APTv3, ZX switch, GDF rotated
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ * (plays well with oneshot shift).
+ */
+// clang-format off
+#define APTv4_split_3x5_2                                                                      \
+       KC_W,    KC_C,    KC_G,    KC_D,    KC_K,    KC_Q,    KC_L,    KC_U,    KC_O,    KC_Y, \
+       KC_R,    KC_S,    KC_T,    KC_H,    KC_B,    KC_J,    KC_N,    KC_E,    KC_A,    KC_I, \
+       KC_Z,    KC_V,    KC_M,    KC_F,    KC_P,    KC_X,  NS_DOT, NS_COMM, NS_QUOT, KC_UNDS, \
+                                   NAV,  KC_SPC,  TD_SFT,    SYM
+// clang-format on
+
+/** 
  * \brief Canary layout.
  * 
  * Canary Ortho version layout by AKL
@@ -154,7 +169,7 @@ enum layers_keymap {
 #define NAV_split_3x5_2                                                                       \
     SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB,   NUMPD,   NUMPD, KC_HOME,   NS_UP,  KC_END,  KC_DEL, \
     OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT,   KC_F2, KC_BSPC, NS_LEFT, NS_DOWN, NS_RGHT,  KC_ENT, \
-    WS_PREV, WS_NEXT, SC_COPY, SC_PSTE, LAUNCHR, DRG_TOG, KC_BTN3, KC_BTN1, KC_BTN2, SNIPING, \
+    WS_PREV,  SC_CUT, SC_COPY, SC_PSTE, WS_NEXT, DRG_TOG, KC_BTN3, KC_BTN1, KC_BTN2, SNIPING, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -163,9 +178,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define SYM_split_3x5_2                                                                       \
-     KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_LPRN, KC_RPRN, NS_SCLN, SPECIAL, \
+     KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_LPRN, NS_SCLN, KC_RPRN, SPECIAL, \
     KC_EXLM, KC_PLUS, NS_MINS,  KC_EQL, KC_HASH, KC_DQUO, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
-    KC_TILD,  KC_DLR, KC_ASTR, NS_SLSH, KC_AMPR, KC_PIPE, KC_LCBR, KC_RCBR, NS_BSLS,  NS_GRV, \
+    KC_TILD,  KC_DLR, KC_ASTR, NS_SLSH, KC_AMPR, KC_PIPE, KC_LCBR, NS_BSLS, KC_RCBR,  NS_GRV, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -189,22 +204,8 @@ enum layers_keymap {
 #define NUMPAD_split_3x5_2                                                                       \
      NS_DOT,    NS_7,    NS_8,    NS_9, KC_ASTR,   NUMPD, ___x___, ___x___, ___x___,  KC_DEL, \
      KC_EQL,    NS_4,    NS_5,    NS_6, KC_PLUS, KC_BSPC, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
-    NS_SLSH,    NS_1,    NS_2,    NS_3, NS_MINS, ___x___, ___x___, ___x___, ___x___,     FUN, \
+    NS_SLSH,    NS_1,    NS_2,    NS_3, NS_MINS, ___x___, NS_LBRC,    NS_0, NS_RBRC,     FUN, \
                                   NS_0,   NUMPD,   NUMPD,   NUMPD
-// clang-format on
-
-/**
- * \brief Workspace navigation layers.
- *
- * Contains platform-dependent shortcuts for moving between virtual workspaces
- * and interacting with tiling window managers.
- */
-// clang-format off
-#define WNAV_split_3x5_2                                                                      \
-    ___x___,  WS_MOD, WS_MPCD, WS_MPCI,    WNAV,    WNAV, WS_MPCI, WS_MPCD,  WS_MOD, ___x___, \
-    ___x___, WS_MPPR, WS_MPEX, WS_MPSH, ___x___, ___x___, WS_MPSH, WS_MPEX, WS_MPPR, ___x___, \
-    ___x___, ___x___, WS_FNXT, WS_FPRV, ___x___, ___x___, WS_FPRV, WS_FNXT, ___x___, ___x___, \
-                               _______, KC_LSFT, KC_LSFT, _______
 // clang-format on
 
 /**
@@ -223,8 +224,8 @@ enum layers_keymap {
  */
 // clang-format off
 #define SPEC_split_3x5_2                                                                      \
-    SPECIAL,   BASE,    GAME,      APT,     CAN,     CAN,     APT,    GAME,    BASE, SPECIAL, \
-      NK_ON, ___x___, ___x___, RGB_MOD, EEP_RST, EEP_RST, RGB_MOD, ___x___, ___x___,   NK_ON, \
+    SPECIAL,   BASE,    GAME,     APTm,     CAN,     CAN,    APTm,    GAME,    BASE, SPECIAL, \
+      NK_ON, ___x___,    APT4, RGB_MOD, EEP_RST, EEP_RST, RGB_MOD,    APT4, ___x___,   NK_ON, \
      NK_OFF, ___x___, RGB_TOG, DB_TOGG, QK_BOOT, QK_BOOT, DB_TOGG, RGB_TOG, ___x___,  NK_OFF, \
                                _______, ___x___, ___x___, _______
 // clang-format on
@@ -252,10 +253,10 @@ enum layers_keymap {
 #define NAV_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NAV_split_3x5_2)
 #define SYM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SYM_split_3x5_2)
 #define NUMROW_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUMROW_split_3x5_2)
-#define WNAV_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(WNAV_split_3x5_2)
 #define SPEC_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SPEC_split_3x5_2)
 #define COLEMAKdhm_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(COLEMAKdhm_split_3x5_2)
 #define APTmod_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(APTmod_split_3x5_2)
+#define APTv4_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(APTv4_split_3x5_2)
 #define Canary_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(Canary_split_3x5_2)
 #define GAMING_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(GAMING_split_3x5_2)
 #define NUMPAD_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUMPAD_split_3x5_2)
@@ -284,10 +285,10 @@ enum layers_keymap {
 #define NAV_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NAV_split_3x5_2)
 #define SYM_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(SYM_split_3x5_2)
 #define NUMROW_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NUMROW_split_3x5_2)
-#define WNAV_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(WNAV_split_3x5_2)
 #define SPEC_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(SPEC_split_3x5_2)
 #define COLEMAKdhm_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(COLEMAKdhm_split_3x5_2)
 #define APTmod_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTmod_split_3x5_2)
+#define APTv4_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTv4_split_3x5_2)
 #define Canary_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(Canary_split_3x5_2)
 #define GAMING_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(GAMING_split_3x5_2)
 #define NUMPAD_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NUMPAD_split_3x5_2)
