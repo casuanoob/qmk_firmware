@@ -334,8 +334,7 @@ void matrix_init_kb(void) {
 }
 #endif // POINTING_DEVICE_ENABLE
 
-//#if defined(KEYBOARD_charybdis_3x5_blackpill) || defined(KEYBOARD_charybdis_4x6_blackpill)
-#if defined(MCU_STM32)
+#if defined(KEYBOARD_bastardkb_charybdis_3x5_blackpill) || defined(KEYBOARD_bastardkb_charybdis_4x6_blackpill)
 void keyboard_pre_init_kb(void) {
     setPinInputHigh(A0);
     keyboard_pre_init_user();
@@ -347,4 +346,4 @@ void matrix_scan_kb(void) {
     }
     matrix_scan_user();
 }
-#endif // KEYBOARD_charybdis_3x5_blackpill || KEYBOARD_charybdis_4x6_blackpill
+#endif // KEYBOARD_bastardkb_charybdis_3x5_blackpill || KEYBOARD_bastardkb_charybdis_4x6_blackpill

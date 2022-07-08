@@ -16,7 +16,6 @@
  */
 
 #include "keymaps/split34.h"
-#include "platform.h"
 
 #ifdef RGB_MATRIX_ENABLE
 #include "quantum/rgb_matrix/rgb_matrix.h"

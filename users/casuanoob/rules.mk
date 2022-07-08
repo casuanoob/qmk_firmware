@@ -16,14 +16,6 @@ ifndef SPACE_CADET_ENABLE
 endif
 
 # Include common sources.
-SRC += $(USER_PATH)/delay.c $(USER_PATH)/platform.c
-
-# Include compose source and flags if enabled.
-ifeq ($(strip $(COMPOSE_ENABLE)), yes)
-	SRC += $(USER_PATH)/compose.c
-	OPT_DEFS += -DCOMPOSE_ENABLE
-endif
-
 # Include tap-dances source and flags if enabled.
 ifeq ($(strip $(TD_ONESHOT_SHIFT_ENABLE)), yes)
 	TAP_DANCE_ENABLE = yes

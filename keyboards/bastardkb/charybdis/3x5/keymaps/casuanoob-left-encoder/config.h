@@ -38,7 +38,7 @@
 /* This is specific to Casuanoob's WIP blackpill charybdis 3x5 falcon encoder build.
 * \ TODO remove this once DIP switch split transport and dual pin WS2812 driver are implemented
 */
-#if defined(KEYBOARD_charybdis_3x5_blackpill) || defined(MCU_STM32)
+#if defined(KEYBOARD_bastardkb_charybdis_3x5_blackpill) || defined(KEYBOARD_bastardkb_charybdis_4x6_blackpill)
     /* Override RGB settings. 
     * \brief 12 LEDs are added by the falcon PCB to the original 36
     */
@@ -64,4 +64,4 @@
     //Encoders right define is required to prevent the trackball SPI pins from being overridden
     #define ENCODERS_PAD_A_RIGHT {  }
     #define ENCODERS_PAD_B_RIGHT {  }
-#endif // KEYBOARD_charybdis_3x5_blackpill || KEYBOARD_charybdis_4x6_blackpill
+#endif // KEYBOARD_bastardkb_charybdis_3x5_blackpill || KEYBOARD_bastardkb_charybdis_4x6_blackpill
