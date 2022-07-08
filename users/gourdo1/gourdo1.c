@@ -46,10 +46,7 @@ void dance_LSFT_reset(qk_tap_dance_state_t * state, void * user_data) {
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for shift, twice for Caps Lock
-    [TD_LSFT_CAPSLOCK] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS),
-    [TD_LSFT_CAPS_WIN] = ACTION_TAP_DANCE_FN_ADVANCED(dance_LSFT_each_tap, NULL, dance_LSFT_reset),
-    // Tap once for Escape, twice to reset to base layer
-    [TD_ESC_BASELYR] = ACTION_TAP_DANCE_LAYER_MOVE(KC_ESC, _BASE),
+    [TD_LSFT_CAPS_WIN] = ACTION_TAP_DANCE_FN_ADVANCED(dance_LSFT_each_tap, NULL, dance_LSFT_reset)
 };
 
 // RGB NIGHT MODE
@@ -416,7 +413,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t * record) {
         } else unregister_code16(keycode);
         break;
 
-        // Double Zero    
+        // Double Zero
     case KC_00:
         if (record -> event.pressed) {
             // when keycode KC_00 is pressed
