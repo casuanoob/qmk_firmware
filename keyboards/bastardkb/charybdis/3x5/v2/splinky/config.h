@@ -104,4 +104,4 @@
 // if encoder is not integrated with the key matrix.
 #define DIP_SWITCH_PINS \
     { GP14 }
-//#define DIP_SWITCH_PINS_RIGHT {  }
+#define DIP_SWITCH_PINS_RIGHT { NO_PIN }
