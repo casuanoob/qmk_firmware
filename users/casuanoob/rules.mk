@@ -2,7 +2,7 @@
 DEBUG_ENABLE = no
 
 # Enable optimizations by default.
-LINK_TIME_OPTIMIZATION = yes
+# LINK_TIME_OPTIMIZATION = yes
 
 # Disable unused features that are enabled by default.
 ifndef GRAVE_ESC_ENABLE
@@ -16,6 +16,8 @@ ifndef SPACE_CADET_ENABLE
 endif
 
 # Include common sources.
+SRC += $(USER_PATH)/delay.c
+
 # Include tap-dances source and flags if enabled.
 ifeq ($(strip $(TD_ONESHOT_SHIFT_ENABLE)), yes)
 	TAP_DANCE_ENABLE = yes

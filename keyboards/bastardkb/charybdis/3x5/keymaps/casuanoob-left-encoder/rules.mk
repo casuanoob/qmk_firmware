@@ -8,7 +8,7 @@ TAP_DANCE_ENABLE = no
 TD_ONESHOT_SHIFT_ENABLE = no
 TD_ONESHOT_DRAGSCROLL_ENABLE = no
 
-COMBOS_ENABLE = no
+COMBOS_ENABLE = yes
 
 NKRO_ENABLE = yes
 
@@ -19,7 +19,7 @@ ENCODER_ENABLE = yes # testing encoder function
 # Speed testing
 LTO_ENABLE = no
 #OPT = fast
-CONSOLE_ENABLE = no
+CONSOLE_ENABLE = yes
 
 #DEBOUNCE_TYPE = sym_eager_pk
 
