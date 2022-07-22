@@ -1,0 +1,529 @@
+[
+  {
+    "backcolor": "#ffffff",
+    "switchMount": "cherry",
+    "pcb": false,
+    "plate": true,
+    "css": ""
+  },
+  [
+    {
+      "x": 7,
+      "t": "#202124",
+      "a": 6,
+      "f": 4,
+      "w": 13,
+      "d": true
+    },
+    "<h5><b>Base layer</b></h5>"
+  ],
+  [
+    {
+      "x": 7,
+      "c": "#dadce0",
+      "t": "#3c4043",
+      "a": 5
+    },
+    "\"\n\n\n\n\n\n'",
+    {
+      "a": 7
+    },
+    ",",
+    ".",
+    "p",
+    "y",
+    {
+      "x": 3
+    },
+    "f",
+    "g",
+    "c",
+    "r",
+    "l"
+  ],
+  [
+    {
+      "x": 7
+    },
+    "a\n\n\n\n⌘",
+    "o\n\n\n\n⌥",
+    "e\n\n\n\n⌃",
+    {
+      "n": true
+    },
+    "u\n\n\n\n⇧",
+    "i",
+    {
+      "x": 3
+    },
+    "d",
+    {
+      "n": true
+    },
+    "h\n\n\n\n⇧",
+    "t\n\n\n\n⌃",
+    "n\n\n\n\n⌥",
+    "s\n\n\n\n⌘"
+  ],
+  [
+    {
+      "x": 7
+    },
+    ";",
+    "q",
+    "j",
+    "k",
+    "k",
+    {
+      "x": 3
+    },
+    "b",
+    "m",
+    "w",
+    "v",
+    "z"
+  ],
+  [
+    {
+      "x": 10.25,
+      "c": "#8ab4f8",
+      "t": "#202124"
+    },
+    "<i class='kb kb-Tab-1'></i>\n\n\n\nDEV",
+    {
+      "c": "#f28b82",
+      "f": 2
+    },
+    "SPACE\n\n\n\nNAV",
+    {
+      "c": "#dadce0",
+      "t": "#3c4043"
+    },
+    "OSSFT",
+    {
+      "x": 0.5,
+      "c": "#fdd663",
+      "t": "#202124",
+      "f": 4
+    },
+    "⎋\n\n\n\nSYM",
+    {
+      "c": "#81c995"
+    },
+    "⮠\n\n\n\nNUM",
+    {
+      "c": "#dadce0",
+      "t": "#3c4043",
+      "g": true,
+      "f": 2
+    },
+    ""
+  ],
+  [
+    {
+      "y": 0.5,
+      "t": "#202124",
+      "g": false,
+      "a": 6,
+      "f": 4,
+      "w": 13,
+      "d": true
+    },
+    "<h5><b>Development/Console layer (DEV)</b></h5>",
+    {
+      "x": 1,
+      "w": 13,
+      "d": true
+    },
+    "<h5><b>Symbol layer (SYM)</b></h5>"
+  ],
+  [
+    {
+      "t": "#3c4043",
+      "a": 7,
+      "f": 1
+    },
+    "<b>RESET</b>",
+    "<b>EEP<br/>RESET</b>",
+    {
+      "f": 4
+    },
+    "",
+    "",
+    "",
+    {
+      "x": 3
+    },
+    "\\",
+    "{",
+    "&",
+    "}",
+    "|",
+    {
+      "x": 1
+    },
+    "",
+    "<",
+    "`",
+    ">",
+    "",
+    {
+      "x": 3
+    },
+    "",
+    "",
+    "",
+    {
+      "f": 1
+    },
+    "<b>EEP<br/>RESET</b>",
+    "<b>RESET</b>"
+  ],
+  [
+    {
+      "f": 4
+    },
+    "<i class='mss mss-Unicode-Command-3'></i>",
+    "<i class='mss mss-Unicode-Option-3'></i>",
+    "⌃",
+    {
+      "n": true
+    },
+    "⇧",
+    {
+      "f": 1
+    },
+    "",
+    {
+      "x": 3,
+      "f": 4
+    },
+    "^",
+    {
+      "n": true
+    },
+    "(",
+    "*",
+    ")",
+    "$",
+    {
+      "x": 1
+    },
+    "",
+    "[",
+    "%",
+    {
+      "n": true
+    },
+    "]",
+    "",
+    {
+      "x": 3
+    },
+    "",
+    {
+      "n": true
+    },
+    "⇧",
+    "⌃",
+    "<i class='mss mss-Unicode-Option-3'></i>",
+    "<i class='mss mss-Unicode-Command-3'></i>"
+  ],
+  [
+    "",
+    "",
+    "",
+    "",
+    "",
+    {
+      "x": 3
+    },
+    "",
+    "?",
+    "/",
+    "~",
+    "",
+    {
+      "x": 1
+    },
+    "",
+    "!",
+    "@",
+    "#",
+    "",
+    {
+      "x": 3
+    },
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    {
+      "x": 3.25,
+      "c": "#4285f4",
+      "t": "#202124",
+      "a": 5,
+      "f": 2
+    },
+    "\n<i class='fa fa-hand-o-down'></i>\n\n\n\n\nDEV",
+    {
+      "c": "#dadce0",
+      "t": "#3c4043",
+      "a": 7,
+      "f": 4
+    },
+    "",
+    "",
+    {
+      "x": 0.5
+    },
+    "<i class='mss mss-Unicode-Escape-3'></i>",
+    "⮠",
+    {
+      "g": true,
+      "f": 2
+    },
+    "",
+    {
+      "x": 7.5,
+      "g": false,
+      "f": 4
+    },
+    "<i class='kb kb-Tab-1'></i>",
+    {
+      "f": 2
+    },
+    "SPACE",
+    {
+      "f": 4
+    },
+    "",
+    {
+      "x": 0.5,
+      "c": "#fbbc04",
+      "t": "#202124",
+      "a": 5,
+      "f": 2
+    },
+    "\n<i class='fa fa-hand-o-down'></i>\n\n\n\n\nSYM",
+    {
+      "c": "#dadce0",
+      "t": "#3c4043",
+      "a": 7,
+      "f": 4
+    },
+    "",
+    {
+      "g": true
+    },
+    ""
+  ],
+  [
+    {
+      "y": 0.5,
+      "t": "#202124",
+      "g": false,
+      "a": 6,
+      "w": 13,
+      "d": true
+    },
+    "<h5><b>Navigation layer (NAV)</b></h5>",
+    {
+      "x": 1,
+      "w": 13,
+      "d": true
+    },
+    "<h5><b>Number layer (NUM)</b></h5>"
+  ],
+  [
+    {
+      "t": "#3c4043",
+      "a": 7
+    },
+    "<i class='kb kb-Arrows-Left'></i><i class='fa fa-desktop'></i>",
+    {
+      "f": 3
+    },
+    "3 <i class='fa fa-mouse-pointer'></i>",
+    "1 <i class='fa fa-mouse-pointer'></i>",
+    "2 <i class='fa fa-mouse-pointer'></i>",
+    {
+      "f": 4
+    },
+    "<i class='fa fa-desktop'></i><i class='kb kb-Arrows-Right'></i>",
+    {
+      "x": 3,
+      "f": 5
+    },
+    "⭱",
+    "⭰",
+    "↑",
+    "⭲",
+    {
+      "f": 4
+    },
+    "",
+    {
+      "x": 1
+    },
+    "=",
+    "7",
+    "8",
+    "9",
+    ".",
+    {
+      "x": 3
+    },
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    "<i class='mss mss-Unicode-Command-3'></i>",
+    "<i class='mss mss-Unicode-Option-3'></i>",
+    "⌃",
+    {
+      "n": true
+    },
+    "⇧",
+    "",
+    {
+      "x": 3,
+      "f": 5
+    },
+    "⭳",
+    {
+      "n": true
+    },
+    "←",
+    "↓",
+    "→",
+    {
+      "f": 4
+    },
+    "",
+    {
+      "x": 1
+    },
+    ":",
+    "4",
+    "5",
+    {
+      "n": true
+    },
+    "6",
+    "+",
+    {
+      "x": 3
+    },
+    "",
+    {
+      "n": true
+    },
+    "⇧",
+    "⌃",
+    "<i class='mss mss-Unicode-Option-3'></i>",
+    "<i class='mss mss-Unicode-Command-3'></i>"
+  ],
+  [
+    "",
+    "<i class='fa fa-paste'></i>",
+    "<i class='fa fa-copy'></i>",
+    "<i class='fa fa-cut'></i>",
+    "",
+    {
+      "x": 3
+    },
+    "",
+    {
+      "f": 2
+    },
+    "",
+    "",
+    "",
+    "",
+    {
+      "x": 1,
+      "f": 4
+    },
+    "/",
+    "1",
+    "2",
+    "3",
+    "*",
+    {
+      "x": 3
+    },
+    "",
+    "",
+    "",
+    "",
+    ""
+  ],
+  [
+    {
+      "x": 3.25
+    },
+    "",
+    {
+      "c": "#ea4335",
+      "t": "#202124",
+      "a": 5,
+      "f": 2
+    },
+    "\n<i class='fa fa-hand-o-down'></i>\n\n\n\n\nNAV",
+    {
+      "c": "#dadce0",
+      "t": "#3c4043",
+      "a": 7,
+      "f": 4
+    },
+    "",
+    {
+      "x": 0.5
+    },
+    "<i class='mss mss-Unicode-Escape-3'></i>",
+    "⮠",
+    {
+      "g": true,
+      "f": 2
+    },
+    "",
+    {
+      "x": 7.5,
+      "g": false,
+      "f": 4
+    },
+    "<i class='mss mss-Unicode-BackSpace-DeleteLeft-Big-2'></i>",
+    "0",
+    {
+      "a": 5
+    },
+    "_\n\n\n\n\n\n-",
+    {
+      "x": 0.5,
+      "a": 7
+    },
+    "",
+    {
+      "c": "#34a853",
+      "t": "#202124",
+      "a": 5,
+      "f": 2
+    },
+    "\n<i class='fa fa-hand-o-down'></i>\n\n\n\n\nNUM",
+    {
+      "c": "#dadce0",
+      "t": "#3c4043",
+      "g": true,
+      "a": 7,
+      "f": 4
+    },
+    ""
+  ]
+]
