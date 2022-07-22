@@ -65,3 +65,4 @@
     #define ENCODERS_PAD_A_RIGHT {  }
     #define ENCODERS_PAD_B_RIGHT {  }
 #endif // KEYBOARD_bastardkb_charybdis_3x5_blackpill || KEYBOARD_bastardkb_charybdis_4x6_blackpill
+#define COMBO_COUNT 1 

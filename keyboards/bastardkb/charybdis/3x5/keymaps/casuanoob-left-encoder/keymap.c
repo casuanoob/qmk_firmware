@@ -25,12 +25,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_charybdis_3x5_delay(COLEMAKdhm_split_3x5_3),
   [_GAME] = LAYOUT_charybdis_3x5_delay(GAMING_split_3x5_3),
   [_APTm] = LAYOUT_charybdis_3x5_delay(APTmod_split_3x5_3),
+  [_APT3] = LAYOUT_charybdis_3x5_delay(APTv3_split_3x5_3),
   [_APT4] = LAYOUT_charybdis_3x5_delay(APTv4_split_3x5_3),
+  [_APTx] = LAYOUT_charybdis_3x5_delay(APTex_split_3x5_3),
+  [_ENGL] = LAYOUT_charybdis_3x5_delay(Engel_split_3x5_3),
   [_CAN] = LAYOUT_charybdis_3x5_delay(Canary_split_3x5_3),
   [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
   [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
   [_NUM] = LAYOUT_charybdis_3x5_delay(NUMROW_split_3x5_3),
-  [_NUMPD] = LAYOUT_charybdis_3x5_delay(NUMPAD_split_3x5_3),
+  //[_NUMPD] = LAYOUT_charybdis_3x5_delay(NUMPAD_split_3x5_3),
   [_FUN] = LAYOUT_charybdis_3x5_delay(FUN_split_3x5_3),
   [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
 };
@@ -112,3 +115,8 @@ void keyboard_post_init_user_keymap(void) {
   debug_mouse=false;
   rgb_matrix_sethsv_noeeprom(HSV_WHITE);
 }
+
+const uint16_t PROGMEM ns_combo[] = {NAV, KC_SPC, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+  COMBO(ns_combo, TD_SFT),
+};

@@ -125,6 +125,12 @@
  */
 #define TAPPING_FORCE_HOLD_PER_KEY
 
+/**
+ * \brief Combo configurations
+ */
+#define COMBO_TERM 40
+#define COMBO_STRICT_TIMER
+
 #ifdef DELAY_KEYMAP_SPLIT36_HOMEROW
 /**
  * \brief Customize the TAPPING_TERM for specific keys.
@@ -255,8 +261,7 @@
 // Limit maximum brightness to keep power consumption reasonable, and avoid
 // disconnects.
 #undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 25
-// limit in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 64// limit in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
 #undef RGB_MATRIX_LED_FLUSH_LIMIT
 #define RGB_MATRIX_LED_FLUSH_LIMIT 16 
 

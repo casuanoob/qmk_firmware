@@ -140,9 +140,17 @@ layer_state_t layer_state_set_user_keymap(layer_state_t state) {
         rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
         rgb_matrix_sethsv_noeeprom(HSV_AZURE);
         break;
+      case _APT3:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_TURQUOISE);
+        break;
       case _APT4:
         rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-        rgb_matrix_sethsv_noeeprom(HSV_AZURE);
+        rgb_matrix_sethsv_noeeprom(HSV_SPRINGGREEN);
+        break;
+      case _ENGL:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
         break;
       case _CAN:
         rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
