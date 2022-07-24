@@ -47,3 +47,4 @@
 // Configure for the Cirque model used on the Dilemma.
 #define CIRQUE_PINNACLE_DIAMETER_MM 35
 #define CIRQUE_PINNACLE_CURVED_OVERLAY
+#define CIRQUE_PINNACLE_CIRCULAR_SCROLL_ENABLE
