@@ -316,7 +316,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
 
 void eeconfig_init_kb(void) {
     g_dilemma_config.raw                 = 0;
-    g_dilemma_config.pointer_default_dpi = 4;
+    g_dilemma_config.pointer_default_dpi = 3;
     write_dilemma_config_to_eeprom(&g_dilemma_config);
     maybe_update_pointing_device_cpi(&g_dilemma_config);
     eeconfig_init_user();
