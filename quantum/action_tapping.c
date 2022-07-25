@@ -40,9 +40,10 @@ __attribute__((weak)) uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *r
 }
 #    endif
 
-#    ifdef TAPPING_FORCE_HOLD_PER_KEY
-__attribute__((weak)) bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
-    return false;
+#    define WITHIN_QUICK_TAP_TERM(e) (TIMER_DIFF_16(e.time, tapping_key.event.time) < GET_QUICK_TAP_TERM(get_record_keycode(&tapping_key, false), &tapping_key))
+#    ifdef QUICK_TAP_TERM_PER_KEY
+__attribute__((weak)) uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
+    return QUICK_TAP_TERM;
 }
 #    endif
 
@@ -125,7 +126,7 @@ void action_tapping_process(keyrecord_t record) {
 /* return true when key event is processed or consumed. */
 bool process_tapping(keyrecord_t *keyp) {
     keyevent_t event = keyp->event;
-#    if (defined(AUTO_SHIFT_ENABLE) && defined(RETRO_SHIFT)) || defined(PERMISSIVE_HOLD_PER_KEY) || defined(TAPPING_FORCE_HOLD_PER_KEY) || defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
+#    if (defined(AUTO_SHIFT_ENABLE) && defined(RETRO_SHIFT)) || defined(PERMISSIVE_HOLD_PER_KEY) || defined(QUICK_TAP_TERM_PER_KEY) || defined(HOLD_ON_OTHER_KEY_PRESS_PER_KEY)
     uint16_t tapping_keycode = get_record_keycode(&tapping_key, false);
 #    endif
 
@@ -371,13 +372,7 @@ bool process_tapping(keyrecord_t *keyp) {
             // clang-format on
             if (event.pressed) {
                 if (IS_TAPPING_RECORD(keyp)) {
-//#    ifndef TAPPING_FORCE_HOLD
-#    if !defined(TAPPING_FORCE_HOLD) || defined(TAPPING_FORCE_HOLD_PER_KEY)
-                    if (
-#        ifdef TAPPING_FORCE_HOLD_PER_KEY
-                        !get_tapping_force_hold(tapping_keycode, &tapping_key) &&
-#        endif
-                        !tapping_key.tap.interrupted && tapping_key.tap.count > 0) {
+                    if (WITHIN_QUICK_TAP_TERM(event) && !tapping_key.tap.interrupted && tapping_key.tap.count > 0) {
                         // sequential tap.
                         keyp->tap = tapping_key.tap;
                         if (keyp->tap.count < 15) keyp->tap.count += 1;
@@ -389,7 +384,6 @@ bool process_tapping(keyrecord_t *keyp) {
                         debug_tapping_key();
                         return true;
                     }
-#    endif
                     // FIX: start new tap again
                     tapping_key = *keyp;
                     return true;
