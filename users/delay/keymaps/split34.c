@@ -30,6 +30,7 @@
 bool is_oneshot_mod_cancel_key(uint16_t keycode) {
     switch (keycode) {
         case NAV:
+        case NAV_SPC:
         case SYM:
             return true;
         default:
@@ -40,6 +41,7 @@ bool is_oneshot_mod_cancel_key(uint16_t keycode) {
 bool is_oneshot_mod_ignore_key(uint16_t keycode) {
     switch (keycode) {
         case NAV:
+        case NAV_SPC:
         case SYM:
         case OS_LALT:
         case OS_LCTL:
@@ -97,7 +99,7 @@ qk_tap_dance_action_t tap_dance_actions[] = {
 uint16_t get_tapping_term_keymap(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case TD_SFT:
-            return TAPPING_TERM + 125;
+            return TAPPING_TERM - 25; // Thumb is a slow finger.
     }
     return TAPPING_TERM;
 }

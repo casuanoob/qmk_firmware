@@ -48,6 +48,7 @@ enum layers_keymap {
 
 // Layers.
 #define NAV MO(_NAV)
+#define NAV_SPC LT(_NAV, KC_SPACE)
 #define SYM MO(_SYM)
 #define WNAV TG(_WNAV)
 #define SPECIAL OSL(_SPEC)
@@ -79,7 +80,7 @@ enum layers_keymap {
     NS_QUOT, NS_COMM,  NS_DOT,    KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L, \
        KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S, \
     KC_UNDS,    KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z, \
-                                   NAV,  KC_SPC,  TD_SFT,     SYM
+                                ___x___, NAV_SPC,    SYM,  TD_SFT
 // clang-format on
 
 /**

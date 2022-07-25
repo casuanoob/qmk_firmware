@@ -144,8 +144,7 @@
  * decision modes.
  */
 
-#if 0
-#    ifdef DELAY_KEYMAP_SPLIT34
+#ifdef DELAY_KEYMAP_SPLIT34
 /**
  * \brief Faster layer-tap hold trigger.
  *
@@ -154,11 +153,12 @@
  * With `HOLD_ON_OTHER_KEY_PRESS`, within `TAPPING_TERM`:
  *     LT(2, a)🠗 e🠗 LT(2, a)🠕 e🠕 ➞ <mapping of e on layer>
  *
- * https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#hold-on-other-key-press
+ * https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#hold-on-other-key-press                                     ...
  */
-#        define HOLD_ON_OTHER_KEY_PRESS
-#    endif // DELAY_KEYMAP_SPLIT34
-#endif
+#    define HOLD_ON_OTHER_KEY_PRESS
+
+#    define QUICK_TAP_TERM 75
+#endif // DELAY_KEYMAP_SPLIT34
 
 #ifdef DELAY_KEYMAP_SPLIT36_HOMEROW
 /**
