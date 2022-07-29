@@ -16,17 +16,22 @@
  */
 
 #include "dilemma.h"
-#include "oled_driver.h"
 #include QMK_KEYBOARD_H
-#include "keymaps/split34.h"
+#include "users/delay/keymap.h"
+
+#ifdef OLED_ENABLE
+#    include "oled_driver.h"
+#endif // OLED_ENABLE
 
 #define LAYOUT_dilemma(...) LAYOUT_split_3x5_2(__VA_ARGS__)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_dilemma(DVORAK_split_3x5_2),
-  [_NAV] = LAYOUT_dilemma(NAV_split_3x5_2),
-  [_SYM] = LAYOUT_dilemma(SYM_split_3x5_2),
+  [_NAVL] = LAYOUT_dilemma(NAVL_split_3x5_2),
+  [_NAVR] = LAYOUT_dilemma(NAVR_split_3x5_2),
+  [_SYML] = LAYOUT_dilemma(SYML_split_3x5_2),
+  [_SYMR] = LAYOUT_dilemma(SYMR_split_3x5_2),
   [_NUM] = LAYOUT_dilemma(NUM_split_3x5_2),
   [_SPEC] = LAYOUT_dilemma(SPEC_split_3x5_2),
 };
@@ -65,9 +70,9 @@ bool oled_task_user(void) {
         layer_state_t current_layer = get_highest_layer(layer_state);
         oled_write_P(PSTR("BASE"), /* inverted = */ current_layer == _BASE);
         oled_write_P(PSTR(" "), /* inverted = */ false);
-        oled_write_P(PSTR("NAV"), /* inverted = */ current_layer == _NAV);
+        oled_write_P(PSTR("NAV"), /* inverted = */ current_layer == _NAVL || current_layer == _NAVR);
         oled_write_P(PSTR(" "), /* inverted = */ false);
-        oled_write_P(PSTR("SYM"), /* inverted = */ current_layer == _SYM);
+        oled_write_P(PSTR("SYM"), /* inverted = */ current_layer == _SYML || current_layer == _SYMR);
         oled_write_P(PSTR(" "), /* inverted = */ false);
         oled_write_P(PSTR("NUM"), /* inverted = */ current_layer == _NUM);
         oled_write_P(PSTR(" "), /* inverted = */ false);

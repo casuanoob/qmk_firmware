@@ -23,6 +23,3 @@
 // Custom DPI.
 #define CHARYBDIS_MINIMUM_DEFAULT_DPI 800
 #define CHARYBDIS_MINIMUM_SNIPING_DPI 300
-
-// Disable unused keycodes.
-#define NO_CHARYBDIS_KEYCODES

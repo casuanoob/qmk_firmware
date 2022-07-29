@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Charly Delay <charly@codesink.dev> (@0xcharly)
+ * Copyright 2021-2022 Charly Delay <charly@codesink.dev> (@0xcharly)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,8 +16,6 @@
  */
 
 #pragma once
-
-// Split keyboards {{{
 
 #ifdef SPLIT_KEYBOARD
 #    ifndef SPLIT_HAND_PIN
@@ -43,47 +41,13 @@
 #    define SPLIT_LAYER_STATE_ENABLE
 #endif // SPLIT_KEYBOARD
 
-// }}}
-// Keymap {{{
-
-#ifdef DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
-/** \brief Only uses 8 bits for layers.  Limits available layers to 8.  */
-#    define LAYER_STATE_8BIT
-#else
 /** \brief Only uses 16 bits for layers.  Limits available layers to 16.  */
-#    define LAYER_STATE_16BIT
-#endif // DELAY_KEYMAP_SPLIT36_HOMEROW_LITE
+#define LAYER_STATE_16BIT
 
-// }}}
-// Via {{{
 #ifdef VIA_ENABLE
 /* VIA configuration. */
 #    define DYNAMIC_KEYMAP_LAYER_COUNT 9
-
-#    ifdef VIAL_ENABLE
-/** Vial-specific configuration. */
-
-// This is stupid because this should be a per keyboard configuration, thus
-// makes no sense in a user space. But I do not use Vial apart for testing,
-// which means that this is fine.
-#        define VIAL_KEYBOARD_UID \
-            { 0x44, 0x9F, 0x26, 0x53, 0xD9, 0x7B, 0x72, 0x4F }
-
-#        define VIAL_UNLOCK_COMBO_ROWS \
-            { 0, 4 }
-#        define VIAL_UNLOCK_COMBO_COLS \
-            { 0, 0 }
-
-/** Disable unused vial features. */
-
-// In addition to RGB Matrix effects, VialRGB also provides direct LED control
-// with a script running on your computer.  Remove to reenable.
-#        define VIALRGB_NO_DIRECT
-#    endif // VIAL_ENABLE
-#endif     // VIA_ENABLE
-
-// }}}
-// One-Shot keys {{{
+#endif // VIA_ENABLE
 
 #ifndef NO_ACTION_ONESHOT
 /**
@@ -101,9 +65,6 @@
 #    define ONESHOT_TIMEOUT 1500
 #endif // NO_ACTION_ONESHOT
 
-// }}}
-// Tap dances {{{
-
 /**
  * \brief Configure the global tapping term (default: 200ms).
  *
@@ -117,6 +78,15 @@
 #    define TAPPING_TERM 175
 #endif // !TAPPING_TERM
 
+#ifndef QUICK_TAP_TERM
+#    define QUICK_TAP_TERM 75
+#endif // QUICK_TAP_TERM
+
+/**
+ * \brief Customize the TAPPING_TERM for specific keys.
+ */
+// #define TAPPING_TERM_PER_KEY
+
 /**
  * \brief Enable rapid switch from tap to hold.
  *
@@ -129,11 +99,6 @@
  */
 #define TAPPING_FORCE_HOLD_PER_KEY
 
-/**
- * \brief Customize the TAPPING_TERM for specific keys.
- */
-#define TAPPING_TERM_PER_KEY
-
 /*
  * Tap-or-Hold decision modes, per keymap.
  *
@@ -144,7 +109,6 @@
  * decision modes.
  */
 
-#ifdef DELAY_KEYMAP_SPLIT34
 /**
  * \brief Faster layer-tap hold trigger.
  *
@@ -153,14 +117,11 @@
  * With `HOLD_ON_OTHER_KEY_PRESS`, within `TAPPING_TERM`:
  *     LT(2, a)🠗 e🠗 LT(2, a)🠕 e🠕 ➞ <mapping of e on layer>
  *
- * https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#hold-on-other-key-press                                     ...
+ * https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#hold-on-other-key-press
+ * ...
  */
-#    define HOLD_ON_OTHER_KEY_PRESS
+// #define HOLD_ON_OTHER_KEY_PRESS
 
-#    define QUICK_TAP_TERM 75
-#endif // DELAY_KEYMAP_SPLIT34
-
-#ifdef DELAY_KEYMAP_SPLIT36_HOMEROW
 /**
  * \brief Faster layer-tap hold trigger.
  *
@@ -171,7 +132,7 @@
  *
  * https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#hold-on-other-key-press
  */
-#    define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+// #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 /**
  * \brief Faster tap-hold trigger.
@@ -184,11 +145,8 @@
  * https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#permissive-hold
  *
  * See precondition.github.io/home-row-mods#permissive-hold.
- *
- * NOTE: `PERMISIVE_HOLD_PER_KEY` is used to enable this only on mod-tap keys
- * (not on layer-tap keys).
  */
-#    define PERMISSIVE_HOLD_PER_KEY
+#define PERMISSIVE_HOLD
 
 /**
  * \brief Prevent normal rollover on alphas from accidentally triggering mods.
@@ -204,22 +162,7 @@
  *
  * See https://precondition.github.io/home-row-mods#ignore-mod-tap-interrupt.
  */
-#    define IGNORE_MOD_TAP_INTERRUPT
-
-/**
- * \brief Prevent same-hand mod misfires.
- *
- * The last mod-tap hold will be converted to the corresponding mod-tap tap if
- * another key on the same hand is tapped during the hold, unless a key on the
- * other hand is tapped first.
- *
- * See precondition.github.io/home-row-mods#rolled-modifiers-cancellation.
- */
-#    define BILATERAL_COMBINATIONS 500
-#endif // DELAY_KEYMAP_SPLIT36_HOMEROW
-
-// }}}
-// RGB {{{
+#define IGNORE_MOD_TAP_INTERRUPT
 
 #ifdef RGB_MATRIX_ENABLE
 #    ifdef __arm__
@@ -291,5 +234,3 @@
 #    define RGB_MATRIX_STARTUP_VAL RGB_MATRIX_MAXIMUM_BRIGHTNESS
 #    define RGB_MATRIX_STARTUP_HSV RGB_MATRIX_STARTUP_HUE, RGB_MATRIX_STARTUP_SAT, RGB_MATRIX_STARTUP_VAL
 #endif // RGB_MATRIX_ENABLE
-
-// }}}

@@ -21,7 +21,7 @@
 
 #define A0 PAL_LINE(GPIOA, 0)
 #define SPLIT_HAND_PIN A0
-#define SPLIT_HAND_PIN_LOW_IS_LEFT  // High -> right, Low -> left.
+#define SPLIT_HAND_PIN_LOW_IS_LEFT // High -> right, Low -> left.
 
 // Trackball angle adjustment.
 #undef ROTATIONAL_TRANSFORM_ANGLE
@@ -30,9 +30,6 @@
 // Custom DPI.
 #define CHARYBDIS_MINIMUM_DEFAULT_DPI 800
 #define CHARYBDIS_MINIMUM_SNIPING_DPI 300
-
-// Disable unused keycodes.
-#define NO_CHARYBDIS_KEYCODES
 
 // Double trackball build.
 #undef POINTING_DEVICE_RIGHT

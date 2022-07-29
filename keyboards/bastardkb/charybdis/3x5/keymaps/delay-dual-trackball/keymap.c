@@ -16,7 +16,7 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "keymaps/split34.h"
+#include "users/delay/keymap.h"
 
 #define LAYOUT_charybdis_3x5_delay(...) LAYOUT_split_3x5_3(__VA_ARGS__)
 #define DRAGSCROLL_PADDING 6
@@ -24,8 +24,10 @@
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_charybdis_3x5_delay(DVORAK_split_3x5_3),
-  [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
-  [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
+  [_NAVL] = LAYOUT_charybdis_3x5_delay(NAVL_split_3x5_2),
+  [_NAVR] = LAYOUT_charybdis_3x5_delay(NAVR_split_3x5_2),
+  [_SYML] = LAYOUT_charybdis_3x5_delay(SYML_split_3x5_2),
+  [_SYMR] = LAYOUT_charybdis_3x5_delay(SYMR_split_3x5_2),
   [_NUM] = LAYOUT_charybdis_3x5_delay(NUM_split_3x5_3),
   [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
 };
