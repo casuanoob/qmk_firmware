@@ -66,6 +66,7 @@ enum keycodes_user {
   OS_LCTL,
   OS_LGUI,
   OS_LSFT,
+  REPEAT,
   SAFE_RANGE_KEYMAP,
 };
 

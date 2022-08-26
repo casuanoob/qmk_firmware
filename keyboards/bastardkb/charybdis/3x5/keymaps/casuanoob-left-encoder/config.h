@@ -25,9 +25,6 @@
 #define CHARYBDIS_MINIMUM_DEFAULT_DPI 1000
 #define CHARYBDIS_MINIMUM_SNIPING_DPI 500
 
-// Caps Word config.
-#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
-
 // Disable unused keycodes.
 //#define NO_CHARYBDIS_KEYCODES
 
@@ -89,7 +86,7 @@
 
     /* Serial baudrate configuration*/
     //#define SERIAL_USART_SPEED 921600
-    #define SERIAL_USART_SPEED 1200000
+    #define SERIAL_USART_SPEED 345600 // PIO half-duplex max stable speed 460800
     /* CRC. */
     #define CRC8_USE_TABLE
     #define CRC8_OPTIMIZE_SPEED
@@ -115,4 +112,9 @@
     #define DIP_SWITCH_PINS_RIGHT { NO_PIN }
 #endif // KEYBOARD_bastardkb_charybdis_3x5_v2_splinky
 
-#define COMBO_COUNT 1
+//#define COMBO_COUNT 5
+#define SERIAL_DEBUG
+
+#define CHARYBDIS_CONFIG_SYNC
+#define MOUSE_EXTENDED_REPORT
+#define PMW33XX_LIFTOFF_DISTANCE 0x15

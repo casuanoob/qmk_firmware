@@ -43,6 +43,7 @@ enum layers_keymap {
     _APT3,  // APTv3 layer.
     _APT4,  // APTv4 layer.
     _APTx,  // APTex layer.
+    _APTmak2, // APTmak2 layer.
     _ENGL,  // Engel layer.
     _CAN,   // Canary layer.
     _GAME,  // Gaming layer.
@@ -65,12 +66,14 @@ enum layers_keymap {
 #define APT3 DF(_APT3)
 #define APT4 DF(_APT4)
 #define APTx DF(_APTx)
+#define APTmak2 DF(_APTmak2)
 #define ENGL DF(_ENGL)
 #define CAN DF(_CAN)
 #define BASE DF(_BASE)
 
 // Tap dances.
 #define TD_SFT OSM(MOD_LSFT)
+#define RD_SFT OSM(MOD_RSFT)
 
 // Ctrl-Tab.
 #define CTL_TAB C(KC_TAB)
@@ -78,7 +81,34 @@ enum layers_keymap {
 
 // Shorthands for readability.
 #define ___x___ KC_NO
+/**
+enum combo_events {
+  THUMB_NAV,
+  THUMB_SYM,
+  FP_Q,
+  LU_Z,
+  HC_BSPC,
+  DQ_ENT,
+  COMBO_LENGTH
+};
+uint16_t COMBO_LEN = COMBO_LENGTH;
 
+const uint16_t PROGMEM ns_combo[] = {NAV, KC_SPC, COMBO_END};
+const uint16_t PROGMEM ss_combo[] = {SYM, TD_SFT, COMBO_END};
+const uint16_t PROGMEM fp_combo[] = {KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM lu_combo[] = {KC_L, KC_U, COMBO_END};
+const uint16_t PROGMEM hc_combo[] = {KC_L, KC_U, COMBO_END};
+const uint16_t PROGMEM dq_combo[] = {NS_DOT, NS_QUOT, COMBO_END};
+
+combo_t key_combos[] = {
+  [THUMB_NAV] = COMBO(ns_combo, NAV),
+  [THUMB_SYM] = COMBO(ss_combo, SYM),
+  [FP_Q] = COMBO(fp_combo, KC_Q),
+  [LU_Z] = COMBO(lu_combo, KC_Z),
+  [HC_BSPC] = COMBO(hc_combo, KC_BSPC),
+  [DQ_ENT] = COMBO(dq_combo, KC_ENT),
+};
+**/
 /**
  * \brief Alternative Dvorak layout.
  *
@@ -179,8 +209,22 @@ enum layers_keymap {
 #define APTex_split_3x5_2                                                                      \
     NS_SLSH,    KC_W,    KC_M,    KC_V,    KC_Q,    KC_Z,    KC_Y,    KC_O,    KC_U, KC_UNDS, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_B,    KC_P,    KC_N,    KC_A,    KC_I,    KC_L, \
-       KC_X,    KC_C,    KC_G,    KC_D,    KC_K,    KC_J,    KC_F,  NS_DOT, NS_COMM, NS_QUOT, \
-                                   NAV,  KC_SPC,  TD_SFT,    LT(_SYM, KC_E)
+       KC_X,    KC_C,    KC_G,    KC_D,    KC_K,    KC_J,    KC_F, NS_QUOT, NS_COMM,  NS_DOT, \
+                                KC_SPC,     NAV,     SYM,    KC_E
+// clang-format on
+
+/** 
+ * \brief APTmak2 layout.
+ * 
+ * APTmak2, designed for 30 key layout with Q and Z on combos 
+ * NAV and SYM are moved to thumb bigram combos
+ */
+// clang-format off
+#define APTmak2_split_3x5_2                                                                      \
+       KC_X,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, NS_QUOT, \
+       KC_N,    KC_R,    KC_S,    KC_T,    KC_G,    KC_K,    KC_H,    KC_A,    KC_I,    KC_O, \
+     TD_SFT,    KC_V,    KC_C,    KC_D,    KC_G,    KC_K,    KC_M, NS_COMM,  NS_DOT,  RD_SFT, \
+                                KC_SPC,     NAV,     SYM,    KC_E
 // clang-format on
 
 /** 
@@ -229,7 +273,7 @@ enum layers_keymap {
 // clang-format off
 #define SYM_split_3x5_2                                                                       \
      KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_LPRN, NS_SCLN, KC_RPRN, SPECIAL, \
-    KC_EXLM, KC_PLUS, NS_MINS,  KC_EQL, KC_HASH, KC_DQUO, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
+    KC_EXLM, KC_PLUS, NS_MINS,  KC_EQL, KC_HASH, KC_UNDS, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
     KC_TILD,  KC_DLR, KC_ASTR, NS_SLSH, KC_AMPR, KC_PIPE, KC_LCBR, NS_BSLS, KC_RCBR,  NS_GRV, \
                                _______, _______, _______, _______
 // clang-format on
@@ -243,7 +287,7 @@ enum layers_keymap {
 #define NUMROW_split_3x5_2                                                                       \
     OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT, ___x___, ___x___, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
        NS_4,    NS_3,    NS_2,    NS_1, ___x___, KC_BSPC,    NS_0,    NS_6,    NS_7,    NS_8, \
-        FUN, NS_COMM,  NS_DOT,    NS_5, ___x___, ___x___,    NS_9, NS_LBRC, NS_RBRC,     FUN, \
+        FUN, NS_COMM,  NS_DOT,    NS_5, KC_LABK, KC_RABK,    NS_9, NS_LBRC, NS_RBRC,     FUN, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -275,7 +319,7 @@ enum layers_keymap {
 // clang-format off
 #define SPEC_split_3x5_2                                                                      \
     SPECIAL,   BASE,     CAN,    ENGL,     APTx,    APTm,    ENGL,     CAN,    BASE, SPECIAL, \
-      NK_ON,   APT4,    GAME,  RGB_MOD, EEP_RST, EEP_RST, RGB_MOD,    GAME,    APT4,   NK_ON, \
+      NK_ON,APTmak2,    GAME,  RGB_MOD, EEP_RST, EEP_RST, RGB_MOD,    GAME,    APT4,   NK_ON, \
      NK_OFF,   APT3, RGB_TOG,  DB_TOGG, QK_BOOT, QK_BOOT, DB_TOGG, RGB_TOG,    APT3,  NK_OFF, \
                                _______, _______, _______, _______
 // clang-format on
@@ -311,6 +355,7 @@ enum layers_keymap {
 #define APTv3_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(APTv3_split_3x5_2)
 #define APTv4_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(APTv4_split_3x5_2)
 #define APTex_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(APTex_split_3x5_2)
+#define APTmak2_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(APTmak2_split_3x5_2)
 #define Engel_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(Engel_split_3x5_2)
 #define Canary_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(Canary_split_3x5_2)
 #define GAMING_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(GAMING_split_3x5_2)
@@ -349,19 +394,10 @@ enum layers_keymap {
 #define APTv3_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTv3_split_3x5_2)
 #define APTv4_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTv4_split_3x5_2)
 #define APTex_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTex_split_3x5_2)
+#define APTmak2_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTmak2_split_3x5_2)
 #define Engel_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(Engel_split_3x5_2)
 #define Canary_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(Canary_split_3x5_2)
 #define GAMING_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(GAMING_split_3x5_2)
 #define NUMPAD_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NUMPAD_split_3x5_2)
 #define FUN_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(FUN_split_3x5_2)
 // clang-format on
-/**
-enum combos {
-    NVSP_SHIFT,
-};
-
-const uint16_t PROGMEM ns_combo[] = {NAV, KC_SPC, COMBO_END};
-
-combo_t key_combos[COMBO_COUNT] = {
-  [NVSP_SHIFT] = COMBO(ns_combo, TD_SFT),
-};*/

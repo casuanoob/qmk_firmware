@@ -125,11 +125,20 @@
  */
 #define TAPPING_FORCE_HOLD_PER_KEY
 
+#ifdef COMBO_ENABLE
 /**
  * \brief Combo configurations
  */
 #define COMBO_TERM 40
 #define COMBO_STRICT_TIMER
+#define COMBO_ONLY_FROM_LAYER 0
+#endif  // COMBO_ENABLE
+
+#ifdef CAPS_WORD_ENABLE
+// Caps Word config.
+#define DOUBLE_TAP_SHIFT_TURNS_ON_CAPS_WORD
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#endif  // CAPS_WORD_ENABLE
 
 #ifdef DELAY_KEYMAP_SPLIT36_HOMEROW
 /**

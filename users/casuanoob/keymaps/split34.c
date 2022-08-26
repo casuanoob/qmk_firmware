@@ -52,6 +52,35 @@ bool is_oneshot_mod_ignore_key(uint16_t keycode) {
 }
 #endif  // ONESHOT_MOD_ENABLE
 
+uint16_t COMBO_LEN = 12;
+const uint16_t PROGMEM ns_combo[] = {NAV, KC_SPC, COMBO_END};
+const uint16_t PROGMEM ss_combo[] = {SYM, TD_SFT, COMBO_END};
+const uint16_t PROGMEM fp_combo[] = {KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM lu_combo[] = {KC_L, KC_U, COMBO_END};
+const uint16_t PROGMEM bg_combo[] = {KC_B, KC_G, COMBO_END};
+const uint16_t PROGMEM jm_combo[] = {KC_J, KC_M, COMBO_END};
+const uint16_t PROGMEM hdot_combo[] = {KC_H, NS_DOT, COMBO_END};
+const uint16_t PROGMEM uy_combo[] = {KC_U, KC_Y, COMBO_END};
+const uint16_t PROGMEM hcom_combo[] = {KC_H, NS_COMM, COMBO_END};
+const uint16_t PROGMEM dotquo_combo[] = {NS_DOT, NS_QUOT, COMBO_END};
+const uint16_t PROGMEM qw_combo[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM ei_combo[] = {KC_E, KC_I, COMBO_END};
+const uint16_t PROGMEM dotcom_combo[] = {NS_DOT, NS_COMM, COMBO_END};
+combo_t key_combos[] = {
+  COMBO(ns_combo, TD_SFT),
+  COMBO(ss_combo, RD_SFT),
+  COMBO(fp_combo, KC_Q),
+  COMBO(lu_combo, KC_Z),
+  COMBO(bg_combo, KC_B),
+  COMBO(jm_combo, KC_J),
+  COMBO(hdot_combo, C(KC_BSPC)),
+  COMBO(uy_combo, OS_LCTL),
+  COMBO(hcom_combo, KC_BSPC),
+  COMBO(dotquo_combo, KC_ENT),
+  COMBO(qw_combo, KC_ESC),
+  COMBO(dotcom_combo, KC_BTN1),
+};
+
 bool process_record_user_keymap(uint16_t keycode, keyrecord_t *record) {
   if (!process_record_keymap(keycode, record)) {
     return false;
@@ -152,6 +181,10 @@ layer_state_t layer_state_set_user_keymap(layer_state_t state) {
         rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
         rgb_matrix_sethsv_noeeprom(HSV_SPRINGGREEN);
         break;
+      case _APTmak2:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
+        rgb_matrix_sethsv_noeeprom(HSV_AZURE);
+        break;
       case _ENGL:
         rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
         rgb_matrix_sethsv_noeeprom(HSV_PURPLE);
@@ -213,3 +246,22 @@ void shutdown_user_keymap(void) { shutdown_keymap(); }
 
 __attribute__((weak)) void shutdown_keymap(void) {}
 */
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+        case NS_MINS:
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
+}

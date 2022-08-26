@@ -28,6 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_APT3] = LAYOUT_charybdis_3x5_delay(APTv3_split_3x5_3),
   [_APT4] = LAYOUT_charybdis_3x5_delay(APTv4_split_3x5_3),
   [_APTx] = LAYOUT_charybdis_3x5_delay(APTex_split_3x5_3),
+  [_APTmak2] = LAYOUT_charybdis_3x5_delay(APTmak2_split_3x5_3),
   [_ENGL] = LAYOUT_charybdis_3x5_delay(Engel_split_3x5_3),
   [_CAN] = LAYOUT_charybdis_3x5_delay(Canary_split_3x5_3),
   [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
@@ -101,11 +102,11 @@ bool dip_switch_update_user(uint8_t index, bool active) {
 #endif // DIP_SWITCH_ENABLE
 
 // Triple nop delay thing lol
-void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
-    for (int32_t i = 0; i < 40; i++) {
-        __asm__ volatile("nop" ::: "memory");
-    }
-}
+//void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
+//    for (int32_t i = 0; i < 40; i++) {
+//        __asm__ volatile("nop" ::: "memory");
+//    }
+//}
 
 void keyboard_post_init_user_keymap(void) {
   // Customise these values to desired behaviour
@@ -115,8 +116,31 @@ void keyboard_post_init_user_keymap(void) {
   debug_mouse=false;
   rgb_matrix_sethsv_noeeprom(HSV_WHITE);
 }
+/**
+enum combo_events {
+  THUMB_NAV,
+  THUMB_SYM,
+  FP_Q,
+  LU_Z,
+  HC_BSPC,
+  DQ_ENT,
+  COMBO_LENGTH,
+};
+
+uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM ns_combo[] = {NAV, KC_SPC, COMBO_END};
-combo_t key_combos[COMBO_COUNT] = {
-  COMBO(ns_combo, TD_SFT),
+const uint16_t PROGMEM ss_combo[] = {SYM, TD_SFT, COMBO_END};
+const uint16_t PROGMEM fp_combo[] = {KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM lu_combo[] = {KC_L, KC_U, COMBO_END};
+const uint16_t PROGMEM hc_combo[] = {KC_H, NS_COMM, COMBO_END};
+const uint16_t PROGMEM dq_combo[] = {NS_DOT, NS_QUOT, COMBO_END};
+combo_t key_combos[] = {
+  COMBO(ns_combo, NAV),
+  COMBO(ss_combo, SYM),
+  COMBO(fp_combo, KC_Q),
+  COMBO(lu_combo, KC_Z),
+  COMBO(hc_combo, KC_BSPC),
+  COMBO(dq_combo, KC_ENT),
 };
+**/
