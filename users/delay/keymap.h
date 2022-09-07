@@ -27,58 +27,52 @@
  */
 enum keycodes_user {
 #ifdef VIA_ENABLE
-  KEYCODE_USER_BEGIN = USER00,
+    KEYCODE_USER_BEGIN = USER00,
 #else
-  KEYCODE_USER_BEGIN = SAFE_RANGE,
+    KEYCODE_USER_BEGIN = SAFE_RANGE,
 #endif
-  // Custom version of these keycodes that don't shift when only oneshot shift
-  // mod is locked.
-  NS_BSLASH = KEYCODE_USER_BEGIN,
-  NS_COMMA,
-  NS_DOT,
-  NS_GRAVE,
-  NS_QUOTE,
-  NS_LBRACKET,
-  NS_RBRACKET,
-  NS_SCOLON,
-  NS_SLASH,
-  // Custom version of up/down/left/right keycodes that can't be shifted.
-  NS_UP,
-  NS_DOWN,
-  NS_LEFT,
-  NS_RIGHT,
-  // Oneshot mods.
-  OS_LALT,
-  OS_LCTL,
-  OS_LGUI,
-  OS_LSFT,
-  // Compose.
-  COMPOSE,
-  SAFE_RANGE_KEYMAP,
+    // Custom version of these keycodes that don't shift when only oneshot shift
+    // mod is locked.
+    NS_BSLASH = KEYCODE_USER_BEGIN,
+    NS_COMMA,
+    NS_DOT,
+    NS_GRAVE,
+    NS_QUOTE,
+    NS_LBRACKET,
+    NS_RBRACKET,
+    NS_SCOLON,
+    NS_SLASH,
+    // Custom version of up/down/left/right keycodes that can't be shifted.
+    NS_UP,
+    NS_DOWN,
+    NS_LEFT,
+    NS_RIGHT,
+    // Oneshot mods.
+    OS_LALT,
+    OS_LCTL,
+    OS_LGUI,
+    OS_LSFT,
+    // Compose.
+    COMPOSE,
+    SAFE_RANGE_KEYMAP,
 };
 
-// This keymap uses home row mods. In addition to mods, I have home row
-// layer-tap keys for the SYM layer. The key arrangement is a variation on
-// "ASCG-order" home row mods:
+// This keymap uses ASCG home row mods.
 //
 //             Left hand                          Right hand
 // ╭───────┬───────┬───────┬───────╮   ╭───────┬───────┬───────┬───────╮
-// │  Sym  │ Shift │ Ctrl  │  Gui  │   │  Gui  │ Ctrl  │ Shift │  Sym  │
-// ├───────┼───────┴───────┴───────╯   ╰───────┴───────┴───────┼───────┤
-// │  Alt  │                                                   │  Alt  │
-// ╰───────╯                                                   ╰───────╯
+// │  Alt  │ Shift │ Ctrl  │  Gui  │   │  Gui  │ Ctrl  │ Shift │  Alt  │
+// ╰───────┴───────┴───────┴───────╯   ╰───────┴───────┴───────┴───────╯
 
 // Home row mods for Dvorak layer.
-#define HOME_A LT(_SYMR, KC_A)
+#define HOME_A LALT_T(KC_A)
 #define HOME_O LSFT_T(KC_O)
 #define HOME_E LCTL_T(KC_E)
 #define HOME_U LGUI_T(KC_U)
 #define HOME_H RGUI_T(KC_H)
 #define HOME_T RCTL_T(KC_T)
 #define HOME_N LSFT_T(KC_N)
-#define HOME_S LT(_SYML, KC_S)
-#define HOME_SC LALT_T(KC_SCLN)
-#define HOME_Z RALT_T(KC_Z)
+#define HOME_S RALT_T(KC_S)
 
 #define VIM_DOWN LALT(KC_DOWN)
 #define VIM_LEFT LALT(KC_LEFT)
@@ -128,27 +122,27 @@ enum keycodes_user {
  *
  * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
  */
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
-void matrix_scan_keymap(void);
+bool          process_record_keymap(uint16_t keycode, keyrecord_t *record);
+void          matrix_scan_keymap(void);
 layer_state_t layer_state_set_keymap(layer_state_t state);
-void keyboard_post_init_keymap(void);
-void oneshot_locked_mods_changed_keymap(uint8_t mods);
-void shutdown_keymap(void);
+void          keyboard_post_init_keymap(void);
+void          oneshot_locked_mods_changed_keymap(uint8_t mods);
+void          shutdown_keymap(void);
 
 enum layers_keymap {
-  _BASE = 0,
-  _NAVL,  // Navigation.
-  _NAVR,  // Navigation.
-  _SYM,   // Symbols.
-  _SYML,  // Symbols.
-  _SYMR,  // Symbols.
-  _NUM,   // Number pad.
-  _SPEC,  // Specials.
+    _BASE = 0,
+    _NAV,  // Navigation.
+    _VIM,  // Vim.
+    _SYM,  // Symbols.
+    _NUM,  // Number pad.
+    _SHRT, // Shortcuts.
+    _SPEC, // Specials.
 };
 
 // Layers.
-#define NAVL MO(_NAVL)
-#define NAVR MO(_NAVR)
+#define NAV MO(_NAV)
+#define NUM MO(_NUM)
+#define SHRT MO(_SHRT)
 #define SYM MO(_SYM)
 #define SPECIAL OSL(_SPEC)
 
@@ -169,8 +163,8 @@ enum layers_keymap {
 #define DVORAK_split_3x5_2                                                                    \
     KC_QUOT, KC_COMM,  KC_DOT,    KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L, \
      HOME_A,  HOME_O,  HOME_E,  HOME_U,    KC_I,    KC_D,  HOME_H,  HOME_T,  HOME_N,  HOME_S, \
-    ___x___,    KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,  HOME_Z, \
-                                  NAVL,  KC_SPC,     SYM,    NAVR
+       SHRT,    KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z, \
+                                   NAV,  KC_SPC,     SYM,     NUM
 // clang-format on
 
 /**
@@ -181,11 +175,11 @@ enum layers_keymap {
  * home row mods.
  */
 // clang-format off
-#define NAVL_split_3x5_2                                                                      \
+#define NAV_split_3x5_2                                                                       \
     SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB, ___x___, ___x___, KC_HOME,   NS_UP,  KC_END, KC_BSPC, \
-    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, NS_LEFT, NS_DOWN, NS_RGHT,  KC_ENT, \
+    OS_LALT, OS_LSFT, OS_LCTL, OS_LGUI, ___x___, ___x___, NS_LEFT, NS_DOWN, NS_RGHT,  KC_ENT, \
     SC_COPY, WS_PREV, ___x___, WS_NEXT, SC_PSTE, ___x___, ___x___, ___x___, ___x___, ___x___, \
-                               _______, _______, LAUNCHR, _______
+                               _______, ___x___, LAUNCHR, _______
 // clang-format on
 
 /**
@@ -196,11 +190,11 @@ enum layers_keymap {
  * home row mods.
  */
 // clang-format off
-#define NAVR_split_3x5_2                                                                      \
+#define VIM_split_3x5_2                                                                       \
     ___x___, ___x___, ___x___, ___x___, ___x___, VIMTESC, VIM_S_L,   VIM_U, VIM_S_R, SPECIAL, \
     OS_LALT, OS_LSFT, OS_LCTL, OS_LGUI, ___x___, ___x___,   VIM_L,   VIM_D,   VIM_R, VIMTERM, \
     ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
-                               _______, ___x___, _______, _______
+                               _______, ___x___, ___x___, _______
 // clang-format on
 
 /**
@@ -210,15 +204,15 @@ enum layers_keymap {
 #define NUM_split_3x5_2                                                                       \
     KC_SLSH,    KC_7,    KC_8,    KC_9, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
     KC_MINS,    KC_4,    KC_5,    KC_6, ___x___, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
-    ___x___,    KC_1,    KC_2,    KC_3, ___x___, ___x___, NS_LBRC,    KC_0, NS_RBRC, ___x___, \
-                               _______, _______, _______, _______
+    ___x___,    KC_1,    KC_2,    KC_3, ___x___, ___x___, NS_LBRC, ___x___, NS_RBRC, ___x___, \
+                               _______,    KC_0, _______, _______
 // clang-format on
 
 /**
  * \brief Symbols.
  */
 // clang-format off
-#define SYM_split_3x5_2                                                                      \
+#define SYM_split_3x5_2                                                                       \
     KC_DQUO,   KC_LT,   KC_GT, KC_COLN,   KC_AT, KC_CIRC, KC_LPRN, NS_SCLN, KC_RPRN, KC_PERC, \
     KC_EXLM, KC_PLUS, KC_MINS,  KC_EQL, KC_HASH, CK_ELPS, KC_LBRC, KC_UNDS, KC_RBRC, KC_QUOT, \
     KC_TILD,  KC_DLR, KC_ASTR, KC_SLSH, KC_AMPR, KC_PIPE, KC_LCBR, NS_BSLS, KC_RCBR,  NS_GRV, \
@@ -226,25 +220,14 @@ enum layers_keymap {
 // clang-format on
 
 /**
- * \brief Symbols.
+ * \brief Special shortcuts.
  */
 // clang-format off
-#define SYML_split_3x5_2                                                                      \
-    KC_DQUO,   KC_LT,   KC_GT, KC_COLN,   KC_AT, ___x___, ___x___, ___x___, ___x___, ___x___, \
-    KC_EXLM, KC_PLUS, KC_MINS,  KC_EQL, KC_HASH, ___x___, ___x___, ___x___, ___x___, _______, \
-    KC_TILD,  KC_DLR, KC_ASTR, KC_SLSH, KC_AMPR, ___x___, ___x___, ___x___, ___x___, ___x___, \
-                               _______, _______, _______, _______
-// clang-format on
-
-/**
- * \brief Symbols.
- */
-// clang-format off
-#define SYMR_split_3x5_2                                                                      \
-    ___x___, ___x___, ___x___, ___x___, ___x___, KC_CIRC, KC_LPRN, NS_SCLN, KC_RPRN, KC_PERC, \
-    _______, ___x___, ___x___, ___x___, ___x___, CK_ELPS, ___x___, KC_UNDS, ___x___, ___x___, \
-    ___x___, ___x___, ___x___, ___x___, ___x___, KC_PIPE, KC_LCBR, NS_BSLS, KC_RCBR,  NS_GRV, \
-                               _______, _______, _______, _______
+#define SHRT_split_3x5_2                                                                      \
+    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+    ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+    _______, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
+                               ___x___, ___x___, ___x___, ___x___
 // clang-format on
 
 /**
@@ -275,15 +258,13 @@ enum layers_keymap {
                    k33, k34, KC_NO, KC_NO, k35, k36
 // clang-format on
 
-#define LAYOUT_split_3x5_2_to_split_3x5_3(...) \
-  _LAYOUT_split_3x5_2_to_split_3x5_3(__VA_ARGS__)
+#define LAYOUT_split_3x5_2_to_split_3x5_3(...) _LAYOUT_split_3x5_2_to_split_3x5_3(__VA_ARGS__)
 
 /* Converts the 3x5_2 layouts into 3x5_3 layouts. */
 #define DVORAK_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(DVORAK_split_3x5_2)
-#define NAVL_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NAVL_split_3x5_2)
-#define NAVR_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NAVR_split_3x5_2)
+#define NAV_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NAV_split_3x5_2)
+#define VIM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(VIM_split_3x5_2)
 #define SYM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SYM_split_3x5_2)
-#define SYML_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SYML_split_3x5_2)
-#define SYMR_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SYMR_split_3x5_2)
 #define NUM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUM_split_3x5_2)
+#define SHRT_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SHRT_split_3x5_2)
 #define SPEC_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SPEC_split_3x5_2)
