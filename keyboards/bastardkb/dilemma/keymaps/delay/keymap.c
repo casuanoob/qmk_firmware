@@ -20,8 +20,8 @@
 #include "users/delay/keymap.h"
 
 #ifdef OLED_ENABLE
-#    include "oled_driver.h"
-#endif // OLED_ENABLE
+#include "oled_driver.h"
+#endif  // OLED_ENABLE
 
 #define LAYOUT_dilemma(...) LAYOUT_split_3x5_2(__VA_ARGS__)
 
@@ -30,6 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_dilemma(DVORAK_split_3x5_2),
   [_NAVL] = LAYOUT_dilemma(NAVL_split_3x5_2),
   [_NAVR] = LAYOUT_dilemma(NAVR_split_3x5_2),
+  [_SYM] = LAYOUT_dilemma(SYM_split_3x5_2),
   [_SYML] = LAYOUT_dilemma(SYML_split_3x5_2),
   [_SYMR] = LAYOUT_dilemma(SYMR_split_3x5_2),
   [_NUM] = LAYOUT_dilemma(NUM_split_3x5_2),
@@ -38,170 +39,215 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 #ifdef OLED_ENABLE
-#    include "oled_driver.h"
+#include "oled_driver.h"
 
-void oled_pan_section(bool left, uint16_t y_start, uint16_t y_end, uint16_t x_start, uint16_t x_end);
+void oled_pan_section(bool left, uint16_t y_start, uint16_t y_end,
+                      uint16_t x_start, uint16_t x_end);
 
-#    if defined(OLED_DISPLAY_128X128) || defined(OLED_DISPLAY_128X64)
-#        define OLED_DISPLAY_VERBOSE
+#if defined(OLED_DISPLAY_128X128) || defined(OLED_DISPLAY_128X64)
+#define OLED_DISPLAY_VERBOSE
 
-#        define OLED_RENDER_KEYLOGGER "Keylogger: "
-#        ifndef OLED_KEYLOGGER_LENGTH
-#            define OLED_KEYLOGGER_LENGTH 9
-#        endif
-#        define OLED_RENDER_LAYOUT_NAME "Layout: "
-#        define OLED_RENDER_LAYOUT_QWERTY "Qwerty"
-#        define OLED_RENDER_LAYOUT_COLEMAK_DH "Colemak DH"
-#        define OLED_RENDER_LAYOUT_COLEMAK "Colemak"
-#        define OLED_RENDER_LAYOUT_DVORAK "Dvorak"
-#        define OLED_RENDER_LAYOUT_WORKMAN "Workman"
-#        define OLED_RENDER_LAYOUT_NORMAN "Norman"
-#        define OLED_RENDER_LAYOUT_MALTRON "Matron"
-#        define OLED_RENDER_LAYOUT_EUCALYN "Eucalyn"
-#        define OLED_RENDER_LAYOUT_CARPLAX "Carplax"
+#define OLED_RENDER_KEYLOGGER "Keylogger: "
+#ifndef OLED_KEYLOGGER_LENGTH
+#define OLED_KEYLOGGER_LENGTH 9
+#endif
+#define OLED_RENDER_LAYOUT_NAME "Layout: "
+#define OLED_RENDER_LAYOUT_QWERTY "Qwerty"
+#define OLED_RENDER_LAYOUT_COLEMAK_DH "Colemak DH"
+#define OLED_RENDER_LAYOUT_COLEMAK "Colemak"
+#define OLED_RENDER_LAYOUT_DVORAK "Dvorak"
+#define OLED_RENDER_LAYOUT_WORKMAN "Workman"
+#define OLED_RENDER_LAYOUT_NORMAN "Norman"
+#define OLED_RENDER_LAYOUT_MALTRON "Matron"
+#define OLED_RENDER_LAYOUT_EUCALYN "Eucalyn"
+#define OLED_RENDER_LAYOUT_CARPLAX "Carplax"
 
-#        define OLED_RENDER_LAYER_NAME "Layer:"
-#        define OLED_RENDER_LAYER_LOWER "Lower"
-#        define OLED_RENDER_LAYER_RAISE "Raise"
-#        define OLED_RENDER_LAYER_ADJUST "Adjust"
-#        define OLED_RENDER_LAYER_MODS "Mods"
+#define OLED_RENDER_LAYER_NAME "Layer:"
+#define OLED_RENDER_LAYER_LOWER "Lower"
+#define OLED_RENDER_LAYER_RAISE "Raise"
+#define OLED_RENDER_LAYER_ADJUST "Adjust"
+#define OLED_RENDER_LAYER_MODS "Mods"
 
-#        define OLED_RENDER_LOCK_NAME "Lock: "
-#        define OLED_RENDER_LOCK_NUML "NUM"
-#        define OLED_RENDER_LOCK_CAPS "CAPS"
-#        define OLED_RENDER_LOCK_SCLK "SCLK"
+#define OLED_RENDER_LOCK_NAME "Lock: "
+#define OLED_RENDER_LOCK_NUML "NUM"
+#define OLED_RENDER_LOCK_CAPS "CAPS"
+#define OLED_RENDER_LOCK_SCLK "SCLK"
 
-#        define OLED_RENDER_MODS_NAME "Mods"
-#        define OLED_RENDER_MODS_SFT "Sft"
-#        define OLED_RENDER_MODS_CTL "Ctl"
-#        define OLED_RENDER_MODS_ALT "Alt"
-#        define OLED_RENDER_MODS_GUI "GUI"
+#define OLED_RENDER_MODS_NAME "Mods"
+#define OLED_RENDER_MODS_SFT "Sft"
+#define OLED_RENDER_MODS_CTL "Ctl"
+#define OLED_RENDER_MODS_ALT "Alt"
+#define OLED_RENDER_MODS_GUI "GUI"
 
-#        define OLED_RENDER_BOOTMAGIC_NAME "Boot  "
-#        define OLED_RENDER_BOOTMAGIC_NKRO "NKRO"
-#        define OLED_RENDER_BOOTMAGIC_NOGUI "nGUI"
-#        define OLED_RENDER_BOOTMAGIC_GRV "GRV"
-#        define OLED_RENDER_BOOTMAGIC_ONESHOT "1SHT"
-#        define OLED_RENDER_BOOTMAGIC_SWAP "SWAP"
-#        define OLED_RENDER_BOOTMAGIC_CAPS "CAPS"
+#define OLED_RENDER_BOOTMAGIC_NAME "Boot  "
+#define OLED_RENDER_BOOTMAGIC_NKRO "NKRO"
+#define OLED_RENDER_BOOTMAGIC_NOGUI "nGUI"
+#define OLED_RENDER_BOOTMAGIC_GRV "GRV"
+#define OLED_RENDER_BOOTMAGIC_ONESHOT "1SHT"
+#define OLED_RENDER_BOOTMAGIC_SWAP "SWAP"
+#define OLED_RENDER_BOOTMAGIC_CAPS "CAPS"
 
-#        define OLED_RENDER_USER_NAME "USER:"
-#        define OLED_RENDER_USER_ANIM "Anim"
-#        define OLED_RENDER_USER_LAYR "Layr"
-#        define OLED_RENDER_USER_NUKE "Nuke"
+#define OLED_RENDER_USER_NAME "USER:"
+#define OLED_RENDER_USER_ANIM "Anim"
+#define OLED_RENDER_USER_LAYR "Layr"
+#define OLED_RENDER_USER_NUKE "Nuke"
 
-#        define OLED_RENDER_WPM_COUNTER "WPM: "
-#    else
-#        define OLED_RENDER_KEYLOGGER "KLogr"
-#        ifndef OLED_KEYLOGGER_LENGTH
-#            define OLED_KEYLOGGER_LENGTH 5
-#        endif
+#define OLED_RENDER_WPM_COUNTER "WPM: "
+#else
+#define OLED_RENDER_KEYLOGGER "KLogr"
+#ifndef OLED_KEYLOGGER_LENGTH
+#define OLED_KEYLOGGER_LENGTH 5
+#endif
 
-#        define OLED_RENDER_LAYOUT_NAME "Lyout"
-#        define OLED_RENDER_LAYOUT_QWERTY " QRTY"
-#        define OLED_RENDER_LAYOUT_COLEMAK_DH " cmDH"
-#        define OLED_RENDER_LAYOUT_COLEMAK " COLE"
-#        define OLED_RENDER_LAYOUT_DVORAK " DVRK"
-#        define OLED_RENDER_LAYOUT_WORKMAN " WKMN"
-#        define OLED_RENDER_LAYOUT_NORMAN " NORM"
-#        define OLED_RENDER_LAYOUT_MALTRON " MLTN"
-#        define OLED_RENDER_LAYOUT_EUCALYN " ECLN"
-#        define OLED_RENDER_LAYOUT_CARPLAX " CRPX"
+#define OLED_RENDER_LAYOUT_NAME "Lyout"
+#define OLED_RENDER_LAYOUT_QWERTY " QRTY"
+#define OLED_RENDER_LAYOUT_COLEMAK_DH " cmDH"
+#define OLED_RENDER_LAYOUT_COLEMAK " COLE"
+#define OLED_RENDER_LAYOUT_DVORAK " DVRK"
+#define OLED_RENDER_LAYOUT_WORKMAN " WKMN"
+#define OLED_RENDER_LAYOUT_NORMAN " NORM"
+#define OLED_RENDER_LAYOUT_MALTRON " MLTN"
+#define OLED_RENDER_LAYOUT_EUCALYN " ECLN"
+#define OLED_RENDER_LAYOUT_CARPLAX " CRPX"
 
-#        define OLED_RENDER_LAYER_NAME "LAYER"
-#        define OLED_RENDER_LAYER_LOWER "Lower"
-#        define OLED_RENDER_LAYER_RAISE "Raise"
-#        define OLED_RENDER_LAYER_ADJUST "Adjst"
-#        define OLED_RENDER_LAYER_MODS " Mods"
+#define OLED_RENDER_LAYER_NAME "LAYER"
+#define OLED_RENDER_LAYER_LOWER "Lower"
+#define OLED_RENDER_LAYER_RAISE "Raise"
+#define OLED_RENDER_LAYER_ADJUST "Adjst"
+#define OLED_RENDER_LAYER_MODS " Mods"
 
-#        define OLED_RENDER_LOCK_NAME "Lock:"
-#        define OLED_RENDER_LOCK_NUML "NumL"
-#        define OLED_RENDER_LOCK_CAPS "CapL"
-#        define OLED_RENDER_LOCK_SCLK "ScrL"
+#define OLED_RENDER_LOCK_NAME "Lock:"
+#define OLED_RENDER_LOCK_NUML "NumL"
+#define OLED_RENDER_LOCK_CAPS "CapL"
+#define OLED_RENDER_LOCK_SCLK "ScrL"
 
-#        define OLED_RENDER_MODS_NAME "Mods: "
-#        define OLED_RENDER_MODS_SFT "Shft"
-#        define OLED_RENDER_MODS_CTL "Ctrl"
-#        define OLED_RENDER_MODS_ALT "Alt\n"
-#        define OLED_RENDER_MODS_GUI "GUI\n"
+#define OLED_RENDER_MODS_NAME "Mods: "
+#define OLED_RENDER_MODS_SFT "Shft"
+#define OLED_RENDER_MODS_CTL "Ctrl"
+#define OLED_RENDER_MODS_ALT "Alt\n"
+#define OLED_RENDER_MODS_GUI "GUI\n"
 
-#        define OLED_RENDER_BOOTMAGIC_NAME "BTMGK"
-#        define OLED_RENDER_BOOTMAGIC_NKRO "NKRO"
-#        define OLED_RENDER_BOOTMAGIC_NOGUI "nGUI"
-#        define OLED_RENDER_BOOTMAGIC_GRV "GRV"
-#        define OLED_RENDER_BOOTMAGIC_ONESHOT "1SHT"
-#        define OLED_RENDER_BOOTMAGIC_SWAP "SWAP"
-#        define OLED_RENDER_BOOTMAGIC_CAPS "CAPS"
+#define OLED_RENDER_BOOTMAGIC_NAME "BTMGK"
+#define OLED_RENDER_BOOTMAGIC_NKRO "NKRO"
+#define OLED_RENDER_BOOTMAGIC_NOGUI "nGUI"
+#define OLED_RENDER_BOOTMAGIC_GRV "GRV"
+#define OLED_RENDER_BOOTMAGIC_ONESHOT "1SHT"
+#define OLED_RENDER_BOOTMAGIC_SWAP "SWAP"
+#define OLED_RENDER_BOOTMAGIC_CAPS "CAPS"
 
-#        define OLED_RENDER_USER_NAME "USER:"
-#        define OLED_RENDER_USER_ANIM "Anim"
-#        define OLED_RENDER_USER_LAYR "Layr"
-#        define OLED_RENDER_USER_NUKE "Nuke"
+#define OLED_RENDER_USER_NAME "USER:"
+#define OLED_RENDER_USER_ANIM "Anim"
+#define OLED_RENDER_USER_LAYR "Layr"
+#define OLED_RENDER_USER_NUKE "Nuke"
 
-#        define OLED_RENDER_WPM_COUNTER "WPM: "
-#    endif
+#define OLED_RENDER_WPM_COUNTER "WPM: "
+#endif
 
-#    ifndef OLED_WPM_GRAPH_MAX_WPM
-#        define OLED_WPM_GRAPH_MAX_WPM 120
-#    endif
-#    ifndef OLED_WPM_GRAPH_REFRESH_INTERVAL
-#        define OLED_WPM_GRAPH_REFRESH_INTERVAL 300
-#    endif
-#    ifndef OLED_WPM_GRAPH_AREA_FILL_INTERVAL
-#        define OLED_WPM_GRAPH_AREA_FILL_INTERVAL 3
-#    endif
-#    ifndef OLED_WPM_GRAPH_VERTCAL_LINE_INTERVAL
-#        define OLED_WPM_GRAPH_VERTCAL_LINE_INTERVAL 3
-#    endif
-#    ifndef OLED_WPM_GRAPH_GRAPH_LINE_THICKNESS
-#        define OLED_WPM_GRAPH_GRAPH_LINE_THICKNESS 2
-#    endif
+#ifndef OLED_WPM_GRAPH_MAX_WPM
+#define OLED_WPM_GRAPH_MAX_WPM 120
+#endif
+#ifndef OLED_WPM_GRAPH_REFRESH_INTERVAL
+#define OLED_WPM_GRAPH_REFRESH_INTERVAL 300
+#endif
+#ifndef OLED_WPM_GRAPH_AREA_FILL_INTERVAL
+#define OLED_WPM_GRAPH_AREA_FILL_INTERVAL 3
+#endif
+#ifndef OLED_WPM_GRAPH_VERTCAL_LINE_INTERVAL
+#define OLED_WPM_GRAPH_VERTCAL_LINE_INTERVAL 3
+#endif
+#ifndef OLED_WPM_GRAPH_GRAPH_LINE_THICKNESS
+#define OLED_WPM_GRAPH_GRAPH_LINE_THICKNESS 2
+#endif
 
-static uint16_t       splash_screen_timer;
+static uint16_t splash_screen_timer;
 static deferred_token kittoken;
 
 static void render_logo(void) {
-    static const char PROGMEM raw_logo[] = {
-        // Bastard Keyboards, 128x32px
-        0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xe0, 0xf0, 0xf8, 0xf8, 0x3c, 0x1c, 0x1e, 0x1e, 0x0e, 0x0e, 0x0e, 0x0e, 0x0e, 0x0e, 0x0e, 0x1e, 0x1c, 0x3c, 0x3c, 0x78, 0xf0, 0xe0, 0xe0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xf8, 0x98, 0xf8, 0x70, 0x00, 0x00, 0xf0, 0xf8, 0xf8, 0xe0, 0x00, 0x00, 0xf0, 0xf8, 0x98, 0xb8, 0x30, 0x00, 0x18, 0xf8, 0xf8, 0x18, 0x18, 0x00, 0xf0, 0xf8, 0xf8, 0xe0, 0x00, 0x00, 0x60, 0xf0, 0x98, 0x98, 0xf8, 0xf8, 0x00, 0xf8, 0xf8, 0x18, 0xf8, 0xf0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0xf0, 0xfe, 0xff, 0x3f, 0x07, 0xff, 0xff, 0xff, 0x60, 0x70, 0x70, 0x70, 0xe0, 0xc0, 0x80, 0x00, 0x00, 0xff, 0xff, 0xff, 0xc0, 0xe0, 0xf0, 0x30, 0x10, 0x03, 0x07, 0xff, 0xff, 0xfc, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x0f, 0x0f, 0x09, 0x0f, 0x0f, 0x00, 0x0e, 0x0f, 0x06, 0x07, 0x0f, 0x0c, 0x00, 0x0c, 0x0c, 0x09, 0x0f, 0x0f, 0x00, 0x00, 0x0f, 0x0f, 0x00, 0x00, 0x0e, 0x0f, 0x06, 0x07, 0x0f, 0x0c, 0x00, 0x0e, 0x0f, 0x01, 0x01, 0x0f, 0x0f, 0x00, 0x0f, 0x0f, 0x08, 0x0f, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x0f, 0x7f, 0xff, 0xfc, 0xe0, 0x83, 0x0f, 0x1f, 0x18, 0x38, 0x38, 0x18, 0x1f, 0x0f, 0x07, 0x00, 0x00, 0x3f, 0x3f, 0x3f, 0x03, 0x07, 0x3f, 0xfe, 0xf0, 0xc0, 0xf0, 0xff, 0xff, 0x3f, 0x03, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xf8, 0xe0, 0xf8, 0x18, 0x00, 0xf8, 0xf8, 0xc8, 0xc8, 0xc8, 0x00, 0x08, 0x38, 0xf0, 0xe0, 0x78, 0x08, 0x00, 0xf8, 0xf8, 0xc8, 0xf8, 0xf8, 0x00, 0xf0, 0xf8, 0x18, 0x0c, 0xf8, 0xf8, 0x00, 0x80, 0xf8, 0x38, 0xf8, 0xe0, 0x00, 0x00, 0xf8, 0xf8, 0xc8, 0xf8, 0xf8, 0x00, 0xf8, 0xf8, 0x08, 0x08, 0xf8, 0xf8, 0x00, 0x78, 0xf8, 0xcc, 0xd8, 0x98, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x07, 0x0f, 0x1f, 0x1e, 0x3c, 0x3c, 0x38, 0x78, 0x70, 0x70, 0x70, 0x70, 0x70, 0x70, 0x70, 0x78, 0x38, 0x3c, 0x1c, 0x1e, 0x0f, 0x07, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0f, 0x0f, 0x00, 0x07, 0x0f, 0x08, 0x0f, 0x0f, 0x0c, 0x0c, 0x0c, 0x00, 0x00, 0x00, 0x0f, 0x0f, 0x00, 0x00, 0x00, 0x0f, 0x0f, 0x0c, 0x0c, 0x07, 0x03, 0x03, 0x07, 0x0c, 0x0c, 0x0f, 0x07, 0x00, 0x0f, 0x07, 0x03, 0x03, 0x0f, 0x0c, 0x00, 0x0f, 0x0f, 0x00, 0x0f, 0x0f, 0x00, 0x0f, 0x0f, 0x0c, 0x0c, 0x07, 0x07, 0x00, 0x06, 0x0e, 0x0c, 0x0f, 0x07, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    };
-    oled_write_raw_P(raw_logo, sizeof(raw_logo));
+  static const char PROGMEM raw_logo[] = {
+      // Bastard Keyboards, 128x32px
+      0x00, 0x00, 0x00, 0x00, 0x00, 0xc0, 0xe0, 0xf0, 0xf8, 0xf8, 0x3c, 0x1c,
+      0x1e, 0x1e, 0x0e, 0x0e, 0x0e, 0x0e, 0x0e, 0x0e, 0x0e, 0x1e, 0x1c, 0x3c,
+      0x3c, 0x78, 0xf0, 0xe0, 0xe0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0xf8, 0xf8, 0x98, 0xf8, 0x70, 0x00, 0x00, 0xf0, 0xf8, 0xf8, 0xe0,
+      0x00, 0x00, 0xf0, 0xf8, 0x98, 0xb8, 0x30, 0x00, 0x18, 0xf8, 0xf8, 0x18,
+      0x18, 0x00, 0xf0, 0xf8, 0xf8, 0xe0, 0x00, 0x00, 0x60, 0xf0, 0x98, 0x98,
+      0xf8, 0xf8, 0x00, 0xf8, 0xf8, 0x18, 0xf8, 0xf0, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xf0, 0xfe,
+      0xff, 0x3f, 0x07, 0xff, 0xff, 0xff, 0x60, 0x70, 0x70, 0x70, 0xe0, 0xc0,
+      0x80, 0x00, 0x00, 0xff, 0xff, 0xff, 0xc0, 0xe0, 0xf0, 0x30, 0x10, 0x03,
+      0x07, 0xff, 0xff, 0xfc, 0xc0, 0x00, 0x00, 0x00, 0x00, 0x0f, 0x0f, 0x09,
+      0x0f, 0x0f, 0x00, 0x0e, 0x0f, 0x06, 0x07, 0x0f, 0x0c, 0x00, 0x0c, 0x0c,
+      0x09, 0x0f, 0x0f, 0x00, 0x00, 0x0f, 0x0f, 0x00, 0x00, 0x0e, 0x0f, 0x06,
+      0x07, 0x0f, 0x0c, 0x00, 0x0e, 0x0f, 0x01, 0x01, 0x0f, 0x0f, 0x00, 0x0f,
+      0x0f, 0x08, 0x0f, 0x0f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0f, 0x7f, 0xff, 0xfc, 0xe0, 0x83,
+      0x0f, 0x1f, 0x18, 0x38, 0x38, 0x18, 0x1f, 0x0f, 0x07, 0x00, 0x00, 0x3f,
+      0x3f, 0x3f, 0x03, 0x07, 0x3f, 0xfe, 0xf0, 0xc0, 0xf0, 0xff, 0xff, 0x3f,
+      0x03, 0x00, 0x00, 0x00, 0x00, 0xf8, 0xf8, 0xe0, 0xf8, 0x18, 0x00, 0xf8,
+      0xf8, 0xc8, 0xc8, 0xc8, 0x00, 0x08, 0x38, 0xf0, 0xe0, 0x78, 0x08, 0x00,
+      0xf8, 0xf8, 0xc8, 0xf8, 0xf8, 0x00, 0xf0, 0xf8, 0x18, 0x0c, 0xf8, 0xf8,
+      0x00, 0x80, 0xf8, 0x38, 0xf8, 0xe0, 0x00, 0x00, 0xf8, 0xf8, 0xc8, 0xf8,
+      0xf8, 0x00, 0xf8, 0xf8, 0x08, 0x08, 0xf8, 0xf8, 0x00, 0x78, 0xf8, 0xcc,
+      0xd8, 0x98, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x07, 0x0f, 0x1f, 0x1e, 0x3c, 0x3c,
+      0x38, 0x78, 0x70, 0x70, 0x70, 0x70, 0x70, 0x70, 0x70, 0x78, 0x38, 0x3c,
+      0x1c, 0x1e, 0x0f, 0x07, 0x03, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x0f, 0x0f, 0x00, 0x07, 0x0f, 0x08, 0x0f, 0x0f, 0x0c, 0x0c, 0x0c,
+      0x00, 0x00, 0x00, 0x0f, 0x0f, 0x00, 0x00, 0x00, 0x0f, 0x0f, 0x0c, 0x0c,
+      0x07, 0x03, 0x03, 0x07, 0x0c, 0x0c, 0x0f, 0x07, 0x00, 0x0f, 0x07, 0x03,
+      0x03, 0x0f, 0x0c, 0x00, 0x0f, 0x0f, 0x00, 0x0f, 0x0f, 0x00, 0x0f, 0x0f,
+      0x0c, 0x0c, 0x07, 0x07, 0x00, 0x06, 0x0e, 0x0c, 0x0f, 0x07, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+      0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+  };
+  oled_write_raw_P(raw_logo, sizeof(raw_logo));
 }
 
 // WPM-responsive animation stuff here
-#    define OLED_SLEEP_FRAMES 2
-#    define OLED_SLEEP_SPEED 10 // below this wpm value your animation will idle
+#define OLED_SLEEP_FRAMES 2
+#define OLED_SLEEP_SPEED 10  // below this wpm value your animation will idle
 
-#    define OLED_WAKE_FRAMES 2               // uncomment if >1
-#    define OLED_WAKE_SPEED OLED_SLEEP_SPEED // below this wpm value your animation will idle
+#define OLED_WAKE_FRAMES 2  // uncomment if >1
+#define OLED_WAKE_SPEED \
+  OLED_SLEEP_SPEED  // below this wpm value your animation will idle
 
-#    define OLED_KAKI_FRAMES 3
-#    define OLED_KAKI_SPEED 40 // above this wpm value typing animation to triggere
+#define OLED_KAKI_FRAMES 3
+#define OLED_KAKI_SPEED 40  // above this wpm value typing animation to triggere
 
-#    define OLED_RTOGI_FRAMES 2
-//#define OLED_LTOGI_FRAMES 2
+#define OLED_RTOGI_FRAMES 2
+// #define OLED_LTOGI_FRAMES 2
 
-//#define ANIM_FRAME_DURATION 500 // how long each frame lasts in ms
-// #define SLEEP_TIMER 60000 // should sleep after this period of 0 wpm, needs fixing
-#    define OLED_ANIM_SIZE 36
-#    define OLED_ANIM_ROWS 4
-#    define OLED_ANIM_MAX_FRAMES 3
-#    if (OLED_SLEEP_FRAMES > OLED_ANIM_MAX_FRAMES) || (OLED_WAKE_FRAMES > OLED_ANIM_MAX_FRAMES) || (OLED_KAKI_FRAMES > OLED_ANIM_MAX_FRAMES) || (OLED_RTOGI_FRAMES > OLED_ANIM_MAX_FRAMES)
-#        error frame size too large
-#    endif
+// #define ANIM_FRAME_DURATION 500 // how long each frame lasts in ms
+//  #define SLEEP_TIMER 60000 // should sleep after this period of 0 wpm, needs
+//  fixing
+#define OLED_ANIM_SIZE 36
+#define OLED_ANIM_ROWS 4
+#define OLED_ANIM_MAX_FRAMES 3
+#if (OLED_SLEEP_FRAMES > OLED_ANIM_MAX_FRAMES) || \
+    (OLED_WAKE_FRAMES > OLED_ANIM_MAX_FRAMES) ||  \
+    (OLED_KAKI_FRAMES > OLED_ANIM_MAX_FRAMES) ||  \
+    (OLED_RTOGI_FRAMES > OLED_ANIM_MAX_FRAMES)
+#error frame size too large
+#endif
 
 static uint8_t animation_frame = 0;
-static uint8_t animation_type  = 0;
+static uint8_t animation_type = 0;
 
 static void render_kitty(uint8_t col, uint8_t line) {
-    // Images credit j-inc(/James Incandenza) and pixelbenny.
-    // Credit to obosob for initial animation approach.
-    // heavily modified by drashna because he's a glutton for punishment
+  // Images credit j-inc(/James Incandenza) and pixelbenny.
+  // Credit to obosob for initial animation approach.
+  // heavily modified by drashna because he's a glutton for punishment
 
-    // clang-format off
+  // clang-format off
     static const char PROGMEM animation[4][OLED_ANIM_MAX_FRAMES][OLED_ANIM_ROWS][OLED_ANIM_SIZE] = {
         // sleep frames
         {
@@ -270,47 +316,48 @@ static void render_kitty(uint8_t col, uint8_t line) {
             }
         }
     };
-    // clang-format on
+  // clang-format on
 
-    for (uint8_t i = 0; i < 4; i++) {
-        oled_set_cursor(col, line + i);
-        oled_write_raw_P(animation[animation_type][animation_frame][i], OLED_ANIM_SIZE);
-    }
+  for (uint8_t i = 0; i < 4; i++) {
+    oled_set_cursor(col, line + i);
+    oled_write_raw_P(animation[animation_type][animation_frame][i],
+                     OLED_ANIM_SIZE);
+  }
 }
 
 uint32_t kitty_animation_phases(uint32_t triger_time, void *cb_arg) {
-    static uint32_t anim_frame_duration = 500;
-#    ifdef WPM_ENABLE
-    if (get_current_wpm() <= OLED_SLEEP_SPEED) {
-#    endif
-        animation_frame     = (animation_frame + 1) % OLED_SLEEP_FRAMES;
-        animation_type      = 0;
-        anim_frame_duration = 500;
-#    ifdef WPM_ENABLE
-    } else if (get_current_wpm() > OLED_WAKE_SPEED) {
-        animation_frame     = (animation_frame + 1) % OLED_WAKE_FRAMES;
-        animation_type      = 1;
-        anim_frame_duration = 800;
-    } else if (get_current_wpm() >= OLED_KAKI_SPEED) {
-        animation_frame     = (animation_frame + 1) % OLED_KAKI_FRAMES;
-        animation_type      = 2;
-        anim_frame_duration = 500;
-    }
-#    endif
-    return anim_frame_duration;
+  static uint32_t anim_frame_duration = 500;
+#ifdef WPM_ENABLE
+  if (get_current_wpm() <= OLED_SLEEP_SPEED) {
+#endif
+    animation_frame = (animation_frame + 1) % OLED_SLEEP_FRAMES;
+    animation_type = 0;
+    anim_frame_duration = 500;
+#ifdef WPM_ENABLE
+  } else if (get_current_wpm() > OLED_WAKE_SPEED) {
+    animation_frame = (animation_frame + 1) % OLED_WAKE_FRAMES;
+    animation_type = 1;
+    anim_frame_duration = 800;
+  } else if (get_current_wpm() >= OLED_KAKI_SPEED) {
+    animation_frame = (animation_frame + 1) % OLED_KAKI_FRAMES;
+    animation_type = 2;
+    anim_frame_duration = 500;
+  }
+#endif
+  return anim_frame_duration;
 }
 
 static void render_wpm(uint8_t padding, uint8_t col, uint8_t line) {
-#    ifdef WPM_ENABLE
-    oled_set_cursor(col, line);
-    oled_write_P(PSTR(OLED_RENDER_WPM_COUNTER), false);
-    if (padding) {
-        for (uint8_t n = padding; n > 0; n--) {
-            oled_write_P(PSTR(" "), false);
-        }
+#ifdef WPM_ENABLE
+  oled_set_cursor(col, line);
+  oled_write_P(PSTR(OLED_RENDER_WPM_COUNTER), false);
+  if (padding) {
+    for (uint8_t n = padding; n > 0; n--) {
+      oled_write_P(PSTR(" "), false);
     }
-    oled_write(get_u8_str(get_current_wpm(), ' '), false);
-#    endif
+  }
+  oled_write(get_u8_str(get_current_wpm(), ' '), false);
+#endif
 }
 
 //=============  USER CONFIG PARAMS  ===============
@@ -324,130 +371,141 @@ static void render_wpm(uint8_t padding, uint8_t col, uint8_t line) {
 // vertical_offset          = 0;
 
 static void render_wpm_graph(uint8_t max_lines_graph, uint8_t vertical_offset) {
-#    ifdef WPM_ENABLE
-    static uint16_t timer   = 0;
-    static uint8_t  x       = OLED_DISPLAY_HEIGHT - 1;
-    uint8_t         currwpm = get_current_wpm();
-    float           max_wpm = OLED_WPM_GRAPH_MAX_WPM;
+#ifdef WPM_ENABLE
+  static uint16_t timer = 0;
+  static uint8_t x = OLED_DISPLAY_HEIGHT - 1;
+  uint8_t currwpm = get_current_wpm();
+  float max_wpm = OLED_WPM_GRAPH_MAX_WPM;
 
-    if (timer_elapsed(timer) > OLED_WPM_GRAPH_REFRESH_INTERVAL) {                  // check if it's been long enough before refreshing graph
-        x = (max_lines_graph - 1) - ((currwpm / max_wpm) * (max_lines_graph - 1)); // main calculation to plot graph line
-        for (uint8_t i = 0; i <= OLED_WPM_GRAPH_GRAPH_LINE_THICKNESS - 1; i++) {   // first draw actual value line
-            oled_write_pixel(3, x + i + vertical_offset, true);
-        }
-#        ifdef OLED_WPM_GRAPH_VERTICAL_LINE
-        static uint8_t vert_count = 0;
-        if (vert_count == OLED_WPM_GRAPH_VERTCAL_LINE_INTERVAL) {
-            vert_count = 0;
-            while (x <= (max_lines_graph - 1)) {
-                oled_write_pixel(3, x + vertical_offset, true);
-                x++;
-            }
-        } else {
-            for (uint8_t i = (max_lines_graph - 1); i > x; i--) {
-                if (i % OLED_WPM_GRAPH_AREA_FILL_INTERVAL == 0) {
-                    oled_write_pixel(3, i + vertical_offset, true);
-                }
-            }
-            vert_count++;
-        }
-#        else
-        for (int i = (max_lines_graph - 1); i > x; i--) {
-            if (i % OLED_WPM_GRAPH_AREA_FILL_INTERVAL == 0) {
-                oled_write_pixel(3, i + vertical_offset, true);
-            }
-        }
-#        endif
-#        include <math.h>
-        uint8_t y_start  = ceil(vertical_offset / 8);
-        uint8_t y_length = y_start + ceil(max_lines_graph / 8);
-        oled_pan_section(false, y_start, y_length, 3, 125); // then move the entire graph one pixel to the right
-        timer = timer_read();                               // refresh the timer for the next iteration
+  if (timer_elapsed(timer) >
+      OLED_WPM_GRAPH_REFRESH_INTERVAL) {  // check if it's been long enough
+                                          // before refreshing graph
+    x = (max_lines_graph - 1) -
+        ((currwpm / max_wpm) *
+         (max_lines_graph - 1));  // main calculation to plot graph line
+    for (uint8_t i = 0; i <= OLED_WPM_GRAPH_GRAPH_LINE_THICKNESS - 1;
+         i++) {  // first draw actual value line
+      oled_write_pixel(3, x + i + vertical_offset, true);
     }
-#    endif
+#ifdef OLED_WPM_GRAPH_VERTICAL_LINE
+    static uint8_t vert_count = 0;
+    if (vert_count == OLED_WPM_GRAPH_VERTCAL_LINE_INTERVAL) {
+      vert_count = 0;
+      while (x <= (max_lines_graph - 1)) {
+        oled_write_pixel(3, x + vertical_offset, true);
+        x++;
+      }
+    } else {
+      for (uint8_t i = (max_lines_graph - 1); i > x; i--) {
+        if (i % OLED_WPM_GRAPH_AREA_FILL_INTERVAL == 0) {
+          oled_write_pixel(3, i + vertical_offset, true);
+        }
+      }
+      vert_count++;
+    }
+#else
+    for (int i = (max_lines_graph - 1); i > x; i--) {
+      if (i % OLED_WPM_GRAPH_AREA_FILL_INTERVAL == 0) {
+        oled_write_pixel(3, i + vertical_offset, true);
+      }
+    }
+#endif
+#include <math.h>
+    uint8_t y_start = ceil(vertical_offset / 8);
+    uint8_t y_length = y_start + ceil(max_lines_graph / 8);
+    oled_pan_section(false, y_start, y_length, 3,
+                     125);  // then move the entire graph one pixel to the right
+    timer = timer_read();   // refresh the timer for the next iteration
+  }
+#endif
 }
 
-#    if defined(POINTING_DEVICE_ENABLE)
-void render_pointing_dpi_status(uint16_t cpi, uint8_t padding, uint8_t col, uint8_t line) {
-    oled_set_cursor(col, line);
-    oled_write_P(PSTR("CPI:"), false);
-    if (padding) {
-        for (uint8_t n = padding - 1; n > 0; n--) {
-            oled_write_P(PSTR(" "), false);
-        }
+#if defined(POINTING_DEVICE_ENABLE)
+void render_pointing_dpi_status(uint16_t cpi, uint8_t padding, uint8_t col,
+                                uint8_t line) {
+  oled_set_cursor(col, line);
+  oled_write_P(PSTR("CPI:"), false);
+  if (padding) {
+    for (uint8_t n = padding - 1; n > 0; n--) {
+      oled_write_P(PSTR(" "), false);
     }
+  }
 
-    oled_write(get_u16_str(cpi, ' '), false);
+  oled_write(get_u16_str(cpi, ' '), false);
 }
-#    endif
+#endif
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-    kittoken            = defer_exec(3000, kitty_animation_phases, NULL);
-    splash_screen_timer = timer_read();
+  kittoken = defer_exec(3000, kitty_animation_phases, NULL);
+  splash_screen_timer = timer_read();
 
-    oled_clear();
-    oled_render();
-    return rotation;
+  oled_clear();
+  oled_render();
+  return rotation;
 }
 
 bool oled_task_user(void) {
-    static bool display_splash_screen = true;
+  static bool display_splash_screen = true;
 
-#    if defined(OLED_DISPLAY_128X128)
-    oled_render_large_display(true);
-#    endif
+#if defined(OLED_DISPLAY_128X128)
+  oled_render_large_display(true);
+#endif
 
-    if (display_splash_screen) {
-        if (timer_elapsed(splash_screen_timer) > 3000) {
-            display_splash_screen = false;
-            oled_clear();
-        }
-        render_logo();
-    } else {
-        // Layer status.
-        layer_state_t current_layer = get_highest_layer(layer_state);
-        oled_write_P(PSTR("BASE"), /* inverted = */ current_layer == _BASE);
-        oled_write_P(PSTR(" "), /* inverted = */ false);
-        oled_write_P(PSTR("NAV"), /* inverted = */ current_layer == _NAVL || current_layer == _NAVR);
-        oled_write_P(PSTR(" "), /* inverted = */ false);
-        oled_write_P(PSTR("SYM"), /* inverted = */ current_layer == _SYML || current_layer == _SYMR);
-        oled_write_P(PSTR(" "), /* inverted = */ false);
-        oled_write_P(PSTR("NUM"), /* inverted = */ current_layer == _NUM);
-        oled_write_P(PSTR(" "), /* inverted = */ false);
-        oled_write_P(PSTR("SPEC"), /* inverted = */ current_layer == _SPEC);
+  if (display_splash_screen) {
+    if (timer_elapsed(splash_screen_timer) > 3000) {
+      display_splash_screen = false;
+      oled_clear();
+    }
+    render_logo();
+  } else {
+    // Layer status.
+    layer_state_t current_layer = get_highest_layer(layer_state);
+    oled_write_P(PSTR("BASE"), /* inverted = */ current_layer == _BASE);
+    oled_write_P(PSTR(" "), /* inverted = */ false);
+    oled_write_P(PSTR("NAV"), /* inverted = */ current_layer == _NAVL ||
+                                  current_layer == _NAVR);
+    oled_write_P(PSTR(" "), /* inverted = */ false);
+    oled_write_P(PSTR("SYM"), /* inverted = */ current_layer == _SYML ||
+                                  current_layer == _SYMR);
+    oled_write_P(PSTR(" "), /* inverted = */ false);
+    oled_write_P(PSTR("NUM"), /* inverted = */ current_layer == _NUM);
+    oled_write_P(PSTR(" "), /* inverted = */ false);
+    oled_write_P(PSTR("SPEC"), /* inverted = */ current_layer == _SPEC);
 
-        oled_write_P(PSTR("Shift: "), /* inverted = */ false);
-        oled_write_P(PSTR("OSM"), /* inverted = */ get_oneshot_mods() & MOD_MASK_SHIFT);
-        oled_write_P(PSTR(" "), /* inverted = */ false);
-        oled_write_P(PSTR("WRD"), /* inverted = */ is_caps_word_on());
-        oled_write_P(PSTR(" "), /* inverted = */ false);
-        oled_write_P(PSTR("LCK"), /* inverted = */ get_oneshot_locked_mods() & MOD_MASK_SHIFT);
+    oled_write_P(PSTR("Shift: "), /* inverted = */ false);
+    oled_write_P(PSTR("OSM"),
+                 /* inverted = */ get_oneshot_mods() & MOD_MASK_SHIFT);
+    oled_write_P(PSTR(" "), /* inverted = */ false);
+    oled_write_P(PSTR("WRD"), /* inverted = */ is_caps_word_on());
+    oled_write_P(PSTR(" "), /* inverted = */ false);
+    oled_write_P(PSTR("LCK"),
+                 /* inverted = */ get_oneshot_locked_mods() & MOD_MASK_SHIFT);
 
-        oled_write_P("\n\n", false);
-        oled_write_P("\n  DPI: ", false);
-        const int8_t default_dpi = (dilemma_get_pointer_default_dpi() - 400) / 200;
-        for (int i = 0; i < default_dpi; ++i) {
-            oled_write_P(" ", /* inverted = */ true);
-        }
-        for (int i = default_dpi; i < 12; ++i) {
-            oled_write_P("_", /* inverted = */ false);
-        }
-
-        oled_write_P("\n+ DPI: ", false);
-        const int8_t sniping_dpi = (dilemma_get_pointer_sniping_dpi() - 200) / 100;
-        for (int i = 0; i < sniping_dpi; ++i) {
-            oled_write_P(" ", /* inverted = */ true);
-        }
-        for (int i = sniping_dpi; i < 4; ++i) {
-            oled_write_P("_", /* inverted = */ false);
-        }
-        oled_write_P("\n", false);
-
-        render_wpm_graph(54, 64);
-        render_wpm(1, 7, 15);
-        render_kitty(0, 12);
+    oled_write_P("\n\n", false);
+    oled_write_P("\n  DPI: ", false);
+    const int8_t default_dpi = (dilemma_get_pointer_default_dpi() - 400) / 200;
+    for (int i = 0; i < default_dpi; ++i) {
+      oled_write_P(" ", /* inverted = */ true);
+    }
+    for (int i = default_dpi; i < 12; ++i) {
+      oled_write_P("_", /* inverted = */ false);
     }
 
-    return false;
+    oled_write_P("\n+ DPI: ", false);
+    const int8_t sniping_dpi = (dilemma_get_pointer_sniping_dpi() - 200) / 100;
+    for (int i = 0; i < sniping_dpi; ++i) {
+      oled_write_P(" ", /* inverted = */ true);
+    }
+    for (int i = sniping_dpi; i < 4; ++i) {
+      oled_write_P("_", /* inverted = */ false);
+    }
+    oled_write_P("\n", false);
+
+    render_wpm_graph(54, 64);
+    render_wpm(1, 7, 15);
+    render_kitty(0, 12);
+  }
+
+  return false;
 }
 #endif
