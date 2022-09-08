@@ -27,34 +27,34 @@
  */
 enum keycodes_user {
 #ifdef VIA_ENABLE
-    KEYCODE_USER_BEGIN = USER00,
+  KEYCODE_USER_BEGIN = USER00,
 #else
-    KEYCODE_USER_BEGIN = SAFE_RANGE,
+  KEYCODE_USER_BEGIN = SAFE_RANGE,
 #endif
-    // Custom version of these keycodes that don't shift when only oneshot shift
-    // mod is locked.
-    NS_BSLASH = KEYCODE_USER_BEGIN,
-    NS_COMMA,
-    NS_DOT,
-    NS_GRAVE,
-    NS_QUOTE,
-    NS_LBRACKET,
-    NS_RBRACKET,
-    NS_SCOLON,
-    NS_SLASH,
-    // Custom version of up/down/left/right keycodes that can't be shifted.
-    NS_UP,
-    NS_DOWN,
-    NS_LEFT,
-    NS_RIGHT,
-    // Oneshot mods.
-    OS_LALT,
-    OS_LCTL,
-    OS_LGUI,
-    OS_LSFT,
-    // Compose.
-    COMPOSE,
-    SAFE_RANGE_KEYMAP,
+  // Custom version of these keycodes that don't shift when only oneshot shift
+  // mod is locked.
+  NS_BSLASH = KEYCODE_USER_BEGIN,
+  NS_COMMA,
+  NS_DOT,
+  NS_GRAVE,
+  NS_QUOTE,
+  NS_LBRACKET,
+  NS_RBRACKET,
+  NS_SCOLON,
+  NS_SLASH,
+  // Custom version of up/down/left/right keycodes that can't be shifted.
+  NS_UP,
+  NS_DOWN,
+  NS_LEFT,
+  NS_RIGHT,
+  // Oneshot mods.
+  OS_LALT,
+  OS_LCTL,
+  OS_LGUI,
+  OS_LSFT,
+  // Compose.
+  COMPOSE,
+  SAFE_RANGE_KEYMAP,
 };
 
 // This keymap uses ASCG home row mods.
@@ -122,21 +122,21 @@ enum keycodes_user {
  *
  * docs.qmk.fm/using-qmk/software-features/feature_userspace#customized-functions.
  */
-bool          process_record_keymap(uint16_t keycode, keyrecord_t *record);
-void          matrix_scan_keymap(void);
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record);
+void matrix_scan_keymap(void);
 layer_state_t layer_state_set_keymap(layer_state_t state);
-void          keyboard_post_init_keymap(void);
-void          oneshot_locked_mods_changed_keymap(uint8_t mods);
-void          shutdown_keymap(void);
+void keyboard_post_init_keymap(void);
+void oneshot_locked_mods_changed_keymap(uint8_t mods);
+void shutdown_keymap(void);
 
 enum layers_keymap {
-    _BASE = 0,
-    _NAV,  // Navigation.
-    _VIM,  // Vim.
-    _SYM,  // Symbols.
-    _NUM,  // Number pad.
-    _SHRT, // Shortcuts.
-    _SPEC, // Specials.
+  _BASE = 0,
+  _NAV,   // Navigation.
+  _NUM,   // Number pad.
+  _SYM,   // Symbols.
+  _VIM,   // Vim.
+  _SHRT,  // Shortcuts.
+  _SPEC,  // Specials.
 };
 
 // Layers.
@@ -205,7 +205,7 @@ enum layers_keymap {
     KC_SLSH,    KC_7,    KC_8,    KC_9, ___x___, ___x___, ___x___, ___x___, ___x___, ___x___, \
     KC_MINS,    KC_4,    KC_5,    KC_6, ___x___, ___x___, OS_LGUI, OS_LCTL, OS_LSFT, OS_LALT, \
     ___x___,    KC_1,    KC_2,    KC_3, ___x___, ___x___, NS_LBRC, ___x___, NS_RBRC, ___x___, \
-                               _______,    KC_0, _______, _______
+                                  KC_0, _______, _______, _______
 // clang-format on
 
 /**
@@ -258,13 +258,14 @@ enum layers_keymap {
                    k33, k34, KC_NO, KC_NO, k35, k36
 // clang-format on
 
-#define LAYOUT_split_3x5_2_to_split_3x5_3(...) _LAYOUT_split_3x5_2_to_split_3x5_3(__VA_ARGS__)
+#define LAYOUT_split_3x5_2_to_split_3x5_3(...) \
+  _LAYOUT_split_3x5_2_to_split_3x5_3(__VA_ARGS__)
 
 /* Converts the 3x5_2 layouts into 3x5_3 layouts. */
 #define DVORAK_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(DVORAK_split_3x5_2)
 #define NAV_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NAV_split_3x5_2)
+#define NUM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUM_split_3x5_2)
 #define VIM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(VIM_split_3x5_2)
 #define SYM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SYM_split_3x5_2)
-#define NUM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUM_split_3x5_2)
 #define SHRT_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SHRT_split_3x5_2)
 #define SPEC_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SPEC_split_3x5_2)
