@@ -23,100 +23,42 @@
 #include "quantum/rgb_matrix/rgb_matrix.h"
 #endif  // RGB_MATRIX_ENABLE
 
-#ifdef ONESHOT_MOD_ENABLE
-#include "oneshot_mod.h"
+#include "features/repeat_key.h"
+#include "features/oneshot_mod.h"
 
 typedef struct {
-  oneshot_mod_state_t lalt;
-  oneshot_mod_state_t lctl;
-  oneshot_mod_state_t lgui;
-  oneshot_mod_state_t lsft;
+    oneshot_mod_state_t lalt;
+    oneshot_mod_state_t lctl;
+    oneshot_mod_state_t lgui;
+    oneshot_mod_state_t lsft;
 } osm_state_t;
-#endif  // ONESHOT_MOD_ENABLE
-
-/**
- * \brief Do not shift `keycode` if only oneshot-shift is locked.
- *
- * This effectively suppresses the effect of oneshot-shift locked mod for some
- * keycodes, allowing for better typing experience in all caps (eg. for
- * identifier names in some programming language/coding style).
- */
-#ifndef NO_ONESHOT_SHIFT_LOCKED_CODE
-#    define NO_ONESHOT_SHIFT_LOCKED_CODE(keycode)                          \
-        {                                                                  \
-            if (record->event.pressed) {                                   \
-                if (get_oneshot_locked_mods() & MOD_MASK_SHIFT) {          \
-                    const uint8_t mod_shift = get_mods() & MOD_MASK_SHIFT; \
-                    unregister_mods(mod_shift);                            \
-                    register_code(keycode);                                \
-                    register_mods(mod_shift);                              \
-                } else {                                                   \
-                    register_code(keycode);                                \
-                }                                                          \
-            } else {                                                       \
-                unregister_code(keycode);                                  \
-            }                                                              \
-            break;                                                         \
-        }
-#endif // NO_ONESHOT_SHIFT_LOCKED_CODE
-
-static bool process_record_user_internal(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case NS_1 ... NS_0:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(keycode - NS_1 + KC_1);
-        case NS_BSLS:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_BSLS);
-        case NS_COMMA:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_COMMA);
-        case NS_DOT:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOT);
-        case NS_GRAVE:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_GRAVE);
-        case NS_QUOTE:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_QUOTE);
-        case NS_LBRACKET:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LBRC);
-        case NS_RBRACKET:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RBRC);
-        case NS_SCLN:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SCLN);
-        case NS_SLASH:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_SLASH);
-        case NS_UP:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_UP);
-        case NS_DOWN:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_DOWN);
-        case NS_LEFT:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_LEFT);
-        case NS_RIGHT:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_RIGHT);
-        case NS_MINUS:
-            NO_ONESHOT_SHIFT_LOCKED_CODE(KC_MINUS);
-    }
-    return process_record_user_keymap(keycode, record);
-}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-#ifdef ONESHOT_MOD_ENABLE
-  static osm_state_t osm_state = {
-      .lalt = ONESHOT_UP_UNQUEUED,
-      .lctl = ONESHOT_UP_UNQUEUED,
-      .lgui = ONESHOT_UP_UNQUEUED,
-      .lsft = ONESHOT_UP_UNQUEUED,
-  };
-  oneshot_mod_pre(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
-  oneshot_mod_pre(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
-  oneshot_mod_pre(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
-  oneshot_mod_pre(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
-#endif  // ONESHOT_MOD_ENABLE
-  const bool result = process_record_user_internal(keycode, record);
-#ifdef ONESHOT_MOD_ENABLE
-  oneshot_mod_post(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
-  oneshot_mod_post(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
-  oneshot_mod_post(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
-  oneshot_mod_post(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
-#endif  // ONESHOT_MOD_ENABLE
-  return result;
+    //Custom repeat key handler.
+    if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) {
+        return false;
+    }
+
+    // Custom oneshot mods handler.
+    static osm_state_t osm_state = {
+        .lalt = ONESHOT_UP_UNQUEUED,
+        .lctl = ONESHOT_UP_UNQUEUED,
+        .lgui = ONESHOT_UP_UNQUEUED,
+        .lsft = ONESHOT_UP_UNQUEUED,
+    };
+    oneshot_mod_pre(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
+    oneshot_mod_pre(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
+    oneshot_mod_pre(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
+    oneshot_mod_pre(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
+
+    const bool result = process_record_user_keymap(keycode, record);
+    
+    oneshot_mod_post(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
+    oneshot_mod_post(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
+    oneshot_mod_post(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
+    oneshot_mod_post(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
+    
+    return result;
 }
 
 __attribute__((weak)) bool process_record_user_keymap(uint16_t keycode,
@@ -159,42 +101,12 @@ void eeconfig_init_user(void) {
 #endif  // RGB_MATRIX_ENABLE
 }
 
-/**
- * \brief Called when a one-shot layer "lock" status changes.
- *
- * This is called automatically by the QMK framework when a one-shot layer is
- * activated and deactivated.
- * The only one-shot layer in this layout is the one-shot shift layer.  Turns
- * the RGBs solid blue when this layer is activated, and back to default when
- * deactivated.
- */
-void oneshot_locked_mods_changed_user(uint8_t mods) {
-#ifdef RGB_MATRIX_ENABLE
-  if (mods & MOD_MASK_SHIFT) {
-    rgb_matrix_mode_noeeprom(RGB_MATRIX_NONE);
-    rgb_matrix_sethsv_noeeprom(HSV_BLUE);
-  } else if (!mods) {
-    rgb_matrix_reload_from_eeprom();  // Load default values.
-  }
-#endif  // RGB_MATRIX_ENABLE
-  oneshot_locked_mods_changed_user_keymap(mods);
-}
-
-__attribute__((weak)) void oneshot_locked_mods_changed_user_keymap(
-    uint8_t mods) {}
-
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.
 void rgb_matrix_update_pwm_buffers(void);
 #endif  // RGB_MATRIX_ENABLE
 
 void shutdown_user(void) {
-#ifdef RGBLIGHT_ENABLE
-  rgblight_enable_noeeprom();
-  rgblight_mode_noeeprom(1);
-  //rgblight_setrgb_red();
-  rgblight_setrgb(rgblight_get_val(), 0x00, 0x00);
-#endif  // RGBLIGHT_ENABLE
 #ifdef RGB_MATRIX_ENABLE
   //rgb_matrix_set_color_all(RGB_RED);
   rgb_matrix_set_color_all(rgb_matrix_get_val(), 0x00, 0x00);
@@ -207,3 +119,51 @@ void shutdown_user(void) {
 }
 
 __attribute__((weak)) void shutdown_user_keymap(void) {}
+
+bool get_repeat_key_eligible(uint16_t keycode,
+                                                   keyrecord_t* record) {
+  switch (keycode) {
+    // Also ignore Tri Layer keys
+    case QK_TRI_LAYER_LOWER:
+    case QK_TRI_LAYER_UPPER:
+    // Also ignore custom Callum mods
+    case OS_LALT ... OS_LSFT:
+    // Ignore MO, TO, TG, and TT layer switch keys.
+    case QK_MOMENTARY ... QK_MOMENTARY_MAX:
+    case QK_TO ... QK_TO_MAX:
+    case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:
+    case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
+    // Ignore mod keys.
+    case KC_LCTL ... KC_RGUI:
+    case KC_HYPR:
+    case KC_MEH:
+      // Ignore one-shot keys.
+#ifndef NO_ACTION_ONESHOT
+    case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
+    case QK_ONE_SHOT_MOD ... QK_ONE_SHOT_MOD_MAX:
+#endif  // NO_ACTION_ONESHOT
+      return false;
+
+      // Ignore hold events on tap-hold keys.
+#ifndef NO_ACTION_TAPPING
+    case QK_MOD_TAP ... QK_MOD_TAP_MAX:
+#ifndef NO_ACTION_LAYER
+    case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
+#endif  // NO_ACTION_LAYER
+      if (record->tap.count == 0) {
+        return false;
+      }
+      break;
+#endif  // NO_ACTION_TAPPING
+
+#ifdef SWAP_HANDS_ENABLE
+    case QK_SWAP_HANDS ... QK_SWAP_HANDS_MAX:
+      if (IS_SWAP_HANDS_KEYCODE(keycode) || record->tap.count == 0) {
+        return false;
+      }
+      break;
+#endif  // SWAP_HANDS_ENABLE
+  }
+
+  return true;
+}

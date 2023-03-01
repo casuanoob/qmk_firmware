@@ -46,6 +46,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
+// Triple nop delay thing lol
+void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
+    for (int32_t i = 0; i < 40; i++) {
+        __asm__ volatile("nop" ::: "memory");
+    }
+}
+
 #ifdef OLED_ENABLE
 #include "oled_driver.h"
 
@@ -481,10 +488,10 @@ bool oled_task_user(void) {
     oled_write_P(PSTR(" "), /* inverted = */ false);
     oled_write_P(PSTR("SYM"), /* inverted = */ current_layer == _SYM);
     oled_write_P(PSTR(" "), /* inverted = */ false);
-    oled_write_P(PSTR("NUM"), /* inverted = */ current_layer == _NUM);
+    oled_write_P(PSTR("NUM"), /* inverted = */ (current_layer == _NUM) || (current_layer == _NUMPD));
     oled_write_P(PSTR(" "), /* inverted = */ false);
-    oled_write_P(PSTR("NUM"), /* inverted = */ current_layer == _NUMPD);
-    oled_write_P(PSTR(" "), /* inverted = */ false);
+    //oled_write_P(PSTR("NUM"), /* inverted = */ current_layer == _NUMPD);
+    //oled_write_P(PSTR(" "), /* inverted = */ false);
     oled_write_P(PSTR("FUN"), /* inverted = */ current_layer == _FUN);
     oled_write_P(PSTR(" "), /* inverted = */ false);
     oled_write_P(PSTR("SYS"), /* inverted = */ current_layer == _SPEC);

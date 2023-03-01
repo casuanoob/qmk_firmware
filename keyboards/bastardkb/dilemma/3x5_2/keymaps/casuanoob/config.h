@@ -37,7 +37,7 @@
 #define I2C1_CLOCK_SPEED 1000000
 //#define I2C1_DUTY_CYCLE FAST_DUTY_CYCLE_2
 #define OLED_DISPLAY_HEIGHT 128
-#define OLED_TIMEOUT 60000 //test, oled should sleep after 1 minute
+#define OLED_TIMEOUT 60000 //doesn't work with custom driver, oled should sleep after 1 minute
 #define OLED_BRIGHTNESS 128
 
 #define SPLIT_TRANSPORT_MIRROR
@@ -53,6 +53,9 @@
 #define POINTING_DEVICE_GESTURES_CURSOR_GLIDE_ENABLE
 #define POINTING_DEVICE_GESTURES_SCROLL_ENABLE
 
+//userspace keymap casuanoob/split34 option for when thumbs are tucky
 #define TUCKY_THUMBS
 
+//debug stuff
 #define DEBUG_MATRIX_SCAN_RATE
+#define SERIAL_DEBUG

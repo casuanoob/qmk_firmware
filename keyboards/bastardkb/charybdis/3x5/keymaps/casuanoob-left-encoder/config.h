@@ -16,6 +16,11 @@
  */
 #pragma once
 
+// Limit maximum brightness to keep power consumption reasonable, and avoid
+// disconnects.
+#undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 72
+
 // Trackball angle adjustment.
 #undef ROTATIONAL_TRANSFORM_ANGLE
 #define ROTATIONAL_TRANSFORM_ANGLE -25
@@ -30,7 +35,7 @@
 */
 #if defined(KEYBOARD_bastardkb_charybdis_3x5_blackpill) || defined(KEYBOARD_bastardkb_charybdis_4x6_blackpill)
     /* Serial baudrate configuration*/
-    #define SERIAL_USART_SPEED 921600
+    #define SERIAL_USART_SPEED (1 * 1024 * 1024)
 
     /* Override RGB settings. 
     * \brief 12 LEDs are added by the falcon PCB to the original 36
@@ -59,7 +64,7 @@
     #define ENCODERS_PAD_B_RIGHT {  }
 #endif // KEYBOARD_bastardkb_charybdis_3x5_blackpill || KEYBOARD_bastardkb_charybdis_4x6_blackpill
 
-/* This is specific to Casuanoob's WIP Splinky charybdis 3x5 falcon encoder build.
+/* This is specific to Casuanoob's WIP Splinky v2 charybdis 3x5 falcon encoder build.
 * \ 
 */
 #if defined(KEYBOARD_bastardkb_charybdis_3x5_v2_splinky_2)
@@ -79,7 +84,7 @@
 
     /* Serial baudrate configuration*/
     //#define SELECT_SOFT_SERIAL_SPEED 1
-    #define SERIAL_USART_SPEED (1024 * 300) // formerly stable at 1024 * 800
+    #define SERIAL_USART_SPEED (1024 * 500) // formerly stable at 1024 * 800, then 1024 * 300 as of 2023_01
     //#define SERIAL_USART_SPEED 460800 // PIO half-duplex max stable speed 460800
     /* CRC. */
     #define CRC8_USE_TABLE
