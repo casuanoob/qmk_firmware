@@ -74,12 +74,12 @@ bool dip_switch_update_user(uint8_t index, bool active) {
 #endif // DIP_SWITCH_ENABLE
 
 // Triple nop delay thing lol
-/**void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
+void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
     for (int32_t i = 0; i < 40; i++) {
         __asm__ volatile("nop" ::: "memory");
     }
 }
-**/
+
 void keyboard_post_init_user_keymap(void) {
   // Customise these values to desired behaviour
   debug_enable=false;

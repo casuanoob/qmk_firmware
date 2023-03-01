@@ -20,9 +20,9 @@
 #include "delay.h"
 #include "quantum.h"
 
-#ifdef TAP_DANCE_ENABLE
+/**#ifdef TAP_DANCE_ENABLE
 #    include "tap_dance.h"
-#endif // TAP_DANCE_ENABLE
+#endif // TAP_DANCE_ENABLE**/
 
 /**
  * \brief Similar to `_kb`, `_user`, `_user_keymap`, and other variants, but for
@@ -34,7 +34,7 @@ bool          process_record_keymap(uint16_t keycode, keyrecord_t *record);
 void          matrix_scan_keymap(void);
 layer_state_t layer_state_set_keymap(layer_state_t state);
 void          keyboard_post_init_keymap(void);
-void          oneshot_locked_mods_changed_keymap(uint8_t mods);
+//void          oneshot_locked_mods_changed_keymap(uint8_t mods);
 void          shutdown_keymap(void);
 
 enum layers_keymap {
@@ -60,8 +60,8 @@ enum layers_keymap {
 };
 
 // Layers.
-#define NAV MO(_NAV)
-#define SYM MO(_SYM)
+#define NAV QK_TRI_LAYER_LOWER
+#define SYM QK_TRI_LAYER_UPPER
 #define NUMPD MO(_NUMPD)
 #define FUN OSL(_FUN)
 #define FUNCT MO(_FUN)
@@ -108,7 +108,7 @@ enum layers_keymap {
  */
 // clang-format off
 #define DVORAK_split_3x5_2                                                                    \
-    NS_QUOT, NS_COMM,  NS_DOT,    KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L, \
+    KC_QUOT, KC_COMM,  KC_DOT,    KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L, \
        KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S, \
     KC_UNDS,    KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z, \
                                    NAV,  TD_SFT,   KC_SPC,    SYM
@@ -125,7 +125,7 @@ enum layers_keymap {
 #define COLEMAKdhm_split_3x5_2                                                                  \
        KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_UNDS, \
        KC_A,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_O, \
-       KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H, NS_COMM,  NS_DOT, NS_QUOT, \
+       KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,    KC_K,    KC_H, KC_COMM,  KC_DOT, KC_QUOT, \
                                   _________DEFAULT_THUMBS_________
 // clang-format on
 
@@ -140,7 +140,7 @@ enum layers_keymap {
 #define APTmod_split_3x5_2                                                                      \
        KC_W,    KC_C,    KC_G,    KC_D,    KC_K,    KC_Q,    KC_L,    KC_U,    KC_O,    KC_Y, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_B,    KC_J,    KC_N,    KC_E,    KC_A,    KC_I, \
-       KC_Z,    KC_V,    KC_M,    KC_F,    KC_P,    KC_X,  NS_DOT, NS_COMM, NS_QUOT, KC_UNDS, \
+       KC_Z,    KC_V,    KC_M,    KC_F,    KC_P,    KC_X,  KC_DOT, KC_COMM, KC_QUOT, KC_UNDS, \
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
@@ -155,7 +155,7 @@ enum layers_keymap {
 #define APTv3_split_3x5_2                                                                      \
        KC_W,    KC_G,    KC_D,    KC_F,    KC_V,    KC_Q,    KC_L,    KC_U,    KC_O,    KC_Y, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_B,    KC_J,    KC_N,    KC_E,    KC_A,    KC_I, \
-       KC_X,    KC_C,    KC_M,    KC_P,    KC_K,    KC_Z,  NS_DOT, NS_COMM, NS_QUOT, KC_UNDS, \
+       KC_X,    KC_C,    KC_M,    KC_P,    KC_K,    KC_Z,  KC_DOT, KC_COMM, KC_QUOT, KC_UNDS, \
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
@@ -170,7 +170,7 @@ enum layers_keymap {
 #define APTv4_split_3x5_2                                                                      \
        KC_W,    KC_C,    KC_G,    KC_D,    KC_K,    KC_Q,    KC_L,    KC_U,    KC_O,    KC_Y, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_B,    KC_J,    KC_N,    KC_E,    KC_A,    KC_I, \
-       KC_Z,    KC_V,    KC_M,    KC_F,    KC_P,    KC_X,  NS_DOT, NS_COMM, NS_QUOT, KC_UNDS, \
+       KC_Z,    KC_V,    KC_M,    KC_F,    KC_P,    KC_X,  KC_DOT, KC_COMM, KC_QUOT, KC_UNDS, \
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
@@ -185,7 +185,7 @@ enum layers_keymap {
 #define Engel_split_3x5_2                                                                      \
        KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_UNDS, \
        KC_C,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_A,    KC_I,    KC_O, \
-    NS_QUOT,    KC_X,    KC_V,    KC_D,    KC_K,    KC_Z,    KC_H, NS_COMM,  NS_DOT, NS_SLSH, \
+    KC_QUOT,    KC_X,    KC_V,    KC_D,    KC_K,    KC_Z,    KC_H, KC_COMM,  KC_DOT, KC_SLSH, \
                                    NAV,  KC_SPC,  TD_SFT,    LT(_SYM, KC_E)
 // clang-format on
 
@@ -198,9 +198,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define APTex_split_3x5_2                                                                      \
-    NS_SLSH,    KC_W,    KC_M,    KC_V,    KC_Q,    KC_Z,    KC_Y,    KC_O,    KC_U, KC_UNDS, \
+    KC_SLSH,    KC_W,    KC_M,    KC_V,    KC_Q,    KC_Z,    KC_Y,    KC_O,    KC_U, KC_UNDS, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_B,    KC_P,    KC_N,    KC_A,    KC_I,    KC_L, \
-       KC_X,    KC_C,    KC_G,    KC_D,    KC_K,    KC_J,    KC_F, NS_QUOT, NS_COMM,  NS_DOT, \
+       KC_X,    KC_C,    KC_G,    KC_D,    KC_K,    KC_J,    KC_F, KC_QUOT, KC_COMM,  KC_DOT, \
                                  __________THEMBY_THUMBS_________
 // clang-format on
 
@@ -212,9 +212,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define NRSTex_split_3x5_2                                                                      \
-       KC_X,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, NS_QUOT, \
+       KC_X,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT, \
        KC_N,    KC_R,    KC_S,    KC_T,    KC_G,    KC_K,    KC_H,    KC_A,    KC_I,    KC_O, \
-      MOUSE,    KC_V,    KC_C,    KC_D,    KC_Q,    KC_Z,    KC_M, NS_COMM,  NS_DOT,   MOUSE, \
+      MOUSE,    KC_V,    KC_C,    KC_D,    KC_Q,    KC_Z,    KC_M, KC_COMM,  KC_DOT,   MOUSE, \
                                  __________THEMBY_THUMBS_________
 // clang-format on
 
@@ -226,23 +226,22 @@ enum layers_keymap {
  */
 // clang-format off
 #define nAPTmak_split_3x5_2                                                                      \
-       KC_V,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, NS_QUOT, \
+     REPEAT,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_K,    KC_X,    KC_N,    KC_A,    KC_I,    KC_O, \
-      MOUSE,    KC_C,    KC_G,    KC_D,    KC_Q,    KC_Z,    KC_M, NS_COMM,  NS_DOT,   MOUSE, \
+      MOUSE,    KC_C,    KC_G,    KC_D,    KC_Q,    KC_Z,    KC_M, KC_COMM,  KC_DOT,   MOUSE, \
                                  __________THEMBY_THUMBS_________
 // clang-format on
 
-/** 
- * \brief nu-APTmak layout.
+/** \brief Adept layout.
  * 
  * nAPTmak, 34 key version - can be converted to 30 key layout with Q and Z on combos
  * Left and right shift are moved to thumb bigram combos
  */
 // clang-format off
 #define ADEPT_split_3x5_2                                                                        \
-     TD_SFT,    KC_W,    KC_M,    KC_P,    KC_Q,    KC_Z,    KC_K, NS_COMM,  NS_DOT,  RD_SFT, \
+     TD_SFT,    KC_W,    KC_M,    KC_P,    KC_Q,    KC_Z,    KC_K, KC_COMM,  KC_DOT,  RD_SFT, \
        KC_R,    KC_S,    KC_N,    KC_T,    KC_G,    KC_V,    KC_H,    KC_A,    KC_I,    KC_O, \
-       KC_X,    KC_C,    KC_F,    KC_D,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, NS_QUOT, \
+       KC_X,    KC_C,    KC_F,    KC_D,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT, \
                                  __________THEMBY_THUMBS_________
 // clang-format on
 
@@ -255,9 +254,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define Canary_split_3x5_2                                                                       \
-       KC_W,    KC_L,    KC_Y,    KC_P,    KC_B,    KC_Z,    KC_F,    KC_O,    KC_U, NS_QUOT, \
+       KC_W,    KC_L,    KC_Y,    KC_P,    KC_B,    KC_Z,    KC_F,    KC_O,    KC_U, KC_QUOT, \
        KC_C,    KC_R,    KC_S,    KC_T,    KC_G,    KC_M,    KC_N,    KC_E,    KC_I,    KC_A, \
-       KC_Q,    KC_J,    KC_V,    KC_D,    KC_K,    KC_X,    KC_H, NS_COMM,  NS_DOT, KC_UNDS, \
+       KC_Q,    KC_J,    KC_V,    KC_D,    KC_K,    KC_X,    KC_H, KC_COMM,  KC_DOT, KC_UNDS, \
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
@@ -270,7 +269,7 @@ enum layers_keymap {
 #define Nerps_split_3x5_2                                                                       \
        KC_X,    KC_L,    KC_D,    KC_P,    KC_V,    KC_Z,    KC_K,    KC_O,    KC_U, KC_UNDS, \
        KC_N,    KC_R,    KC_T,    KC_S,    KC_G,    KC_Y,    KC_H,    KC_E,    KC_I,    KC_A, \
-       KC_Q,    KC_J,    KC_M,    KC_C,    KC_W,    KC_B,    KC_F, NS_QUOT, NS_COMM,  NS_DOT, \
+       KC_Q,    KC_J,    KC_M,    KC_C,    KC_W,    KC_B,    KC_F, KC_QUOT, KC_COMM,  KC_DOT, \
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
@@ -280,8 +279,8 @@ enum layers_keymap {
 // clang-format off
 #define GAMING_split_3x5_2                                                                      \
        KC_T,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, \
-    KC_LSFT,   KC_A,    KC_S,    KC_D,    KC_F,    KC_H,    KC_J,    KC_K,    KC_L, NS_QUOT, \
-    KC_LCTL,   KC_Z,    KC_X,    KC_C,    KC_V, DRGSCRL, KC_BTN3, KC_BTN1, KC_BTN2, SNIPING, \
+    KC_LSFT,   KC_A,    KC_S,    KC_D,    KC_F,    KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, \
+    KC_LCTL,   KC_Z,    KC_X,    KC_C,    KC_V,    KC_N,    KC_M, KC_COMM,  KC_DOT, SNIPING, \
                                 _________DEFAULT_THUMBS_________
 // clang-format on
 
@@ -294,8 +293,8 @@ enum layers_keymap {
  */
 // clang-format off
 #define NAV_split_3x5_2                                                                       \
-    SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB, ___x___, KC_PGUP, KC_HOME,   NS_UP,  KC_END,  KC_DEL, \
-    OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT,   KC_F2, KC_PGDN, NS_LEFT, NS_DOWN, NS_RGHT,  KC_ENT, \
+    SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB, ___x___, KC_PGUP, KC_HOME,   KC_UP,  KC_END,  KC_DEL, \
+    OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT,   KC_F2, KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT,  KC_ENT, \
     WS_PREV,  SC_CUT, SC_COPY, SC_PSTE, WS_NEXT, ___x___, KC_BSPC, ___x___, ___x___, ___x___, \
                                _______, _______, _______, _______
 // clang-format on
@@ -305,9 +304,9 @@ enum layers_keymap {
  */
 // clang-format off
 #define SYM_split_3x5_2                                                                       \
-     KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, NS_SCLN, KC_LPRN, KC_RPRN, SPECIAL, \
-    KC_EXLM, KC_PLUS, NS_MINS,  KC_EQL, KC_HASH, KC_UNDS, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
-    KC_TILD,  KC_DLR, KC_ASTR, NS_SLSH, KC_AMPR, KC_PIPE, NS_BSLS, KC_LCBR, KC_RCBR,  NS_GRV, \
+     KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_SCLN, KC_LPRN, KC_RPRN, SPECIAL, \
+    KC_EXLM, KC_PLUS, KC_MINS,  KC_EQL, KC_HASH, KC_UNDS, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
+    KC_TILD,  KC_DLR, KC_ASTR, KC_SLSH, KC_AMPR, KC_PIPE, KC_BSLS, KC_LCBR, KC_RCBR,  KC_GRV, \
                                _______, _______, _______, _______
 // clang-format on
 
@@ -320,8 +319,8 @@ enum layers_keymap {
 #ifdef NUM_LAYER_NUMROW
 #define NUMBER_split_3x5_2                                                                    \
     OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT, ___x___, ___x___, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
-       NS_4,    NS_3,    NS_2,    NS_1, ___x___, KC_BSPC,    NS_0,    NS_6,    NS_7,    NS_8, \
-        FUN, NS_COMM,  NS_DOT,    NS_5, KC_LABK, KC_RABK,    NS_9, NS_LBRC, NS_RBRC,     FUN, \
+       KC_4,    KC_3,    KC_2,    KC_1, ___x___, KC_BSPC,    KC_0,    KC_6,    KC_7,    KC_8, \
+        FUN, KC_COMM,  KC_DOT,    KC_5, KC_LABK, KC_RABK,    KC_9, KC_LBRC, KC_RBRC,     FUN, \
                                _______, _______, _______, _______
 #else
 #define NUMBER_split_3x5_2                                                                    \
@@ -340,7 +339,7 @@ enum layers_keymap {
 #define NUMPAD_split_3x5_2                                                                       \
     KC_PSLS,    KC_7,    KC_8,    KC_9, KC_PAST, KC_PAST,   KC_P7,   KC_P8,   KC_P9, KC_PMNS, \
     ___________NUMPAD_HRM_____________, KC_PPLS, KC_PSLS,   KC_P4,   KC_P5,   KC_P6, KC_PPLS, \
-    KC_PDOT,    KC_1,    KC_2,    KC_3,   KC_P0, KC_P0,   KC_P1,   KC_P2,   KC_P3, KC_PDOT, \
+    KC_PDOT,    KC_1,    KC_2,    KC_3,    KC_0,   KC_P0,   KC_P1,   KC_P2,   KC_P3, KC_PDOT, \
                                _______, _______, KC_PENT,   KC_P0
 // clang-format on
 

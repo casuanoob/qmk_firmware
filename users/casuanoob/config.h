@@ -20,23 +20,6 @@
 // Split keyboards {{{
 
 #ifdef SPLIT_KEYBOARD
-#ifndef SPLIT_HAND_PIN
-/**
- * \brief Flash each side with `-bl dfu-split-*` to set handedness in memory eg.
- *
- *     `qmk flash -bl dfu-split-left -kb <keyboard> -km delay`
- *     `qmk flash -bl dfu-split-right -kb <keyboard> -km delay`
- *
- * The handedness needs only be set once.  The actual firmware image is
- * unchanged.  This means that even though the commands above will keep working,
- * the flashing process can be simplified by using the same flash command for
- * both halves once the handedness has been set once to EEPROM, ie.
- *
- *     `qmk flash -kb <keyboard> -km delay`
- */
-#define EE_HANDS
-#endif  // SPLIT_HAND_PIN
-
 // Enable split keyboards extensions, in order to sync state between the halves.
 #define SPLIT_MODS_ENABLE
 #define SPLIT_LED_STATE_ENABLE
@@ -49,35 +32,25 @@
 /** \brief Only uses 16 bits for layers.  Limits available layers to 16.  */
 #define LAYER_STATE_16BIT
 
+/** \brief Tri Layer settings NAV SYM NUM  */
+#define TRI_LAYER_LOWER_LAYER 9
+#define TRI_LAYER_UPPER_LAYER 10
+#define TRI_LAYER_ADJUST_LAYER 11
+
 // One-Shot keys {{{
 
 #ifndef NO_ACTION_ONESHOT
 /**
- * \brief Tapping this number of times holds the key until tapped once again.
- *
- * https://beta.docs.qmk.fm/using-qmk/software-features/one_shot_keys
- */
-#define ONESHOT_TAP_TOGGLE 5
-
-/**
  * \brief Time (in ms) before the one shot key is released.
- *
- * https://beta.docs.qmk.fm/using-qmk/software-features/one_shot_keys
  */
 #define ONESHOT_TIMEOUT 1500
 #endif  // NO_ACTION_ONESHOT
-
-// }}}
-// Tap dances {{{
 
 /**
  * \brief Configure the global tapping term (default: 200ms).
  *
  * If you have a lot of accidental mod activations, crank up the tapping term.
  *
- * See
- *   https://beta.docs.qmk.fm/using-qmk/software-features/tap_hold#tapping-term
- *   https://precondition.github.io/home-row-mods#tapping-term
  */
 #ifndef TAPPING_TERM
 #define TAPPING_TERM 175
@@ -88,8 +61,10 @@
  * \brief Combo configurations
  */
 #define COMBO_TERM 20
+#define COMBO_TERM_PER_COMBO
 #define COMBO_STRICT_TIMER
 #define COMBO_ONLY_FROM_LAYER 1
+#define COMBO_SHOULD_TRIGGER
 #endif  // COMBO_ENABLE
 
 // RGB {{{
@@ -145,10 +120,9 @@
 #define RGB_MATRIX_DISABLE_KEYCODES
 #endif
 
-// Limit maximum brightness to keep power consumption reasonable, and avoid
-// disconnects.
-#undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 72
+// Limit maximum brightness to prevent power spikes from tripping fuses.
+//#undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
+//#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 72
 // limit in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
 #undef RGB_MATRIX_LED_FLUSH_LIMIT
 #define RGB_MATRIX_LED_FLUSH_LIMIT 16 

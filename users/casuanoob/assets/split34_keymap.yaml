@@ -1,0 +1,81 @@
+# parsed and updated from https://github.com/manna-harbour/miryoku_zmk/blob/master/config/microdox.keymap
+# uses MIRYOKU_KLUDGE_MOUSEKEYSPR and omits shift functions and double tap guards to simplify
+layout:
+    qmk_keyboard: boardsource/microdox/v1
+layers:
+    Aptmak:
+    - [Repeat, W, F, P, B, J, L, U, Y, "'"]
+    - [R, S, T, H, K, X, N, A, I, O]
+    - [{t: '', h: Mouse}, C, G, D, Q, Z, M, ',', '.', {t: '', h: Mouse}]
+    - [{t: '', type: ghost}, SPC, {t: NAV, h: MO}, {t: SYM, h: MO}, E, {t: '', type: ghost}]
+    Nav:
+    - [{t: Spec, h: OSL}, Prev Tab, TAB, Next Tab, {t: '', type: ghost}, Page Up, Home, Up, End, DEL]
+    - [LGUI, LALT, LCTRL, LSHFT, F2, Page Down, Left, Down, Right, Enter]
+    - [Prev Desk, Cut, Copy, Paste, Next Desk, {t: '', type: ghost}, BSPC, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}]
+    - [{t: '', type: ghost}, null, {t: '', type: held}, null, null, {t: '', type: ghost}]
+    Sym:
+    - [ESC, '%', '?', ':', '@', '^', ';', '(', ')', {t: Spec, h: OSL}]
+    - ['!', '+', '-', '=', '#', '_', LSHFT, LCTRL, LALT, LGUI]
+    - ['~', '$', '*', '/', '&', '|', '\', '{', '}', '`']
+    - [{t: '', type: ghost}, null, null, {t: '', type: held}, null, {t: '', type: ghost}]
+    Num:
+    - ['/', 7, 8, 9, '*', {t: '', type: ghost}, '=', '<', '>', {t: '', type: ghost}]
+    - ['-', 4, 5, 6, '+', {t: '', type: ghost}, LSHFT, LCTRL, LALT, LGUI]
+    - ['.', 1, 2, 3, ',', {t: '', type: ghost}, 0, '[', ']', {t: 'F-keys', h: OSL}]
+    - [{t: '', type: ghost}, null, {t: '', type: held}, {t: '', type: held}, null, {t: '', type: ghost}]
+    NumPad:
+    - ['/', 7, 8, 9, '*', '*', 7, 8, 9, '-']
+    - [{t: '-', h: LGUI}, {t: 4, h: LALT}, {t: 5, h: LCTRL}, {t: 6, h: LSHFT}, '+', '/', 4, 5, 6, '+']
+    - ['.', 1, 2, 3, 0, 0, 1, 2, 3, '.']
+    - [{t: '', type: ghost}, {t: '', type: held}, {t: '', type: held}, Enter, 0, {t: '', type: ghost}]
+    F-keys:
+    - [F12, F7, F8, F9, Caps Lock, Num Lock, Insert, Print Screen, Scroll Lock, Pause Break]
+    - [F11, F4, F5, F6, Menu, {t: '', type: ghost}, LSHFT, LCTRL, LALT, LGUI]
+    - [F10, F1, F2, F3, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}]
+    - [{t: '', type: ghost}, null, null, {t: '', type: held}, {t: '', type: held}, {t: '', type: ghost}]
+    Spec:
+    - [{t: '', type: ghost}, {t: Colemak DH, h: DF}, {t: Nerps, h: DF}, {t: APTv3 mod, h: DF}, {t: Aptmak, h: DF}, {t: Aptmak, h: DF}, {t: APTv3, h: DF}, {t: Canary, h: DF}, {t: Colemak DH, h: DF}, {t: '', type: ghost}]
+    - [NKRO On, {t: NRSTex, h: DF}, {t: Game, h: DF}, RGB Mode, EEP CLEAR, EEP CLEAR, RGB Mode, {t: Game, h: DF}, {t: NRSTex, h: DF}, NKRO On]
+    - [NKRO Off, {t: Adept, h: DF}, RGB Toggle, Debug Toggle, QK BOOT, QK BOOT, Debug Toggle, RGB Toggle, {t: Adept, h: DF}, NKRO Off]
+    - [{t: '', type: ghost}, '', '', '', '', {t: '', type: ghost}]
+    Mouse:
+    - ['', '', '', Snipe DPI, DPI, '', '', '', '', '']
+    - ['', Snipe Mode, '', '', '', '', '', '', Snipe Mode, '']
+    - [{t: '', type: held}, Mouse 2, Mouse 1, Mouse 3, Drag Scroll, Drag Toggle, Mouse 3, Mouse 1, Mouse 2, {t: '', type: held}]
+    - [{t: '', type: ghost}, '', '', '', '', {t: '', type: ghost}]
+    Game:
+    - [T, Q, W, E, R, Y, U, I, O, P]
+    - [LSHFT, A, S, D, F, H, J, K, L, "'"]
+    - [LCTRL, Z, X, C, V, N, M, ',', '.', Snipe Mode]
+    - [{t: '', type: ghost}, SPC, NAV, SYM, LSHFT, {t: '', type: ghost}]
+
+combos:
+    - {p: [1, 2], k: V, l: [Aptmak]}
+    - {p: [3, 2], k: Q, l: [Aptmak]}
+    - {p: [22, 23], k: Z, l: [Aptmak]}
+    - {p: [7, 8], k: '"', l: [Aptmak, Game]}
+    - {p: [11, 12], k: "LSFT", l: [Aptmak]}
+    - {p: [17, 18], k: "RSFT", l: [Aptmak, Game]}
+    - {p: [31, 32], k: "NUM PAD", a: top, o: -0.1, l: [Aptmak, NumPad, Game]}
+    - {p: [33, 34], k: "F keys", a: top, o: -0.1, l: [Aptmak, F-keys, Game]}
+    - {p: [0, 1], k: "ESC", a: top, d: no, o: -0.45, l: [Aptmak, Game]}
+    - {p: [28, 29], k: "Enter", l: [Aptmak, Game]}
+    - {p: [8, 9], k: "DEL", a: top, d: no, o: -0.45, l: [Aptmak, Game]}
+    - {p: [26, 27], k: "BSPC", l: [Aptmak, Game]}
+    - {p: [27, 28], k: "Mouse 1", l: [Aptmak, Game]}
+    - {p: [18, 28], k: "Mouse 2", l: [Aptmak, Game]}
+    - {p: [16, 26], k: "Mouse 3", l: [Aptmak, Game]}
+    - {p: [25, 26], k: "Drag Scrl", l: [Aptmak, Game]}
+    - {p: [26, 28], k: "Del Word", a: bottom, l: [Aptmak, Game]}
+    - {p: [2, 7], k: "Caps Word", a: top, o: -0.15, l: [Aptmak, Game]}
+    - {p: [1, 8], k: "Caps Lock", a: top, o: 0.4, l: [Aptmak, Game]}
+    - {p: [1, 11], k: "[", l: [Aptmak]}
+    - {p: [2, 12], k: "(", l: [Aptmak]}
+    - {p: [3, 13], k: "{", l: [Aptmak]}
+    - {p: [4, 14], k: "<", l: [Aptmak]}
+    - {p: [5, 15], k: ">", l: [Aptmak]}
+    - {p: [6, 16], k: "}", l: [Aptmak]}
+    - {p: [7, 17], k: ")", l: [Aptmak]}
+    - {p: [8, 18], k: "]", l: [Aptmak]}
+    - {p: [4, 14], k: G, l: [Game]}
+    - {p: [14, 24], k: B, l: [Game]}
