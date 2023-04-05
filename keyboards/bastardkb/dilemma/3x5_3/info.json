@@ -16,10 +16,10 @@
         "soft_serial_pin": "GP1"
     },
     "rgblight": {
-        "split_count": [18, 18]
+        "split_count": [36, 36]
     },
     "ws2812": {
-        "pin": "GP0",
+        "pin": "GP10",
         "driver": "vendor"
     },
     "processor": "RP2040",
