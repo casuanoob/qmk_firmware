@@ -20,10 +20,15 @@
 /* RGB stuff. */
 // Change the default brightness.
 #undef RGB_MATRIX_DEFAULT_VAL
-#define RGB_MATRIX_DEFAULT_VAL 192
+#define RGB_MATRIX_DEFAULT_VAL 128
 // Limit maximum brightness to prevent power spikes from tripping fuses.
-#undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 192
+//#undef RGB_MATRIX_MAXIMUM_BRIGHTNESS
+//#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 192
+// Turn off LEDs after 2 minutes inactivity.
+#define RGB_MATRIX_TIMEOUT 120000
+
+/* Encoder defines. */
+#define ENCODER_RESOLUTION { 2 }
 
 /* Split Comms. */
 #define SELECT_SOFT_SERIAL_SPEED 1
@@ -49,11 +54,6 @@
 //debug stuff
 #define DEBUG_MATRIX_SCAN_RATE
 #define SERIAL_DEBUG
-
-/* Encoder defines */
-#define ENCODERS_PAD_A { GP25 }
-#define ENCODERS_PAD_B { GP24 }
-#define ENCODER_RESOLUTIONS { 2 }
 
 //Via
 #define DYNAMIC_KEYMAP_LAYER_COUNT 16
