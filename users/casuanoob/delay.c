@@ -95,11 +95,11 @@ void keyboard_post_init_user(void) {
 
 __attribute__((weak)) void keyboard_post_init_user_keymap(void) {}
 
-void eeconfig_init_user(void) {
+/*void eeconfig_init_user(void) {
 #ifdef RGB_MATRIX_ENABLE
   eeconfig_update_rgb_matrix_default();
 #endif  // RGB_MATRIX_ENABLE
-}
+}*/
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.

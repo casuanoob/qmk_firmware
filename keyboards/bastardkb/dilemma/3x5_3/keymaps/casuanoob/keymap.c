@@ -18,6 +18,21 @@
 #include QMK_KEYBOARD_H
 #include "users/casuanoob/keymaps/split34.h"
 
+/* RGB Per Key toggle. */
+/*typedef union {
+  uint32_t raw;
+  struct {
+    bool     rgb_per_key_enabled :1;
+  };
+} user_config_t;
+
+user_config_t user_config;
+
+enum keycodes_user_keymap {
+  // Toggle RGB.
+  PK_TOG = SAFE_RANGE_KEYMAP,
+};*/
+
 // clang-format off
 #define _LAYOUT(                                             \
            k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
@@ -83,9 +98,44 @@ void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
 }
 
 void keyboard_post_init_user_keymap(void) {
-  // Customise these values to desired behaviour
+  // Keep debug off on boot to toggle on as needed.
   debug_enable=false;
   debug_matrix=false;
   //debug_keyboard=true;
   //debug_mouse=false;
+  // Read the user config from EEPROM
+  //user_config.raw = eeconfig_read_user();
+
 }
+
+// Turn off per key rgb but keep underglow.
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+  for (uint8_t i = led_min; i <= led_max; i++) {
+    //if(user_config.rgb_per_key_enabled) {
+        if (!HAS_FLAGS(g_led_config.flags[i], LED_FLAG_UNDERGLOW)) { // 0x02 == LED_FLAG_MODIFIER
+          rgb_matrix_set_color(i, RGB_OFF);
+        }
+    //}
+  }
+  return false;
+}
+/*
+bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case PK_TOG:  // This allows me to use underglow as layer indication, or as normal
+        if (record->event.pressed) {
+            user_config.rgb_per_key_enabled ^= 1; // Toggles the status
+            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
+        }
+        return false;
+
+    default:
+      return true; // Process all other keycodes normally
+  }
+}
+
+void eeconfig_init_user(void) {  // EEPROM is getting reset!
+  user_config.raw = 0;
+  user_config.rgb_per_key_enabled = true; // We want this enabled by default
+  eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
+}*/
