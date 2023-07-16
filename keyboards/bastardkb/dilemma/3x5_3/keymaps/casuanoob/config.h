@@ -57,3 +57,11 @@
 
 //Via
 #define DYNAMIC_KEYMAP_LAYER_COUNT 16
+
+//Quantum Painter
+#define LCD_CS_PIN GP12
+#define LCD_DC_PIN GP11
+#define LCD_RST_PIN GP13
+#define LCD_SPI_DIVISOR 8
+#define LCD_SPI_MODE 0
+#define QUANTUM_PAINTER_SUPPORTS_NATIVE_COLORS true

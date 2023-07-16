@@ -2,25 +2,128 @@
 # uses MIRYOKU_KLUDGE_MOUSEKEYSPR and omits shift functions and double tap guards to simplify
 layout:
     qmk_keyboard: boardsource/microdox/v1
+draw_config:
+  # specify the size to bound the vertical dimension of your glyph, below are defaults
+  glyph_tap_size: 15
+  glyph_hold_size: 14
+  glyph_shifted_size: 14
+  glyphs:  # mapping of glyph name to be used to svg definition
+    bri_up: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+            <path d="M12 5l0 -2"></path>
+            <path d="M17 7l1.4 -1.4"></path>
+            <path d="M19 12l2 0"></path>
+            <path d="M17 17l1.4 1.4"></path>
+            <path d="M12 19l0 2"></path>
+            <path d="M7 17l-1.4 1.4"></path>
+            <path d="M6 12l-2 0"></path>
+            <path d="M7 7l-1.4 -1.4"></path>
+        </svg>
+    bri_down: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+           <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+           <path d="M12 5l0 .01"></path>
+           <path d="M17 7l0 .01"></path>
+           <path d="M19 12l0 .01"></path>
+           <path d="M17 17l0 .01"></path>
+           <path d="M12 19l0 .01"></path>
+           <path d="M7 17l0 .01"></path>
+           <path d="M5 12l0 .01"></path>
+           <path d="M7 7l0 .01"></path>
+        </svg>
+    vol_up: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-volume" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+           <path d="M15 8a5 5 0 0 1 0 8"></path>
+           <path d="M17.7 5a9 9 0 0 1 0 14"></path>
+           <path d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"></path>
+        </svg>
+    vol_down: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-volume-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+           <path d="M15 8a5 5 0 0 1 0 8"></path>
+           <path d="M6 15h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l3.5 -4.5a.8 .8 0 0 1 1.5 .5v14a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5"></path>
+        </svg>
+    vol_mute: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-volume-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+           <path d="M15 8a5 5 0 0 1 1.912 4.934m-1.377 2.602a5 5 0 0 1 -.535 .464"></path>
+           <path d="M17.7 5a9 9 0 0 1 2.362 11.086m-1.676 2.299a9 9 0 0 1 -.686 .615"></path>
+           <path d="M9.069 5.054l.431 -.554a.8 .8 0 0 1 1.5 .5v2m0 4v8a.8 .8 0 0 1 -1.5 .5l-3.5 -4.5h-2a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h2l1.294 -1.664"></path>
+           <path d="M3 3l18 18"></path>
+        </svg>
+    usb_icon: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-usb" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+            <path d="M12 17v-11.5"></path>
+            <path d="M7 10v3l5 3"></path>
+            <path d="M12 14.5l5 -2v-2.5"></path>
+            <path d="M16 10h2v-2h-2z"></path>
+            <path d="M7 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+            <path d="M10 5.5h4l-2 -2.5z"></path>
+        </svg>
+    bt_icon: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bluetooth" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M7 8l10 8l-5 4l0 -16l5 4l-10 8"></path>
+        </svg>
+    screenshot: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-screenshot" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+           <path d="M7 19a2 2 0 0 1 -2 -2"></path>
+           <path d="M5 13v-2"></path>
+           <path d="M5 7a2 2 0 0 1 2 -2"></path>
+           <path d="M11 5h2"></path>
+           <path d="M17 5a2 2 0 0 1 2 2"></path>
+           <path d="M19 11v2"></path>
+           <path d="M19 17v4"></path>
+           <path d="M21 19h-4"></path>
+           <path d="M13 19h-2"></path>
+        </svg>
+    sel_all: |
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-select-all" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+           <path d="M8 8m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z"></path>
+           <path d="M12 20v.01"></path>
+           <path d="M16 20v.01"></path>
+           <path d="M8 20v.01"></path>
+           <path d="M4 20v.01"></path>
+           <path d="M4 16v.01"></path>
+           <path d="M4 12v.01"></path>
+           <path d="M4 8v.01"></path>
+           <path d="M4 4v.01"></path>
+           <path d="M8 4v.01"></path>
+           <path d="M12 4v.01"></path>
+           <path d="M16 4v.01"></path>
+           <path d="M20 4v.01"></path>
+           <path d="M20 8v.01"></path>
+           <path d="M20 12v.01"></path>
+           <path d="M20 16v.01"></path>
+           <path d="M20 20v.01"></path>
+        </svg>
 layers:
     Aptmak:
-    - [Repeat, W, F, P, B, J, L, U, Y, "'"]
+    - [⟳ Repeat, W, F, P, B, J, L, U, Y, "'"]
     - [R, S, T, H, K, X, N, A, I, O]
     - [{t: '', h: Mouse}, C, G, D, Q, Z, M, ',', '.', {t: '', h: Mouse}]
-    - [{t: '', type: ghost}, SPC, {t: NAV, h: MO}, {t: SYM, h: MO}, E, {t: '', type: ghost}]
+    - [{t: '', type: ghost}, ␣ SPC, {t: NAV, h: MO}, {t: SYM, h: MO}, E, {t: '', type: ghost}]
     Nav:
-    - [{t: Spec, h: OSL}, Prev Tab, TAB, Next Tab, {t: '', type: ghost}, Page Up, Home, Up, End, DEL]
-    - [LGUI, LALT, LCTRL, LSHFT, F2, Page Down, Left, Down, Right, Enter]
-    - [Prev Desk, Cut, Copy, Paste, Next Desk, {t: '', type: ghost}, BSPC, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}]
+    - [{t: Spec, h: OSL}, ⎗ Prev Tab, ↹ TAB, ⎘ Next Tab, {t: '', type: ghost}, ⇞ Page Up, ⤒ Home, 🡅 Up, ⤓ End, ⌦ DEL]
+    - [⊞ LGUI, ⌥ LALT, ⎈ LCTRL, ⇧ LSHFT, F2, ⇟ Page Down, 🡄 Left, 🡇 Down, 🡆 Right, ⮠ Enter]
+    - [⭠🖥 Prev Desk, ✂ Cut, ⧉ Copy, 📄 Paste, 🖥⭢ Next Desk, {t: '', type: ghost}, ⌫ BSPC, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}]
     - [{t: '', type: ghost}, null, {t: '', type: held}, null, null, {t: '', type: ghost}]
     Sym:
-    - [ESC, '%', '?', ':', '@', '^', ';', '(', ')', {t: Spec, h: OSL}]
-    - ['!', '+', '-', '=', '#', '_', LSHFT, LCTRL, LALT, LGUI]
+    - [⎋ ESC, '%', '?', ':', '@', '^', ';', '(', ')', {t: Spec, h: OSL}]
+    - ['!', '+', '-', '=', '#', '_', ⇧ LSHFT, ⎈ LCTRL, ⌥ LALT, ⊞ LGUI]
     - ['~', '$', '*', '/', '&', '|', '\', '{', '}', '`']
     - [{t: '', type: ghost}, null, null, {t: '', type: held}, null, {t: '', type: ghost}]
     Num:
     - ['/', 7, 8, 9, '*', {t: '', type: ghost}, '=', '<', '>', {t: '', type: ghost}]
-    - ['-', 4, 5, 6, '+', {t: '', type: ghost}, LSHFT, LCTRL, LALT, LGUI]
+    - ['-', 4, 5, 6, '+', {t: '', type: ghost}, ⇧ LSHFT, ⎈ LCTRL, ⌥ LALT, ⊞ LGUI]
     - ['.', 1, 2, 3, ',', {t: '', type: ghost}, 0, '[', ']', {t: 'F-keys', h: OSL}]
     - [{t: '', type: ghost}, null, {t: '', type: held}, {t: '', type: held}, null, {t: '', type: ghost}]
     NumPad:
@@ -29,8 +132,8 @@ layers:
     - ['.', 1, 2, 3, 0, 0, 1, 2, 3, '.']
     - [{t: '', type: ghost}, {t: '', type: held}, {t: '', type: held}, Enter, 0, {t: '', type: ghost}]
     F-keys:
-    - [F12, F7, F8, F9, Caps Lock, Num Lock, Insert, Print Screen, Scroll Lock, Pause Break]
-    - [F11, F4, F5, F6, Menu, {t: '', type: ghost}, LSHFT, LCTRL, LALT, LGUI]
+    - [F12, F7, F8, F9, 🄰 CapLk, ⇭ NumLk, ⎀ Insert, ⎙ PrtScr, ⇳ ScrLk, ⎊ Pause]
+    - [F11, F4, F5, F6, 𝌆 Menu, {t: '', type: ghost}, ⇧ LSHFT, ⎈ LCTRL, ⌥ LALT, ⊞ LGUI]
     - [F10, F1, F2, F3, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}, {t: '', type: ghost}]
     - [{t: '', type: ghost}, null, null, {t: '', type: held}, {t: '', type: held}, {t: '', type: ghost}]
     Spec:

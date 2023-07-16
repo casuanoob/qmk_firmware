@@ -18,6 +18,8 @@
 #include QMK_KEYBOARD_H
 #include "users/casuanoob/keymaps/split34.h"
 
+#include <qp.h>
+
 /* RGB Per Key toggle. */
 /*typedef union {
   uint32_t raw;
@@ -97,6 +99,8 @@ void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
     }
 }
 
+static painter_device_t display;
+
 void keyboard_post_init_user_keymap(void) {
   // Keep debug off on boot to toggle on as needed.
   debug_enable=false;
@@ -105,7 +109,7 @@ void keyboard_post_init_user_keymap(void) {
   //debug_mouse=false;
   // Read the user config from EEPROM
   //user_config.raw = eeconfig_read_user();
-
+  display = qp_st7789_make_spi_device(240, 280, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, LCD_SPI_DIVISOR, LCD_SPI_MODE);
 }
 
 // Turn off per key rgb but keep underglow.
@@ -139,3 +143,5 @@ void eeconfig_init_user(void) {  // EEPROM is getting reset!
   user_config.rgb_per_key_enabled = true; // We want this enabled by default
   eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
 }*/
+
+painter_device_t qp_st7789_make_spi_device(uint16_t 240, uint16_t 280, pin_t GP12, pin_t GP11, pin_t GP13, uint16_t spi_divisor, int spi_mode);
