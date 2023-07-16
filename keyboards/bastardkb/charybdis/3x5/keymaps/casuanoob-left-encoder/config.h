@@ -34,6 +34,8 @@
 * \ TODO remove this once DIP switch split transport and dual pin WS2812 driver are implemented
 */
 #if defined(KEYBOARD_bastardkb_charybdis_3x5_blackpill) || defined(KEYBOARD_bastardkb_charybdis_4x6_blackpill)
+    /* Enable Split Watchdog for reliable boot */
+    #define SPLIT_WATCHDOG_ENABLE
     /* Serial baudrate configuration*/
     #define SERIAL_USART_SPEED (1 * 1024 * 1024)
 

@@ -95,9 +95,13 @@ enum layers_keymap {
 #ifdef TUCKY_THUMBS // if thumb cluster is more tucky
 #   define _________DEFAULT_THUMBS_________  NAV,     KC_SPC,  TD_SFT,     SYM
 #   define __________THEMBY_THUMBS_________  NAV,     KC_SPC,    KC_E,     SYM
+#   define ___________NAV_THUMBS___________ _______, SPECIAL, _______, _______
+#   define ___________SYM_THUMBS___________ _______, _______, SPECIAL, _______
 #else // if thumb cluster is more reachy
 #   define _________DEFAULT_THUMBS_________  KC_SPC,     NAV,     SYM,  TD_SFT
 #   define __________THEMBY_THUMBS_________  KC_SPC,     NAV,     SYM,    KC_E
+#   define ___________NAV_THUMBS___________ SPECIAL, _______, _______, _______
+#   define ___________SYM_THUMBS___________ _______, _______, _______, SPECIAL
 #endif //TUCKY_THUMBS
 
 /**
@@ -296,7 +300,7 @@ enum layers_keymap {
     SPECIAL, RCS_TAB,  KC_TAB, CTL_TAB, ___x___, KC_PGUP, KC_HOME,   KC_UP,  KC_END,  KC_DEL, \
     OS_LGUI, OS_LALT, OS_LCTL, OS_LSFT,   KC_F2, KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT,  KC_ENT, \
     WS_PREV,  SC_CUT, SC_COPY, SC_PSTE, WS_NEXT, ___x___, KC_BSPC, ___x___, ___x___, ___x___, \
-                               _______, _______, _______, _______
+                               ___________NAV_THUMBS___________
 // clang-format on
 
 /**
@@ -307,7 +311,7 @@ enum layers_keymap {
      KC_ESC, KC_PERC, KC_QUES, KC_COLN,   KC_AT, KC_CIRC, KC_SCLN, KC_LPRN, KC_RPRN, SPECIAL, \
     KC_EXLM, KC_PLUS, KC_MINS,  KC_EQL, KC_HASH, KC_UNDS, OS_LSFT, OS_LCTL, OS_LALT, OS_LGUI, \
     KC_TILD,  KC_DLR, KC_ASTR, KC_SLSH, KC_AMPR, KC_PIPE, KC_BSLS, KC_LCBR, KC_RCBR,  KC_GRV, \
-                               _______, _______, _______, _______
+                               ___________SYM_THUMBS___________
 // clang-format on
 
 /**
