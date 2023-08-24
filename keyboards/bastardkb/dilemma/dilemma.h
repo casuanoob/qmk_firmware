@@ -22,6 +22,8 @@
 #    include "3x5_2.h"
 #elif defined(KEYBOARD_bastardkb_dilemma_3x5_3)
 #    include "3x5_3.h"
+#elif defined(KEYBOARD_bastardkb_dilemma_4x6_4)
+#    include "4x6_4.h"
 #else
 #    error "Unsuported format"
 #endif
