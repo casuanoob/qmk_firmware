@@ -18,22 +18,7 @@
 #include QMK_KEYBOARD_H
 #include "users/casuanoob/keymaps/split34.h"
 
-#include <qp.h>
-
-/* RGB Per Key toggle. */
-/*typedef union {
-  uint32_t raw;
-  struct {
-    bool     rgb_per_key_enabled :1;
-  };
-} user_config_t;
-
-user_config_t user_config;
-
-enum keycodes_user_keymap {
-  // Toggle RGB.
-  PK_TOG = SAFE_RANGE_KEYMAP,
-};*/
+//#include <qp.h>
 
 // clang-format off
 #define _LAYOUT(                                             \
@@ -79,8 +64,8 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [_ADEPT] =      { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_APTm] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_APT3] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [_CAN] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [_NERPS] =      { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [_CAN] =        { ENCODER_CCW_CW(KC_UP, KC_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [_NERPS] =      { ENCODER_CCW_CW(KC_UP, KC_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_GAME] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_NAV] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_SYM] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
@@ -99,7 +84,7 @@ void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
     }
 }
 
-static painter_device_t display;
+//static painter_device_t display;
 
 void keyboard_post_init_user_keymap(void) {
   // Keep debug off on boot to toggle on as needed.
@@ -107,9 +92,7 @@ void keyboard_post_init_user_keymap(void) {
   debug_matrix=false;
   //debug_keyboard=true;
   //debug_mouse=false;
-  // Read the user config from EEPROM
-  //user_config.raw = eeconfig_read_user();
-  display = qp_st7789_make_spi_device(240, 280, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, LCD_SPI_DIVISOR, LCD_SPI_MODE);
+  //display = qp_st7789_make_spi_device(240, 280, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, LCD_SPI_DIVISOR, LCD_SPI_MODE);
 }
 
 // Turn off per key rgb but keep underglow.
@@ -123,25 +106,5 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
   }
   return false;
 }
-/*
-bool process_record_keymap(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case PK_TOG:  // This allows me to use underglow as layer indication, or as normal
-        if (record->event.pressed) {
-            user_config.rgb_per_key_enabled ^= 1; // Toggles the status
-            eeconfig_update_user(user_config.raw); // Writes the new status to EEPROM
-        }
-        return false;
 
-    default:
-      return true; // Process all other keycodes normally
-  }
-}
-
-void eeconfig_init_user(void) {  // EEPROM is getting reset!
-  user_config.raw = 0;
-  user_config.rgb_per_key_enabled = true; // We want this enabled by default
-  eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
-}*/
-
-painter_device_t qp_st7789_make_spi_device(uint16_t 240, uint16_t 280, pin_t GP12, pin_t GP11, pin_t GP13, uint16_t spi_divisor, int spi_mode);
+//painter_device_t qp_st7789_make_spi_device(uint16_t 240, uint16_t 280, pin_t GP12, pin_t GP11, pin_t GP13, uint16_t spi_divisor, int spi_mode);

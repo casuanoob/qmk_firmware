@@ -20,10 +20,6 @@
 #include "delay.h"
 #include "quantum.h"
 
-/**#ifdef TAP_DANCE_ENABLE
-#    include "tap_dance.h"
-#endif // TAP_DANCE_ENABLE**/
-
 /**
  * \brief Similar to `_kb`, `_user`, `_user_keymap`, and other variants, but for
  * keymaps.
@@ -118,11 +114,11 @@ enum layers_keymap {
                                    NAV,  TD_SFT,   KC_SPC,    SYM
 // clang-format on
 
-/** 
+/**
  * \brief COLEMAK-dhm layout.
- * 
+ *
  * quote `'` replaces `;` on alpha layer to accommodate reduced keys.
- * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting
  * (plays well with oneshot shift).
  */
 // clang-format off
@@ -133,11 +129,11 @@ enum layers_keymap {
                                   _________DEFAULT_THUMBS_________
 // clang-format on
 
-/** 
+/**
  * \brief APTv3 modified layout.
- * 
+ *
  * Slightly modified APTv3, ZX switch, GDF rotated
- * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting
  * (plays well with oneshot shift).
  */
 // clang-format off
@@ -148,11 +144,11 @@ enum layers_keymap {
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
-/** 
+/**
  * \brief APTv3 modified layout.
- * 
+ *
  * Slightly modified APTv3, VBK rotate
- * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting
  * (plays well with oneshot shift).
  */
 // clang-format off
@@ -163,11 +159,11 @@ enum layers_keymap {
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
-/** 
+/**
  * \brief APTv4 modified layout.
- * 
+ *
  * Slightly modified APTv4, ZX swap
- * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting
  * (plays well with oneshot shift).
  */
 // clang-format off
@@ -178,11 +174,11 @@ enum layers_keymap {
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
-/** 
+/**
  * \brief Engel layout.
- * 
+ *
  * Engel layout by Apsu with QZ swap
- * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting
  * (plays well with oneshot shift).
  */
 // clang-format off
@@ -193,11 +189,11 @@ enum layers_keymap {
                                    NAV,  KC_SPC,  TD_SFT,    LT(_SYM, KC_E)
 // clang-format on
 
-/** 
+/**
  * \brief APTex modified layout.
- * 
- * Slightly modified APTex, VK and PY swaps 
- * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ *
+ * Slightly modified APTex, VK and PY swaps
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting
  * (plays well with oneshot shift).
  */
 // clang-format off
@@ -208,10 +204,10 @@ enum layers_keymap {
                                  __________THEMBY_THUMBS_________
 // clang-format on
 
-/** 
+/**
  * \brief APTmak2 layout. Actually NRSTex
- * 
- * NRSTex, designed for 30 key layout with Q and Z on combos 
+ *
+ * NRSTex, designed for 30 key layout with Q and Z on combos
  * Left and right shift are moved to thumb bigram combos
  */
 // clang-format off
@@ -222,22 +218,22 @@ enum layers_keymap {
                                  __________THEMBY_THUMBS_________
 // clang-format on
 
-/** 
+/**
  * \brief nu-APTmak layout.
- * 
+ *
  * nAPTmak, 34 key version - can be converted to 30 key layout with Q and Z on combos
  * Left and right shift are moved to thumb bigram combos
  */
 // clang-format off
 #define nAPTmak_split_3x5_2                                                                      \
-     REPEAT,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT, \
+     QK_REP,    KC_W,    KC_F,    KC_P,    KC_B,    KC_J,    KC_L,    KC_U,    KC_Y, KC_QUOT, \
        KC_R,    KC_S,    KC_T,    KC_H,    KC_K,    KC_X,    KC_N,    KC_A,    KC_I,    KC_O, \
       MOUSE,    KC_C,    KC_G,    KC_D,    KC_Q,    KC_Z,    KC_M, KC_COMM,  KC_DOT,   MOUSE, \
                                  __________THEMBY_THUMBS_________
 // clang-format on
 
 /** \brief Adept layout.
- * 
+ *
  * nAPTmak, 34 key version - can be converted to 30 key layout with Q and Z on combos
  * Left and right shift are moved to thumb bigram combos
  */
@@ -249,11 +245,11 @@ enum layers_keymap {
                                  __________THEMBY_THUMBS_________
 // clang-format on
 
-/** 
+/**
  * \brief Canary layout.
- * 
+ *
  * Canary Ortho version layout by AKL
- * Also prevent quote `'`, comma `,` and dot `.` from shifting 
+ * Also prevent quote `'`, comma `,` and dot `.` from shifting
  * (plays well with oneshot shift).
  */
 // clang-format off
@@ -264,9 +260,9 @@ enum layers_keymap {
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
-/** 
+/**
  * \brief Nerps layout.
- * 
+ *
  * Nerps by Smudge
  */
 // clang-format off
@@ -277,8 +273,8 @@ enum layers_keymap {
                                  _________DEFAULT_THUMBS_________
 // clang-format on
 
-/** 
- * \brief Gaming layout (3 rows, 10 columns). 
+/**
+ * \brief Gaming layout (3 rows, 10 columns).
  */
 // clang-format off
 #define GAMING_split_3x5_2                                                                      \
@@ -315,8 +311,8 @@ enum layers_keymap {
 // clang-format on
 
 /**
- * \brief Numrow. 
- * 
+ * \brief Numrow.
+ *
  * 43215 90678, with the inner keys dropped to bottom index position.
  */
 // clang-format off
@@ -386,7 +382,7 @@ enum layers_keymap {
  * In other words, converts a split-34 keymap into a split-36 one.
  */
 // clang-format off
-#define _LAYOUT_split_3x5_2_to_split_3x5_3(                  \
+/*#define _LAYOUT_split_3x5_2_to_split_3x5_3(                  \
            k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
            k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
            k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
@@ -394,14 +390,14 @@ enum layers_keymap {
            k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
            k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
            k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
-                     k33, KC_NO, k34, k35, k36, KC_NO 
+                     k33, KC_NO, k34, k35, k36, KC_NO
 
 #define LAYOUT_split_3x5_2_to_split_3x5_3(...) _LAYOUT_split_3x5_2_to_split_3x5_3(__VA_ARGS__)
-
+*/
 // clang-format on
 /* Converts the 3x5_2 layouts into 3x5_3 layouts. */
 // clang-format off
-#define DVORAK_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(DVORAK_split_3x5_2)
+/*#define DVORAK_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(DVORAK_split_3x5_2)
 #define NAV_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NAV_split_3x5_2)
 #define SYM_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(SYM_split_3x5_2)
 #define NUMBER_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(NUMBER_split_3x5_2)
@@ -422,45 +418,4 @@ enum layers_keymap {
 #define Canary_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(Canary_split_3x5_2)
 #define Nerps_split_3x5_3 LAYOUT_split_3x5_2_to_split_3x5_3(Nerps_split_3x5_2)
 // clang-format on
-
-/**
- * \brief Converts a 3x5_2 layout into the more community 3x5_3 layout for cnano.
- *
- * In other words, converts a split-34 keymap into a split-36 one.
- */
-// clang-format off
-/**                     
-#define _LAYOUT_split_3x5_2_to_charybdis_3x5_3(                  \
-           k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
-           k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
-           k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
-                          k33, k34, k35, k36)                \
-           k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
-           k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
-           k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
-                     k33, k34, TD_SFT, k35, k36, KC_NO  
- 
-#define LAYOUT_split_3x5_2_to_charybdis_3x5_3(...) _LAYOUT_split_3x5_2_to_charybdis_3x5_3(__VA_ARGS__)*/
-                
-// clang-format on
-/* Converts the 3x5_2 layouts into 3x5_3 layouts. */
-// clang-format off
-/**   
-#define DVORAK_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(DVORAK_split_3x5_2)
-#define NAV_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NAV_split_3x5_2)
-#define SYM_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(SYM_split_3x5_2)
-#define NUMBER_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NUMBER_split_3x5_2)
-#define SPEC_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(SPEC_split_3x5_2)
-#define COLEMAKdhm_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(COLEMAKdhm_split_3x5_2)
-#define APTmod_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTmod_split_3x5_2)
-#define APTv3_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTv3_split_3x5_2)
-#define APTv4_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTv4_split_3x5_2)
-#define APTex_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(APTex_split_3x5_2)
-#define NRSTex_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NRSTex_split_3x5_2)
-#define nAPTmak_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(nAPTmak_split_3x5_2)
-#define Engel_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(Engel_split_3x5_2)
-#define Canary_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(Canary_split_3x5_2)
-#define GAMING_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(GAMING_split_3x5_2)
-#define NUMPAD_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(NUMPAD_split_3x5_2)
-#define FUN_cnano_3x5_3 LAYOUT_split_3x5_2_to_charybdis_3x5_3(FUN_split_3x5_2) */
-// clang-format on
+*/

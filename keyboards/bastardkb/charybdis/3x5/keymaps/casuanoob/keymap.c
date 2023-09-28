@@ -16,49 +16,64 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "keymaps/split34.h"
+#include "users/casuanoob/keymaps/split34.h"
 
-#define LAYOUT_charybdis_3x5_delay(...) LAYOUT_split_3x5_3(__VA_ARGS__)
+#define LAYOUT_charybdis_3x5_wrapper(...) LAYOUT_charybdis_3x5(__VA_ARGS__)
+#define LAYOUT_charybdis_3x5_base( \
+    K01, K02, K03, K04, K05,  K06, K07, K08, K09, K0A, \
+    K11, K12, K13, K14, K15,  K16, K17, K18, K19, K1A, \
+    K21, K22, K23, K24, K25,  K26, K27, K28, K29, K2A, \
+                   K34, K35,  K36, K37                 \
+    ) \
+    LAYOUT_charybdis_3x5 ( \
+       K01, K02, K03, K04, K05,  K06, K07, K08, K09, K0A, \
+       K11, K12, K13, K14, K15,  K16, K17, K18, K19, K1A, \
+       K21, K22, K23, K24, K25,  K26, K27, K28, K29, K2A, \
+                 K34, KC_NO, K35, K36, K37                \
+    )
+#define LAYOUT_charybdis_3x5_base_wrapper(...)       LAYOUT_charybdis_3x5_base(__VA_ARGS__)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_nAPTmak] = LAYOUT_charybdis_3x5_delay(nAPTmak_split_3x5_3),
-  [_CLMKdh] = LAYOUT_charybdis_3x5_delay(COLEMAKdhm_split_3x5_3),
-  [_NRSTex] = LAYOUT_charybdis_3x5_delay(NRSTex_split_3x5_3),
-  [_ADEPT] = LAYOUT_charybdis_3x5_delay(ADEPT_split_3x5_3),
-  [_APTm] = LAYOUT_charybdis_3x5_delay(APTmod_split_3x5_3),
-  [_APT3] = LAYOUT_charybdis_3x5_delay(APTv3_split_3x5_3),
-  [_CAN] = LAYOUT_charybdis_3x5_delay(Canary_split_3x5_3),
-  [_NERPS] = LAYOUT_charybdis_3x5_delay(Nerps_split_3x5_3),
-  [_GAME] = LAYOUT_charybdis_3x5_delay(GAMING_split_3x5_3),
-  [_NAV] = LAYOUT_charybdis_3x5_delay(NAV_split_3x5_3),
-  [_SYM] = LAYOUT_charybdis_3x5_delay(SYM_split_3x5_3),
-  [_NUM] = LAYOUT_charybdis_3x5_delay(NUMBER_split_3x5_3),
-  [_NUMPD] = LAYOUT_charybdis_3x5_delay(NUMPAD_split_3x5_3),
-  [_FUN] = LAYOUT_charybdis_3x5_delay(FUN_split_3x5_3),
-  [_SPEC] = LAYOUT_charybdis_3x5_delay(SPEC_split_3x5_3),
-  [_MOUSE] = LAYOUT_charybdis_3x5_delay(MOUSE_split_3x5_3),
+  [_nAPTmak] = LAYOUT_charybdis_3x5_base_wrapper(nAPTmak_split_3x5_2),
+  [_CLMKdh] = LAYOUT_charybdis_3x5_base_wrapper(COLEMAKdhm_split_3x5_2),
+  [_NRSTex] = LAYOUT_charybdis_3x5_base_wrapper(NRSTex_split_3x5_2),
+  [_ADEPT] = LAYOUT_charybdis_3x5_base_wrapper(ADEPT_split_3x5_2),
+  [_APTm] = LAYOUT_charybdis_3x5_base_wrapper(APTmod_split_3x5_2),
+  [_APT3] = LAYOUT_charybdis_3x5_base_wrapper(APTv3_split_3x5_2),
+  [_CAN] = LAYOUT_charybdis_3x5_base_wrapper(Canary_split_3x5_2),
+  [_NERPS] = LAYOUT_charybdis_3x5_base_wrapper(Nerps_split_3x5_2),
+  [_GAME] = LAYOUT_charybdis_3x5_base_wrapper(GAMING_split_3x5_2),
+  [_NAV] = LAYOUT_charybdis_3x5_base_wrapper(NAV_split_3x5_2),
+  [_SYM] = LAYOUT_charybdis_3x5_base_wrapper(SYM_split_3x5_2),
+  [_NUM] = LAYOUT_charybdis_3x5_base_wrapper(NUMBER_split_3x5_2),
+  [_NUMPD] = LAYOUT_charybdis_3x5_base_wrapper(NUMPAD_split_3x5_2),
+  [_FUN] = LAYOUT_charybdis_3x5_base_wrapper(FUN_split_3x5_2),
+  [_SPEC] = LAYOUT_charybdis_3x5_base_wrapper(SPEC_split_3x5_2),
+  [_MOUSE] = LAYOUT_charybdis_3x5_base_wrapper(MOUSE_split_3x5_2),
 };
 // clang-format on
 
-#ifdef ENCODER_ENABLE
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (get_highest_layer(layer_state) > 0) {
-            if (clockwise) {
-                tap_code(KC_PGDN);
-            } else {
-                tap_code(KC_PGUP);
-            }
-    } else {  /* Layer 0 */
-            if (clockwise) {
-                tap_code(KC_WH_D);
-            } else {
-                tap_code(KC_WH_U);
-            }
-    }
-    return false;
-}
-#endif // ENCODER_ENABLE
+#if defined(ENCODER_MAP_ENABLE)
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
+    [_nAPTmak] =    { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_CLMKdh] =     { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_NRSTex] =     { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_ADEPT] =      { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_APTm] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_APT3] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_CAN] =        { ENCODER_CCW_CW(KC_UP, KC_DOWN) },
+    [_NERPS] =      { ENCODER_CCW_CW(KC_UP, KC_DOWN) },
+    [_GAME] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_NAV] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_SYM] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_NUM] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_NUMPD] =      { ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [_FUN] =        { ENCODER_CCW_CW(KC_PGUP, KC_PGDN) },
+    [_SPEC] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN) },
+    [_MOUSE] =      { ENCODER_CCW_CW(KC_RIGHT, KC_LEFT) },
+};
+#endif
 
 #ifdef DIP_SWITCH_ENABLE
 bool dip_switch_update_user(uint8_t index, bool active) {
@@ -86,9 +101,6 @@ void keyboard_post_init_user_keymap(void) {
   debug_matrix=false;
   //debug_keyboard=true;
   //debug_mouse=false;
-  #ifdef RGB_MATRIX_ENABLE
-  rgb_matrix_sethsv_noeeprom(HSV_WHITE);
-  #endif
 }
 
 void matrix_init_keymap(void) {
@@ -133,9 +145,9 @@ g_led_config = (led_config_t){ {
     /* index=9  */ {  54,   0 }, {  54,  21 }, {  54,  42 },
     /* index=12 */ {  72,   0 }, {  72,  21 }, {  72,  42 },
 
-    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
-    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
-    {   0,   0 }, {   0,   0 }, {   0,   0 }, 
+    {   0,   0 }, {   0,   0 }, {   0,   0 },
+    {   0,   0 }, {   0,   0 }, {   0,   0 },
+    {   0,   0 }, {   0,   0 }, {   0,   0 },
     {   0,   0 }, {   0,   0 }, {   0,   0 }, //Falcon left
 
     /* index=15 */ {  72,  64 }, {  90,  64 }, { 108,  64 }, // Thumb cluster

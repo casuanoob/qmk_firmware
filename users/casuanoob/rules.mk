@@ -19,18 +19,18 @@ SRC += $(USER_PATH)/delay.c
 # Include callum-style oneshot mods.
 SRC += $(USER_PATH)/features/oneshot_mod.c
 
-# Repeat key implementation by Getreuer.
-SRC += $(USER_PATH)/features/repeat_key.c
+# Include combo source
+INTROSPECTION_KEYMAP_C = features/combos.c
 
 # Include split34 keymap source and flags if enabled.
-ifeq ($(strip $(KEYMAP_ENABLE)), split34)
+#ifeq ($(strip $(KEYMAP_ENABLE)), split34)
 	SRC += $(USER_PATH)/keymaps/split34.c
-	OPT_DEFS += -DDELAY_KEYMAP_SPLIT34
-endif
+#endif
 
 DEFERRED_EXEC_ENABLE = yes
 TRI_LAYER_ENABLE = yes
 CAPS_WORD_ENABLE = yes
+REPEAT_KEY_ENABLE = yes
 MOUSEKEY_ENABLE = yes
 COMBO_ENABLE = yes
 NKRO_ENABLE = yes

@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdint.h>
 #include "config.h"
 #include "delay.h"
 #include "quantum.h"
@@ -23,8 +24,8 @@
 #include "quantum/rgb_matrix/rgb_matrix.h"
 #endif  // RGB_MATRIX_ENABLE
 
-#include "features/repeat_key.h"
 #include "features/oneshot_mod.h"
+#include "features/combos.h"
 
 typedef struct {
     oneshot_mod_state_t lalt;
@@ -34,11 +35,6 @@ typedef struct {
 } osm_state_t;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    //Custom repeat key handler.
-    if (!process_repeat_key_with_alt(keycode, record, REPEAT, ALTREP)) {
-        return false;
-    }
-
     // Custom oneshot mods handler.
     static osm_state_t osm_state = {
         .lalt = ONESHOT_UP_UNQUEUED,
@@ -52,12 +48,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     oneshot_mod_pre(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
 
     const bool result = process_record_user_keymap(keycode, record);
-    
+
     oneshot_mod_post(&osm_state.lalt, KC_LALT, OS_LALT, keycode, record);
     oneshot_mod_post(&osm_state.lctl, KC_LCTL, OS_LCTL, keycode, record);
     oneshot_mod_post(&osm_state.lgui, KC_LGUI, OS_LGUI, keycode, record);
     oneshot_mod_post(&osm_state.lsft, KC_LSFT, OS_LSFT, keycode, record);
-    
+
     return result;
 }
 
@@ -120,50 +116,35 @@ void shutdown_user(void) {
 
 __attribute__((weak)) void shutdown_user_keymap(void) {}
 
-bool get_repeat_key_eligible(uint16_t keycode,
-                                                   keyrecord_t* record) {
-  switch (keycode) {
-    // Also ignore Tri Layer keys
-    case QK_TRI_LAYER_LOWER:
-    case QK_TRI_LAYER_UPPER:
-    // Also ignore custom Callum mods
-    case OS_LALT ... OS_LSFT:
-    // Ignore MO, TO, TG, and TT layer switch keys.
-    case QK_MOMENTARY ... QK_MOMENTARY_MAX:
-    case QK_TO ... QK_TO_MAX:
-    case QK_TOGGLE_LAYER ... QK_TOGGLE_LAYER_MAX:
-    case QK_LAYER_TAP_TOGGLE ... QK_LAYER_TAP_TOGGLE_MAX:
-    // Ignore mod keys.
-    case KC_LCTL ... KC_RGUI:
-    case KC_HYPR:
-    case KC_MEH:
-      // Ignore one-shot keys.
-#ifndef NO_ACTION_ONESHOT
-    case QK_ONE_SHOT_LAYER ... QK_ONE_SHOT_LAYER_MAX:
-    case QK_ONE_SHOT_MOD ... QK_ONE_SHOT_MOD_MAX:
-#endif  // NO_ACTION_ONESHOT
-      return false;
+bool remember_last_key_user(uint16_t keycode, keyrecord_t* record,
+                            uint8_t* remembered_mods) {
+    switch (keycode) {
+        case OS_LALT ... OS_LSFT:
+            return false;  // Ignore backspace.
+    }
 
-      // Ignore hold events on tap-hold keys.
-#ifndef NO_ACTION_TAPPING
-    case QK_MOD_TAP ... QK_MOD_TAP_MAX:
-#ifndef NO_ACTION_LAYER
-    case QK_LAYER_TAP ... QK_LAYER_TAP_MAX:
-#endif  // NO_ACTION_LAYER
-      if (record->tap.count == 0) {
-        return false;
-      }
-      break;
-#endif  // NO_ACTION_TAPPING
+    return true;  // Other keys can be repeated.
+}
 
-#ifdef SWAP_HANDS_ENABLE
-    case QK_SWAP_HANDS ... QK_SWAP_HANDS_MAX:
-      if (IS_SWAP_HANDS_KEYCODE(keycode) || record->tap.count == 0) {
-        return false;
-      }
-      break;
-#endif  // SWAP_HANDS_ENABLE
-  }
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
 
-  return true;
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        // I have a dedicated underscore key, so no need to shift KC_MINS.
+        case KC_UNDS:
+        case KC_MINS:
+        // Also ignore Tri Layer keys
+        case QK_TRI_LAYER_LOWER:
+        case QK_TRI_LAYER_UPPER:
+            return true;
+        default:
+            return false;  // Deactivate Caps Word.
+    }
 }

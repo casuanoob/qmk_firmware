@@ -35,9 +35,6 @@ enum keycodes_user {
   OS_LCTL,
   OS_LGUI,
   OS_LSFT,
-  // Repeat keys
-  REPEAT,
-  ALTREP,
   SAFE_RANGE_KEYMAP,
 };
 

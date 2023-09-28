@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "dilemma.h"
 #include QMK_KEYBOARD_H
 #include "users/casuanoob/keymaps/split34.h"
 

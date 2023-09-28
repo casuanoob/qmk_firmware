@@ -56,6 +56,10 @@
 #define TAPPING_TERM 175
 #endif  // !TAPPING_TERM
 
+#ifdef CAPS_WORD_ENABLE
+#define CAPS_WORD_INVERT_ON_SHIFT
+#endif // CAPS_WORD_ENABLE
+
 #ifdef COMBO_ENABLE
 /**
  * \brief Combo configurations
@@ -125,7 +129,7 @@
 //#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 72
 // limit in milliseconds how frequently an animation will update the LEDs. 16 (16ms) is equivalent to limiting to 60fps (increases keyboard responsiveness)
 #undef RGB_MATRIX_LED_FLUSH_LIMIT
-#define RGB_MATRIX_LED_FLUSH_LIMIT 16 
+#define RGB_MATRIX_LED_FLUSH_LIMIT 16
 
 // Rainbow swirl as startup mode.
 #ifndef ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
