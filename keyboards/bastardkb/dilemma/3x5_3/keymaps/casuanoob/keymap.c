@@ -1,5 +1,6 @@
 /**
  * Copyright 2022 Charly Delay <charly@codesink.dev> (@0xcharly)
+ * Copyright 2023 casuanoob <casuanoob@hotmail.com> (@casuanoob)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +18,14 @@
 
 #include QMK_KEYBOARD_H
 #include "users/casuanoob/keymaps/split34.h"
+#include <qp.h>
+#include "suisei.qgf.h"
+#include "ghost3_crop.qgf.h"
 
-//#include <qp.h>
+static painter_device_t display;
+static painter_image_handle_t suisei;
+static painter_image_handle_t ghost;
+static deferred_token ghost_anim;
 
 // clang-format off
 #define _LAYOUT(                                             \
@@ -30,7 +37,7 @@
            k00, k01, k02, k03, k04, k05, k06, k07, k08, k09, \
            k10, k11, k12, k13, k14, k15, k16, k17, k18, k19, \
            k20, k21, k22, k23, k24, k25, k26, k27, k28, k29, \
-                    KC_A, k33, k34, k35, k36, KC_B)
+                   BL_ON, k33, k34, k35, k36, BL_OFF)
 // clang-format on
 
 #define LAYOUT(...) _LAYOUT(__VA_ARGS__)
@@ -64,16 +71,16 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [_ADEPT] =      { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_APTm] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_APT3] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [_CAN] =        { ENCODER_CCW_CW(KC_UP, KC_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [_NERPS] =      { ENCODER_CCW_CW(KC_UP, KC_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [_CAN] =        { ENCODER_CCW_CW(KC_UP, KC_DOWN),             ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
+    [_NERPS] =      { ENCODER_CCW_CW(KC_UP, KC_DOWN),             ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_GAME] =       { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_NAV] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_SYM] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_NUM] =        { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
     [_NUMPD] =      { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU)  },
-    [_FUN] =        { ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  },
+    [_FUN] =        { ENCODER_CCW_CW(RGB_RMOD, RGB_MOD),          ENCODER_CCW_CW(RGB_SAD, RGB_SAI)  },
     [_SPEC] =       { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(RGB_SPD, RGB_SPI)  },
-    [_MOUSE] =      { ENCODER_CCW_CW(RGB_RMOD, RGB_MOD),          ENCODER_CCW_CW(KC_RIGHT, KC_LEFT) },
+    [_MOUSE] =      { ENCODER_CCW_CW(KC_UP, KC_DOWN),             ENCODER_CCW_CW(KC_LEFT, KC_RIGHT) },
 };
 #endif
 
@@ -84,27 +91,56 @@ void matrix_output_unselect_delay(uint8_t line, bool key_pressed) {
     }
 }
 
-//static painter_device_t display;
-
 void keyboard_post_init_user_keymap(void) {
-  // Keep debug off on boot to toggle on as needed.
-  debug_enable=false;
-  debug_matrix=false;
-  //debug_keyboard=true;
-  //debug_mouse=false;
-  //display = qp_st7789_make_spi_device(240, 280, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, LCD_SPI_DIVISOR, LCD_SPI_MODE);
+    // Keep debug off on boot to toggle on as needed.
+    debug_enable=false;
+    debug_matrix=false;
+    //debug_keyboard=true;
+    //debug_mouse=false;
+    display = qp_st7789_make_spi_device(240, 280, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, LCD_SPI_DIVISOR, LCD_SPI_MODE);
+    qp_init(display, QP_ROTATION_180);   // Initialise the display
+    qp_set_viewport_offsets(display, 0, 20);
+    suisei = qp_load_image_mem(gfx_suisei);
+    ghost = qp_load_image_mem(gfx_ghost3_crop);
+    qp_clear(display);
+    qp_drawimage(display, 0, 0, suisei);
+}
+
+void housekeeping_task_user(void) {
+    if(is_keyboard_left()) {
+        /* Tie backlight state to QP display state */
+        if (is_backlight_enabled() && (last_input_activity_elapsed() > (QUANTUM_PAINTER_DISPLAY_TIMEOUT))) {
+            backlight_level_noeeprom(0);
+        } else if (last_input_activity_elapsed() > ((QUANTUM_PAINTER_DISPLAY_TIMEOUT)/4)) {
+            backlight_level_noeeprom(1);
+        } else if (last_input_activity_elapsed() > ((QUANTUM_PAINTER_DISPLAY_TIMEOUT)/8)) {
+            backlight_level_noeeprom(5);
+        } else if(last_input_activity_elapsed() < (QUANTUM_PAINTER_DISPLAY_TIMEOUT)) {
+            backlight_level_noeeprom(BACKLIGHT_DEFAULT_LEVEL);
+        }
+
+        if (last_input_activity_elapsed() >= (QUANTUM_PAINTER_DISPLAY_TIMEOUT/20)) {
+            if(ghost_anim == INVALID_DEFERRED_TOKEN) {
+                qp_rect(display, 0, 0, 239, 279, 0, 0, 0, true);
+                ghost_anim = qp_animate(display, 30, 75, ghost);
+            }
+        } else if (ghost_anim != INVALID_DEFERRED_TOKEN) {
+            qp_stop_animation(ghost_anim);
+            ghost_anim = INVALID_DEFERRED_TOKEN;
+            //qp_clear(display);
+            qp_drawimage(display, 0, 0, suisei);
+        }
+    }
 }
 
 // Turn off per key rgb but keep underglow.
+#ifdef DISABLE_PER_KEY_RGB
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-  for (uint8_t i = led_min; i <= led_max; i++) {
-    //if(user_config.rgb_per_key_enabled) {
+    for (uint8_t i = led_min; i <= led_max; i++) {
         if (!HAS_FLAGS(g_led_config.flags[i], LED_FLAG_UNDERGLOW)) { // 0x02 == LED_FLAG_MODIFIER
-          rgb_matrix_set_color(i, RGB_OFF);
+            rgb_matrix_set_color(i, RGB_OFF);
         }
-    //}
-  }
-  return false;
+    }
+    return false;
 }
-
-//painter_device_t qp_st7789_make_spi_device(uint16_t 240, uint16_t 280, pin_t GP12, pin_t GP11, pin_t GP13, uint16_t spi_divisor, int spi_mode);
+#endif

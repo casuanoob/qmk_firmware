@@ -370,7 +370,7 @@ enum layers_keymap {
  */
 // clang-format off
 #define MOUSE_split_3x5_2                                                                     \
-    _______, _______, _______, S_D_MOD, DPI_MOD, _______, _______, _______, _______, _______, \
+    _______, _______, _______, S_D_MOD, DPI_MOD, DPI_MOD, S_D_MOD, _______, _______, _______, \
     _______, SNIPING, _______, _______, _______, _______, _______, _______, SNIPING, _______, \
     _______, KC_BTN2, KC_BTN1, KC_BTN3, DRGSCRL, DRG_TOG, KC_BTN3, KC_BTN1, KC_BTN2, _______, \
                                _______, _______, _______, _______

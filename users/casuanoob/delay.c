@@ -62,14 +62,6 @@ __attribute__((weak)) bool process_record_user_keymap(uint16_t keycode,
   return true;
 }
 
-#ifdef RGB_MATRIX_ENABLE
-void rgb_matrix_reset(void) {
-  rgb_matrix_mode(RGB_MATRIX_DEFAULT_MODE);
-  rgb_matrix_sethsv(RGB_MATRIX_DEFAULT_HSV);
-  rgb_matrix_set_speed(RGB_MATRIX_DEFAULT_SPD);
-}
-#endif  // RGB_MATRIX_ENABLE
-
 void matrix_scan_user(void) { matrix_scan_user_keymap(); }
 
 __attribute__((weak)) void matrix_scan_user_keymap(void) {}
@@ -90,12 +82,6 @@ void keyboard_post_init_user(void) {
 }
 
 __attribute__((weak)) void keyboard_post_init_user_keymap(void) {}
-
-/*void eeconfig_init_user(void) {
-#ifdef RGB_MATRIX_ENABLE
-  eeconfig_update_rgb_matrix_default();
-#endif  // RGB_MATRIX_ENABLE
-}*/
 
 #ifdef RGB_MATRIX_ENABLE
 // Forward-declare this helper function since it is defined in rgb_matrix.c.

@@ -74,12 +74,3 @@ layer_state_t layer_state_set_user_keymap(layer_state_t state);
 void keyboard_post_init_user_keymap(void);
 //void oneshot_locked_mods_changed_user_keymap(uint8_t mods);
 void shutdown_user_keymap(void);
-
-#ifdef RGB_MATRIX_ENABLE
-/**
- * \brief Apply default/startup RGB matrix values.
- *
- * This is to replace the missing `rgb_matrix_reload_from_eeprom()`.
- */
-void rgb_matrix_reset(void);
-#endif  // RGB_MATRIX_ENABLE
