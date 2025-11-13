@@ -1,0 +1,27 @@
+{
+    "keyboard_name": "Charybdis Nano (3x5) Splinktegrated Rev3",
+    "matrix_pins": {
+        "cols": ["GP28", "GP21", "GP6", "GP7", "GP8"],
+        "rows": ["GP26", "GP5", "GP4", "GP9"]
+    },
+    "split": {
+        "serial": {
+            "driver": "vendor"
+        },
+        "bootmagic": {
+            "matrix": [4, 0]
+        },
+        "handedness": {
+            "pin": "GP15"
+        }
+    },
+    "ws2812": {
+        "pin": "GP0",
+        "driver": "vendor"
+    },
+    "processor": "RP2040",
+    "bootloader": "rp2040",
+    "features": {
+        "mousekey": true
+    }
+}
