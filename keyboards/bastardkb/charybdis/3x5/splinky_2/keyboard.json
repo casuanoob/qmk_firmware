@@ -1,0 +1,19 @@
+{
+    "keyboard_name": "Charybdis Nano (3x5) Splinky",
+    "matrix_pins": {
+        "cols": ["GP28", "GP15", "GP6", "GP7", "GP8"],
+        "rows": ["GP26", "GP5", "GP4", "GP9"]
+    },
+    "split": {
+        "serial": {
+            "driver": "vendor"
+            "pin": "GP1"
+        }
+    },
+    "ws2812": {
+        "pin": "GP0",
+        "driver": "vendor"
+    },
+    "processor": "RP2040",
+    "bootloader": "rp2040"
+}
